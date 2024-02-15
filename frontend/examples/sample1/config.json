@@ -1,0 +1,6 @@
+{
+  "ts":   {"dest": "dist/dev/js",  "src": "src/ts/*.ts"},
+  "sass": {"dest": "dist/dev/css", "src": "src/sass/*.scss"},
+  "less": {"dest": "dist/dev/css", "src": "src/less/*.less"},
+  "html": {"dest": "dist/dev",     "templates": "src/html", "mustache":{"base":"src/html/_tmpl/base.mustache"}}
+}

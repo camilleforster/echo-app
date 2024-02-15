@@ -1,0 +1,10 @@
+$black: #000 !default;
+$terminal-font-stack: Menlo, Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+$terminal-bg: $black;
+.terminal {
+  background-color: $black;
+  font: 12px $terminal-font-stack;
+  padding: 15px;
+  min-height: 80px;
+}
+
