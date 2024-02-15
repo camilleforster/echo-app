@@ -1,86 +1,50 @@
-# frontend 
-![](https://img.shields.io/npm/v/frontend.svg?style=flat-square) ![](https://img.shields.io/npm/dw/frontend.svg?style=flat-square) ![](https://img.shields.io/github/repo-size/danieljackson1983/frontend.svg?style=flat-square) ![](https://img.shields.io/github/issues/danieljackson1983/frontend.svg?style=flat-square) ![](https://img.shields.io/npm/l/frontend.svg?style=flat-square)
 
-A boilerplate for UI/UX Developers.
+# TypeScript
 
-![](https://nodei.co/npm/frontend.png?downloads=true&downloadRank=true)
+[![GitHub Actions CI](https://github.com/microsoft/TypeScript/workflows/CI/badge.svg)](https://github.com/microsoft/TypeScript/actions?query=workflow%3ACI)
+[![npm version](https://badge.fury.io/js/typescript.svg)](https://www.npmjs.com/package/typescript)
+[![Downloads](https://img.shields.io/npm/dm/typescript.svg)](https://www.npmjs.com/package/typescript)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/microsoft/TypeScript/badge)](https://api.securityscorecards.dev/projects/github.com/microsoft/TypeScript)
 
-### Getting Started
-There are several ways to use Frontend. Examples can be found at [Github](https://github.com/danieljackson1983/frontend/tree/master/examples). 
 
-##### Step One
-A JSON configuration file is used to define the paths for files in order to compile them. The JSON schema should be similar to the example below.
+[TypeScript](https://www.typescriptlang.org/) is a language for application-scale JavaScript. TypeScript adds optional types to JavaScript that support tools for large-scale JavaScript applications for any browser, for any host, on any OS. TypeScript compiles to readable, standards-based JavaScript. Try it out at the [playground](https://www.typescriptlang.org/play/), and stay up to date via [our blog](https://blogs.msdn.microsoft.com/typescript) and [Twitter account](https://twitter.com/typescript).
 
-Create a JSON configuration file in the root directory of your project. 
-```sh
-$ touch config.json
-```
-`config.json`:
-```json
-{
-  "ts":   { "dest": "dist/dev/js", "src": "src/ts/*.ts" },
-  "sass": { "dest": "dist/dev/css", "src": "src/sass/*.scss" },
-  "less": { "dest": "dist/dev/css", "src": "src/less/*.less" },
-  "html": { "dest": "dist/dev", "templates": "src/html", "mustache": { "base":"src/html/_tmpl/base.mustache" } }
-}
-```
-> NOTE: It is important to use the keys as described since Frontend does not validate against a JSON schema.
+Find others who are using TypeScript at [our community page](https://www.typescriptlang.org/community/).
 
-##### Step Two
-Create a base Mustache file in the directory defined in the `config.json`
-```sh
-$ mkdir -p ./src/html/_tmpl && touch ./src/html/_tmpl/base.mustache
-```
-`base.mustache`:
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{{ pageTitle }}</title>
-</head>
-<body>
-    {{> component }}
-</body>
-</html>
+## Installing
+
+For the latest stable version:
+
+```bash
+npm install -D typescript
 ```
 
-##### Step Three
-Create your first HTML page and corresponding JSON file for data. 
-```sh
-$ touch ./src/html/index.html ./src/html/index.json
+For our nightly builds:
+
+```bash
+npm install -D typescript@next
 ```
 
-> Every **.html** file in the _templates_ directory will be parsed as an individual page. The contents of this will be sent through the base template and any partials created. The data comes from a corresponding **.json** file having the same base name. 
+## Contribute
 
-`index.html`:
-```html
-<h1>{{ heading }}</h1>
-```
-### How To Build Using Gulp
-Use this package to run your Gulp tasks for compiling Sass, Less, Typescript and Mustache files. 
+There are many ways to [contribute](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md) to TypeScript.
+* [Submit bugs](https://github.com/microsoft/TypeScript/issues) and help us verify fixes as they are checked in.
+* Review the [source code changes](https://github.com/microsoft/TypeScript/pulls).
+* Engage with other TypeScript users and developers on [StackOverflow](https://stackoverflow.com/questions/tagged/typescript).
+* Help each other in the [TypeScript Community Discord](https://discord.gg/typescript).
+* Join the [#typescript](https://twitter.com/search?q=%23TypeScript) discussion on Twitter.
+* [Contribute bug fixes](https://github.com/microsoft/TypeScript/blob/main/CONTRIBUTING.md).
 
-Create a new Gulp file in the root directory of your project.
-```sh
-$ touch gulpfile.js
-```
-`gulpfile.js`:
-```javascript
-const gulp = require('gulp');
-const { build, html, sass, less, ts } = require('frontend');
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see
+the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com)
+with any additional questions or comments.
 
-exports.default = build;
-exports["HTML"] = html;
-exports["Sass"] = sass;
-exports["Less"] = less;
-exports["Typescript"] = ts;
-```
-List the Gulp tasks that are exported from gulpfile.js
-```sh
-$ gulp --list-tasks
-```
-Run a task:
-```sh
-$ gulp default
-```
-___
-> Go to the  [Github repo for Mustache](https://github.com/janl/mustache.js) to read further information on its usage.
+## Documentation
+
+*  [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+*  [Programming handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+*  [Homepage](https://www.typescriptlang.org/)
+
+## Roadmap
+
+For details on our planned features and future direction please refer to our [roadmap](https://github.com/microsoft/TypeScript/wiki/Roadmap).
