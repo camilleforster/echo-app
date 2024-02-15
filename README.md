@@ -13,11 +13,11 @@ venv\Scripts\activate  # activate environment
 pip install -r requirements.txt  # install necessary packages
 ```
 
-### MacOS/Linux
+### macOS/Linux
 
 ```
 cd backend
 python3 -m venv venv  # create virtual environment
-source venv/bin/activate # activate environment
+source venv/bin/activate  # activate environment
 pip install -r requirements.txt  # install necessary packages
 ```
