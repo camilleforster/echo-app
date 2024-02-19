@@ -78,9 +78,7 @@ While recordings should be shareable, it is possible that users would like to pr
 
 <!--A detailed specification of the system. UML, or other diagrams, such as finite automata, or other appropriate specification formalisms, are encouraged over natural language.-->
 
-<!--Include sections, for example, illustrating the database architecture (with, for example, an ERD).-->
-
-<!--Included below are some sample diagrams, including some example tech stack diagrams.-->
+<!--TODO: convert diagrams from pictures to MD for easy editing-->
 
 #### Technology Stack
 
