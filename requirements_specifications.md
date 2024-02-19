@@ -1,10 +1,10 @@
-# Echo - Voice to Tabs: Requirements and Specification Document
+# Requirements and Specification Document
 
 Built by Team Echo: Justin Benz, Jin Yong Choi, Camille Forster, Andy Liu, Aisha Mohamed, and David Viggiano
 
 ### Project Abstract
 
-This cross-platform application allows users to record audio - from hums to previously recorded tunes - and processes that audio into refined note sequences, to be played back or displayed in MIDI format, guitar tabs, and/or sheet music. Users can also edit their previously recorded note sequences and export them for sharing or use in musical recreation.
+This cross-platform application - **Echo: Voice to Tabs** - allows users to record audio - from hums to previously recorded tunes - and processes that audio into refined note sequences, to be played back or displayed in MIDI format, guitar tabs, and/or sheet music. Users can also edit their previously recorded note sequences and export them for sharing or use in musical recreation.
 
 ### Customer
 
