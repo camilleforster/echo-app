@@ -928,21 +928,32 @@ Source: https://github.com/python/peps/blob/main/peps/pep-0008.rst
 
 # Coding Guidelines - ReactJS
 
-
-
 ## Table of Contents
 
-  1. [Basic Rules](#basic-rules)
-  1. [Naming](#naming)
-  1. [Declaration](#declaration)
-  1. [Alignment](#alignment)
-  1. [Quotes](#quotes)
-  1. [Spacing](#spacing)
-  1. [Props](#props)
-  1. [Parentheses](#parentheses)
-  1. [Tags](#tags)
-  1. [Methods](#methods)
-  1. [Ordering](#ordering)
+1. [Basic Rules](#basic-rules)
+2. [Imports](#imports)
+3. [Naming](#naming)
+4. [Declaration](#declaration)
+5. [Alignment](#alignment)
+6. [Quotes](#quotes)
+7. [Spacing](#spacing)
+8. [Props](#props)
+9. [Parentheses](#parentheses)
+10. [Tags](#tags)
+11. [Methods](#methods)
+12. [Ordering](#ordering)
+13. [CSS Styling](#css-styling)
+14. [Closing Components without children](#closing-components-without-children)
+15. [List iterations](#list-iterations)
+16. [Hooks](#hooks)
+17. [useContext](#usecontext)
+18. [Error Boundaries](#error-boundaries)
+19. [Accessibility](#accessibility)
+20. [Performance optimization](#performance-optimization)
+21. [Testing](#testing)
+22. [Type Checking](#type-checking)
+23. [Commenting](#commenting)
+24. [Security](#security)
 
 ## Basic Rules
 
@@ -1191,7 +1202,45 @@ render() {
 }
 ```
 
+## Hooks
+
+- Always use hooks above functional components
+- Avoid nesting hooks
+
+
+## useContext
+
+- Used for states that need to be accessed by multiple components at different levels
+- Create only if necessary (ex. themes, user auth status)
+
+## Error Boundaries
+
+- Error handle around situations that may fail and render a UI indication of failure to improve UX
+
+## Accessibility
+- Ensure all elements are keyboard accessible
+- Use aria attributes when possible
+- Run accessibiltiy tests with tools like WAVE
+
+## Performance optimization
+- Use 'React.memo' to prevent unneeded re-renders
+- Use 'useCallback' and 'useMemo' to memoize callbacks
+
+## Testing
+- Write unit tests with Jest and React Testing Library for all components and hooks
+- Test for behavior > implementation
+
+## Type Checking
+- Adopt TypeScript to type check functions and components
+
+## Commenting
+- Only add comments to explain non-obvious logic, while still resorting to declarative programming
+
+## Security
+- Sanitize user inputs to prevent XSS attacks
+- HTTPS not HTTP
+
 
 ## Sources
-- https://medium.com/@navitasinghal77/react-coding-standards-and-practices-3b133bcaea8react-style-guide.md
-- https://web-design-weekly.com/2015/01/29/opinionated-guide-react-js-best-practices-conventions/
+- https://medium.com/@navitasinghal77/react-coding-standards-and-practices-3b133bcaea8 
+- https://github.com/airbnb/javascript/tree/master/react
