@@ -1175,6 +1175,13 @@ static propTypes = {
 - Use the styled components library instead of making a css file, see documentation here: https://styled-components.com/docs 
 - Keep styled components at the end of the document
 
+```javascript
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: redl
+`;
+```
 
 ## Closing Components without children
 
@@ -1275,6 +1282,23 @@ const AccessibleButton = () => {
 ## Performance optimization
 - Use 'React.memo' to prevent unneeded re-renders
 - Use 'useCallback' and 'useMemo' to memoize callbacks
+
+```javascript
+import React, { memo, useCallback, useMemo } from 'react';
+
+const ExpensiveComponent = memo(({ compute, value }) => {
+  return <div>Computed: {compute(value)}</div>;
+});
+
+const ParentComponent = () => {
+  const value = 10;
+  const computeExpensiveValue = useCallback((num) => num * 2, []);
+
+  const memoizedValue = useMemo(() => computeExpensiveValue(value), [value, computeExpensiveValue]);
+
+  return <ExpensiveComponent compute={computeExpensiveValue} value={memoizedValue} />;
+};
+```
 
 ## Testing
 - Write unit tests with Jest and React Testing Library for all components and hooks
