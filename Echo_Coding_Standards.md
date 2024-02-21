@@ -1,4 +1,3 @@
-
 # Echo - Voice to Tabs Coding Sandards Document
 
 Backend Coding Style
@@ -944,17 +943,28 @@ Source: https://github.com/python/peps/blob/main/peps/pep-0008.rst
   1. [Tags](#tags)
   1. [Methods](#methods)
   1. [Ordering](#ordering)
-  
-  
-  
 
 ## Basic Rules
 
 - Only include one React component per file.
 - Always use JSX syntax.
-- Do not use `React.createElement` unless you're initializing the app from a file that is not JSX.
+- Do not use `React.createElement`
+- Always use functional components instead of class components
+- Use the DRY principle (Don't repeat yourself)
+- Stick to smaller functionality for each file
+- Use a linter to fix syntax styles
+- Always write tests for code
 
 
+## Imports 
+
+Follow this order for import statements:
+1. React import
+2. Library imports (Alphabetical order)
+3. Absolute imports from the project (Alphabetical order)
+4. Relative imports (Alphabetical order)
+5. Import * as
+6. Import ‘./<some file>.<some extension>
 
 ## Naming
 - File- and component name need to be identical.
@@ -964,67 +974,61 @@ Source: https://github.com/python/peps/blob/main/peps/pep-0008.rst
 // Bad
 // Filename: foo.js
 
-class Foo extends React.Component {}
-
-export default Foo;
-
-
 // Good
 // Filename: Foo.js
 
-class Foo extends React.Component {}
-
+const Foo = () => {
+  return (
+      // JSX code here
+  );
+}
 export default Foo;
+
 ```
-
-
 
 ## Ordering
 
-- Ordering for class extends React.Component:
-
-1. constructor
-1. optional static methods
-1. getChildContext
-1. componentWillMount
-1. componentDidMount
-1. componentWillReceiveProps
-1. shouldComponentUpdate
-1. componentWillUpdate
-1. componentDidUpdate
-1. componentWillUnmount
-1. *clickHandlers or eventHandlers* like onClickSubmit() or onChangeDescription()
-1. *getter methods for render* like getSelectReason() or getFooterContent()
-1. *Optional render methods* like renderNavigation() or renderProfilePicture()
-1. render
+Ordering for a functional component:
+1. imports
+2. hook declarations (ex. useState)
+3. local variables and states
+4. function definitions
+5. effects/other react hooks (ex. data fetching)
+6. return statement w/ JSX
+7. proptypes and defaultprops
+8. styled components (CSS)
 
 - How to define propTypes, defaultProps, contextTypes, etc...  
 
 ```javascript
-import React, { Component, PropTypes } from 'react';
+import React, { useState, useEffect } from 'react';
+import ChildComponent from './ChildComponent';
+import './Foo.css';
 
-const propTypes = {
-    id: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-    text: PropTypes.string,
+const Foo = (props) => {
+  const [count, setCount] = useState(0);
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, [count]);
+
+  return (
+    <div className="foo">
+      <p>You clicked {count} times</p>
+      <button onClick={incrementCount}>Click me</button>
+      <ChildComponent />
+    </div>
+  );
 };
 
-const defaultProps = {
-    text: 'Hello World',
-};
+Foo.propTypes = {};
+Foo.defaultProps = {};
 
-export default class Link extends Component {
-    static methodsAreOk() {
-        return true;
-    }
-
-    render() {
-        return <a href={this.props.url} data-id={this.props.id}>{this.props.text}</a>
-    }
-}
-
-Link.propTypes = propTypes;
-Link.defaultProps = defaultProps;
+export default Foo;
 ```
 
 
@@ -1071,8 +1075,7 @@ Link.defaultProps = defaultProps;
 
 // good
 <Foo style={{ left: '20px' }} />
-
-
+```
 
 
 ## Props
@@ -1120,29 +1123,24 @@ Link.defaultProps = defaultProps;
 ```
 
 
-## Stateless function components
-For stateless components use the function syntax, introduced in React 0.14.
+## Functional components
+- Use const instead of function for component declaration
+- Use ES6 arrow functions
+- Destructure props in the function signature
+- Implicit returns if there's no need for additional logic before returning JSX
 
 ```javascript
-// Using an ES2015 (ES6) arrow function:
-var Aquarium = (props) => {
-    var fish = getFish(props.species);
-    return <Tank>{fish}</Tank>;
-};
+import React from 'react';
+import Tank from './Tank';
 
-// Or with destructuring and an implicit return, simply:
-var Aquarium = ({species}) => (
-    <Tank>
-        {getFish(species)}
-    </Tank>
+// Arrow function with destructuring props and implicit return
+const Aquarium = ({ species }) => (
+  <Tank>
+    {getFish(species)}
+  </Tank>
 );
-
-// Then use: <Aquarium species="rainbowfish" />
+export default Aquarium;
 ```
-
-[Read More](http://facebook.github.io/react/blog/2015/09/10/react-v0.14-rc1.html#stateless-function-components)
-
-
 
 ## PropTypes declarations
 
@@ -1160,97 +1158,11 @@ static propTypes = {
     disabled: React.PropTypes.bool,
 };
 ```
+# CSS Styling
 
-
-## Prefixing component wide variables
-In the exception that you do not want to place a component wide variables on the state, you have to prefix it with an underscore.
-
-```javascript
-class Foo extends React.Component {
-
-    componentDidMount() {
-        this._el = React.FindDOMNode(this.refs.foo);
-    }
-    
-    render() {
-        return (
-            <div>foo</div>
-        );
-    }
-}   
-```
-
-
-## Using handler methods
-
-- Name methods using `'_handle' + triggering event`, e.g. `_handleClick`
-- Bind handler using the ES6 arrow syntax, so inside the callback it has always the right context
-
-```javascript
-class Foo extends React.Component {
-
-    _handleClick = (e) => {
-        this.setState(
-            {
-                clicked: true
-            }
-        );
-    }
-    
-    render() {
-        return (
-            <button onClick={this._handleClick}>Submit</button>
-        );
-    }
-}
-```
-
-
-
-## Using “container” components for loading data from Stores
-
-
-```javascript
-// CommentListContainer.js
-
-class CommentListContainer extends React.Component {
-    constructor() {
-        super();
-        this.state = { comments: [] }
-    }
-    componentDidMount() {
-        $.ajax({
-            url: "/my-comments.json",
-            dataType: 'json',
-            success: function(comments) {
-            this.setState({comments: comments});
-            }.bind(this)
-        });
-    }
-    render() {
-        return <CommentList comments={this.state.comments} />;
-    }
-}
-
-
-
-// CommentList.js
-
-class CommentList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    _renderComment({body, author}) {
-        return <li>{body}—{author}</li>;
-    }
-    render() { 
-        return <ul> {this.props.comments.map(_renderComment)} </ul>;
-    }
-}
-```
-
-Source: https://medium.com/@learnreact/container-components-c0e67432e005
-
+- Avoid inline CSS when possible
+- Use the styled components library instead of making a css file, see documentation here: https://styled-components.com/docs 
+- Keep styled components at the end of the document
 
 
 ## Closing Components without children
@@ -1264,7 +1176,6 @@ render() {
     );
 }
 ```
-
 
 ## List iterations
 
@@ -1281,87 +1192,6 @@ render() {
 ```
 
 
-## Formatting Attributes
-
-```javascript
-<input
-    type="text"
-    value={this.state.foo}
-    onChange={this._handleInputChange.bind(this, 'foo')}
-/>
-```
-
-
-
-## Inline CSS styles
-Static properties should be set in the SCSS, dynamic ones in JS.
-
-```css
-.Foo {
-    background-color: #ff0;
-}
-```
-
-```javascript
-class Foo extends React.Component {
-
-    render() {
-        
-        const styles = {
-            'transform': 'translateX(' + this.state.position + ' + px)'
-        };
-    
-        return (
-            <div className="Foo" styles={classes}>Foo Header</div>
-        )
-    };
-
-}
-```
-
-
-
-
-## Use "classnames" to set CSS classes
-
-Use the [classnames](https://www.npmjs.com/package/classnames) node module for setting CSS classes on an element.
-
-```javascript
-import React from 'react';
-import classnames from 'classnames';
-
-class Foo extends React.Component {
-
-    render() {
-        
-        const classes = classnames('FooHeader', {
-            'is-fixed': this.state.fixed,
-            'is-visible': this.state.visible
-        });
-    
-        return (
-            <div className={classes}>Foo Header</div>
-        )
-    };
-
-}
-```
-
-
-
-## Working with DOM listeners
-http://facebook.github.io/react/tips/dom-event-listeners.html
-
-
-## Using StaticContainer for more granular control over shouldUpdate
-https://github.com/reactjs/react-static-container
-
-
-## Use higherOrder functions to add scroll/resize listeners
-https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750
-
-
 ## Sources
-
-- https://github.com/kriasoft/react-starter-kit/blob/master/docs/react-style-guide.md
+- https://medium.com/@navitasinghal77/react-coding-standards-and-practices-3b133bcaea8react-style-guide.md
 - https://web-design-weekly.com/2015/01/29/opinionated-guide-react-js-best-practices-conventions/
