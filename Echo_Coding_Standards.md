@@ -1208,10 +1208,50 @@ render() {
 - Avoid nesting hooks
 
 
+```javascript
+import React, { useState, useEffect } from 'react';
+
+const ExampleComponent = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  }, [count]);
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Click me
+    </button>
+  );
+};
+```
+
 ## useContext
 
 - Used for states that need to be accessed by multiple components at different levels
 - Create only if necessary (ex. themes, user auth status)
+
+```javascript
+import React, { useContext, createContext, useState } from 'react';
+
+const ThemeContext = createContext();
+
+const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+const ThemedComponent = () => {
+  const { theme } = useContext(ThemeContext);
+
+  return <div className={theme}>Themed content</div>;
+};
+```
 
 ## Error Boundaries
 
@@ -1221,6 +1261,16 @@ render() {
 - Ensure all elements are keyboard accessible
 - Use aria attributes when possible
 - Run accessibiltiy tests with tools like WAVE
+
+```javscript
+const AccessibleButton = () => {
+  return (
+    <button aria-label="Close" aria-pressed="false">
+      Close
+    </button>
+  );
+};
+```
 
 ## Performance optimization
 - Use 'React.memo' to prevent unneeded re-renders
