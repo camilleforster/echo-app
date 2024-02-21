@@ -1162,28 +1162,6 @@ static propTypes = {
 ```
 
 
-## Prefixing none React methods
-Prefix all none React methods within a component with an underscore.
-
-```javascript
-class Foo extends React.Component {
-
-    componentDidMount() {
-        this._update();
-    }
-    
-    _update() {
-        // e.g. update position
-    }
-    
-    render() {
-        return (
-            <div>foo</div>
-        );
-    }
-}   
-```
-
 ## Prefixing component wide variables
 In the exception that you do not want to place a component wide variables on the state, you have to prefix it with an underscore.
 
