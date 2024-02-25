@@ -107,4 +107,4 @@ While recordings should be shareable, it is possible that users would like to pr
 
 ### Standards & Conventions
 
-<!--TODO: Here you can document your coding standards and conventions. This includes decisions about naming, style guides, etc.-->
+Our coding standards and conventions can be found in [this document](Echo_Coding_Standards.md).
