@@ -14,27 +14,16 @@ The application is designed for casual users or those new to composition or musi
 
 ### User Requirements
 
-<!--TODO: This section lists the behavior that the users see. This information needs to be presented in a logical, organized fashion. It is most helpful if this section is organized in outline form: a bullet list of major topics (e.g., one for each kind of user, or each major piece of system functionality) each with some number of subtopics.-->
-
-Here is a user requirements sample from [Crookshanks](https://learning-oreilly-com.ezproxy.library.wisc.edu/library/view/practical-software-development/9781484206201/9781484206218_Ch02.xhtml):
+<!--This section lists the behavior that the users see. This information needs to be presented in a logical, organized fashion. It is most helpful if this section is organized in outline form: a bullet list of major topics (e.g., one for each kind of user, or each major piece of system functionality) each with some number of subtopics.-->
 
 | ID   | Description                                                  | Priority | Status |
 | ---- | ------------------------------------------------------------ | -------- | ------ |
-| R11  | Users should not have to sign into the system; their current network login should be used for identification. | Med      | Done   |
-| R12  | The user should pick a project first; the tasks available are a derivative of the project. | High     | Open   |
-| R13  | A full-time employee should not be able to submit a time card with less than 40 hours per week recorded. | High     | Open   |
-| R14  | A contractor can submit any number of hours up to 60 without special approval. | Med      | Open   |
-| R15  | A team lead can see his/her team's time cards before they are submitted but cannot approve them until the user submits it. | High     | Open   |
-
-<div align="center"><small><i>Excerpt from Crookshanks Table 2-2 showing example user requirements for a timekeeping system</i></small></div>
-
-- You 
-  - Can
-    - Use
-- Bullet
-  - Points
-    - In
-    - Markdown
+| 36  | Users should be able to sign in using Duo authentication. | Low      | Open   |
+| 41  | Users should be able to view all previous recordings and organize them into folders. | High     | Open   |
+| 45  | Users should be able to create new recordings and save them into folders. | High     | Open   |
+| 46  | Users should be able to edit previous recordings. | Med      | Open   |
+| 42  | Users should be able to play previous recordings back with a variety of instruments. | Low     | Open   |
+| R16  | Users should be able to export previous recordings in several formats. | High | Open |
 
 ### Use Cases & User Stories
 
