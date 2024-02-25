@@ -91,13 +91,11 @@ While recordings should be shareable, it is possible that users would like to pr
 
 #### Class Diagram
 
-<!--TODO: is this required?-->
+![Frontend Class Diagram](diagrams/frontend-class-diagram.png)
 
 #### Flowchart
 
-<!--TODO: reorganize for a coherent appearance-->
-
-![Flowchart](diagrams/flowchart.png)
+![Frontend Flowchart](diagrams/frontend-flowchat.png)
 
 #### Behavior
 
