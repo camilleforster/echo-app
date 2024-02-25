@@ -95,7 +95,7 @@ While recordings should be shareable, it is possible that users would like to pr
 
 #### Flowchart
 
-![Frontend Flowchart](diagrams/frontend-flowchat.png)
+![Frontend Flowchart](diagrams/frontend-flowchart.png)
 
 #### Behavior
 
