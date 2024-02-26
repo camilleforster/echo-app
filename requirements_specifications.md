@@ -1,4 +1,6 @@
-# Requirements and Specification Document
+# Echo - Voice to Tabs: Requirements and Specification Document
+
+![Preliminary Logo](/prelim-assets/icon.png)
 
 Built by Team Echo: Justin Benz, Jin Yong Choi, Camille Forster, Andy Liu, Aisha Mohamed, and David Viggiano
 
@@ -73,9 +75,17 @@ During our next meeting with our customer (Daniel), we will ask for an ordering 
 
 ### User Interface Requirements
 
-<!--TODO: Describes any customer user interface requirements including graphical user interface requirements as well as data exchange format requirements. This also should include necessary reporting and other forms of human readable input and output. This should focus on how the feature or product and user interact to create the desired workflow. Describing your intended interface as “easy” or “intuitive” will get you nowhere unless it is accompanied by details.-->
+<!--Describes any customer user interface requirements including graphical user interface requirements as well as data exchange format requirements. This also should include necessary reporting and other forms of human readable input and output. This should focus on how the feature or product and user interact to create the desired workflow. Describing your intended interface as “easy” or “intuitive” will get you nowhere unless it is accompanied by details.-->
 
 <!--NOTE: Please include illustrations or screenshots of what your user interface would look like -- even if they’re rough -- and interleave it with your description.-->
+
+The application will require an authentication screen for the user to identify which account's data should be retrieved. Once that data is retrieved, the user should be presented with a menu of all previous recordings, which can each be expanded for playback and exporting, as well as making edits in a simple editing interface that holds only a few capabilities so that the interface does not present the user with an intensive cognitive load. The editor should still be capable of adjusting the pitch and length of particular notes via a drag-and-drop mechanism that is illustrated to the user with a tutorial/demo on first-time use. This menu screen should include a central button on the bottom of the screen from which a new recording can be initiated - and once it is completed, the recording will be instantly viewable, exportable, and editable just like any other previous recording as the menu is instantly populated with it.
+
+Below are some preliminary prototypes of what the new recording screen, previous recording menu, and individual previous recording screen might look somewhat like, respectively fromt left to right.
+
+![New Recording Screen](/prelim-assets/record.png)
+![Previous Recording Menu](/prelim-assets/archive.png)
+![Individual Previous Recording](/prelim-assets/sheet.png)
 
 ### Security Requirements
 
@@ -85,12 +95,11 @@ While recordings should be shareable, it is possible that users would like to pr
 
 ### System Requirements
 
-<!--TODO: List here all of the external entities, other than users, on which your system will depend. For example, if your system inter-operates with sendmail, or if you will depend on Apache for the web server, or if you must target both Unix and Windows, list those requirements here. List also memory requirements, performance/speed requirements, data capacity requirements, if applicable.-->
+<!--List here all of the external entities, other than users, on which your system will depend. For example, if your system inter-operates with sendmail, or if you will depend on Apache for the web server, or if you must target both Unix and Windows, list those requirements here. List also memory requirements, performance/speed requirements, data capacity requirements, if applicable.-->
 
-| You    |    can    |    also |
-| ------ | :-------: | ------: |
-| change |    how    | columns |
-| are    | justified |         |
+The backend will run on any system with Python 3.11 and MySQL, though will be tested and deployed on the UW-Madison CSL machines.
+
+The frontend will be written in React Native and as such should be accessible from any mobile device running iOS or Android. While the app will technically be runnable on a web browser, development, testing, and intended usability will target these mobile platforms.
 
 ### Specification
 
