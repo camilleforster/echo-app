@@ -118,7 +118,7 @@ While recordings should be shareable, it is possible that users would like to pr
 
 #### Behavior
 
-<!--TODO: is this required given our flowchart?-->
+![Behavior](diagrams/behavior.png)
 
 #### Sequence Diagram
 
