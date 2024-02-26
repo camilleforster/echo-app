@@ -110,6 +110,7 @@ While recordings should be shareable, it is possible that users would like to pr
 #### Class Diagram
 
 ![Frontend Class Diagram](diagrams/frontend-class-diagram.png)
+![Backend Class Diagram](diagrams/backend-class-diagram.png)
 
 #### Flowchart
 
