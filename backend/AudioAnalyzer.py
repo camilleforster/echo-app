@@ -8,8 +8,8 @@ from scipy.io import wavfile
 from scipy.fft import rfft, rfftfreq
 
 class AudioAnalyzer:
-    A4_FREQ = 440.0
-    NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    A4_freq= 440.0
+    Note_Names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
     def __init__(self, sampling_rate: int):
         self.sampling_rate = sampling_rate
@@ -17,10 +17,10 @@ class AudioAnalyzer:
     def _frequency_to_note_name(self, frequency: float) -> str:
         if frequency < 20:  # Below human hearing range
             return "None"
-        h = round(12 * np.log2(frequency / AudioAnalyzer.A4_FREQ) + 69)
+        h = round(12 * np.log2(frequency / AudioAnalyzer.A4_freq) + 69)
         octave = h // 12 - 1
         n = h % 12
-        return f"{AudioAnalyzer.NOTE_NAMES[n]}{octave}"
+        return f"{AudioAnalyzer.Note_Names[n]}{octave}"
 
     def frequency_to_note_name(self, frequencies: List[float]) -> List[str]:
         return [self._frequency_to_note_name(f) for f in frequencies]
@@ -104,7 +104,7 @@ class Song:
 
 
 # Example usage
-file_path = 'C:/Users/andyl/Documents/cs506/music-transcription-from-voice-app/backend/sample2.wav'  # Update this path to your audio file
+file_path = 'sample2.wav'  # Update this path to your audio file
 sampling_rate = 44100  # This should match the sampling rate of your audio file
 analyzer = AudioAnalyzer(sampling_rate)
 song = Song(analyzer, file_path)
