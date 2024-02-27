@@ -2,9 +2,10 @@ from typing import Iterator, List
 import numpy as np
 import pyaudio
 from scipy.fft import rfft, rfftfreq
+# The Song class receives raw audio file and ready it for processing
 class Song:
     def __init__(self, analyzer, file_path: str):
-        self.frequency_queue = None
+        self.frequency_List = None
         self.analyzer = analyzer
         self.file_path = file_path
 
@@ -14,6 +15,7 @@ class Song:
         # Placeholder for actual implementation
         pass
 
+# The AudioAnalyzer class will help with the analysis by converts frequency to note name
 class AudioAnalyzer:
     def __init__(self, sampling_rate: int, chunk_size: int, channels: int):
         self.sampling_rate = sampling_rate
@@ -30,12 +32,14 @@ class AudioAnalyzer:
         # Placeholder for actual implementation
         return AnalyzedSong()
 
+# The AnalysisPoint stores the frequency and note name for every time stamp (0.25 seconds for now)
 class AnalysisPoint:
     def __init__(self, time_stamp: float, frequency: float, note_name: str):
         self.time_stamp = time_stamp
         self.frequency = frequency
         self.note_name = note_name
 
+# The AnalyzedSong class will store the processed the song and ready to store the data into MySQL database
 class AnalyzedSong:
     def __init__(self):
         self.data = []
