@@ -18,14 +18,14 @@ The application is designed for casual users or those new to composition or musi
 
 <!--This section lists the behavior that the users see. This information needs to be presented in a logical, organized fashion. It is most helpful if this section is organized in outline form: a bullet list of major topics (e.g., one for each kind of user, or each major piece of system functionality) each with some number of subtopics.-->
 
-| ID   | Description                                                  | Priority | Status |
-| ---- | ------------------------------------------------------------ | -------- | ------ |
-| 36  | Users should be able to sign in using Duo authentication. | Low      | Open   |
+| ID   | Description                                                                         | Priority | Status |
+| ---- | ----------------------------------------------------------------------------------- | -------- | ------ |
+| 36  | Users should be able to sign in using Duo authentication.                            | Low      | Open   |
 | 41  | Users should be able to view all previous recordings and organize them into folders. | High     | Open   |
-| 45  | Users should be able to create new recordings and save them into folders. | High     | Open   |
-| 46  | Users should be able to edit previous recordings. | Med      | Open   |
-| 42  | Users should be able to play previous recordings back with a variety of instruments. | Low     | Open   |
-| R16  | Users should be able to export previous recordings in several formats. | High | Open |
+| 45  | Users should be able to create new recordings and save them into folders.            | High     | Open   |
+| 46  | Users should be able to edit previous recordings.                                    | Med      | Open   |
+| 42  | Users should be able to play previous recordings back with a variety of instruments. | Low      | Open   |
+| 47  | Users should be able to export previous recordings in several formats.               | High     | Open   |
 
 ### Use Cases & User Stories
 
