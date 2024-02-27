@@ -18,14 +18,14 @@ The application is designed for casual users or those new to composition or musi
 
 <!--This section lists the behavior that the users see. This information needs to be presented in a logical, organized fashion. It is most helpful if this section is organized in outline form: a bullet list of major topics (e.g., one for each kind of user, or each major piece of system functionality) each with some number of subtopics.-->
 
-| ID   | Description                                                  | Priority | Status |
-| ---- | ------------------------------------------------------------ | -------- | ------ |
-| 36  | Users should be able to sign in using Duo authentication. | Low      | Open   |
+| ID   | Description                                                                         | Priority | Status |
+| ---- | ----------------------------------------------------------------------------------- | -------- | ------ |
+| 36  | Users should be able to sign in using Duo authentication.                            | Low      | Open   |
 | 41  | Users should be able to view all previous recordings and organize them into folders. | High     | Open   |
-| 45  | Users should be able to create new recordings and save them into folders. | High     | Open   |
-| 46  | Users should be able to edit previous recordings. | Med      | Open   |
-| 42  | Users should be able to play previous recordings back with a variety of instruments. | Low     | Open   |
-| R16  | Users should be able to export previous recordings in several formats. | High | Open |
+| 45  | Users should be able to create new recordings and save them into folders.            | High     | Open   |
+| 46  | Users should be able to edit previous recordings.                                    | Med      | Open   |
+| 42  | Users should be able to play previous recordings back with a variety of instruments. | Low      | Open   |
+| 47  | Users should be able to export previous recordings in several formats.               | High     | Open   |
 
 ### Use Cases & User Stories
 
@@ -81,7 +81,7 @@ During our next meeting with our customer (Daniel), we will ask for an ordering 
 
 The application will require an authentication screen for the user to identify which account's data should be retrieved. Once that data is retrieved, the user should be presented with a menu of all previous recordings, which can each be expanded for playback and exporting, as well as making edits in a simple editing interface that holds only a few capabilities so that the interface does not present the user with an intensive cognitive load. The editor should still be capable of adjusting the pitch and length of particular notes via a drag-and-drop mechanism that is illustrated to the user with a tutorial/demo on first-time use. This menu screen should include a central button on the bottom of the screen from which a new recording can be initiated - and once it is completed, the recording will be instantly viewable, exportable, and editable just like any other previous recording as the menu is instantly populated with it.
 
-Below are some preliminary prototypes of what the new recording screen, previous recording menu, and individual previous recording screen might look somewhat like, respectively fromt left to right.
+Below are some preliminary prototypes of what the new recording screen, previous recording menu, and individual previous recording screen might look somewhat like, respectively from left to right.
 
 ![New Recording Screen](/prelim-assets/record.png)
 ![Previous Recording Menu](/prelim-assets/archive.png)
