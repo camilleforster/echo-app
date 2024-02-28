@@ -1,11 +1,8 @@
 from flask import Flask, request, jsonify
 
-app = Flask(__name__)
-
-app.config['TEMP_RECORDINGS'] = '/recordings'  # stores raw recordings while they are being processed into an encoded sequence
-
 # TODO create unit tests for routes
 
+app = Flask(__name__)
 
 @app.route('/user/<user>', methods=['GET'])
 def get_user_data():
