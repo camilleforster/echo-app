@@ -38,8 +38,31 @@ def process_recording():
     return jsonify({"error": "Invalid recording format"}), 400
 
 
-@app.route('/edit', methods=['POST'])
-def edit_recording():
+@app.route('/edit-sequence-name', methods=['POST'])
+def edit_sequence_name():
+    """
+    TODO create docstring
+    """
+
+    if not request.is_json:
+        return jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
+
+    data = request.get_json()
+
+    sequence_id = data.get('sequence_id')
+    display_name = data.get('display_name')
+
+    if display_name is None:
+        # TODO also validate that sequence ID exists as a record in database
+        return jsonify({"error": "Missing new display name"}), 400
+
+    # TODO process edit to sequence name, save to database
+
+    return jsonify({"message": f"Sequence {sequence_id} renamed to {display_name} successfully"})
+
+
+@app.route('/edit-sequence-data', methods=['POST'])
+def edit_sequence_data():
     """
     TODO create docstring
     """
@@ -95,7 +118,7 @@ def create_folder():
 
     # TODO create folder in database
 
-    return jsonify({"message": f"{display_name} created successfully for {owner}"})
+    return jsonify({"message": f"{display_name} created for {owner} successfully"})
 
 
 @app.route('/edit-folder-name', methods=['POST'])
@@ -123,7 +146,7 @@ def edit_folder_name():
 
     # TODO update folder name in database
 
-    return jsonify({"message": f"{original_name} renamed to {display_name}"})
+    return jsonify({"message": f"{original_name} renamed to {display_name} successfully"})
 
 
 @app.route('/update-folder-contents', methods=['POST'])
