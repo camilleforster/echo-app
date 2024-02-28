@@ -13,7 +13,7 @@ def get_user_data():
     TODO create docstring
     """
 
-    user_data = {}  # TODO populate from database
+    user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
 
     return jsonify(user_data)
 
