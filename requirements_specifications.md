@@ -1,6 +1,6 @@
 # Echo - Voice to Tabs: Requirements and Specification Document
 
-![Preliminary Logo](/prelim-assets/icon.png)
+![Preliminary Logo](/assets/icon.png)
 
 Built by Team Echo: Justin Benz, Jin Yong Choi, Camille Forster, Andy Liu, Aisha Mohamed, and David Viggiano
 
@@ -83,9 +83,9 @@ The application will require an authentication screen for the user to identify w
 
 Below are some preliminary prototypes of what the new recording screen, previous recording menu, and individual previous recording screen might look somewhat like, respectively from left to right.
 
-![New Recording Screen](/prelim-assets/record.png)
-![Previous Recording Menu](/prelim-assets/archive.png)
-![Individual Previous Recording](/prelim-assets/sheet.png)
+![New Recording Screen](/assets/record.png)
+![Previous Recording Menu](/assets/archive.png)
+![Individual Previous Recording](/assets/sheet.png)
 
 ### Security Requirements
 
