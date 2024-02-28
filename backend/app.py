@@ -27,15 +27,15 @@ def process_recording():
 
     recording = request.files['file']
 
-    if recording and recording.filename.endswith('.mp3'):
-        display_name = request.form.get('display_name')
-        instrument = request.form.get('instrument', type=int)  # default playback instrument
+    if not recording or not recording.filename.endswith('.mp3'):
+        return jsonify({"error": "Invalid recording format"}), 400
 
-        sequence = {}  # TODO process sequence, save to database, and return sequence data for frontend
+    display_name = request.form.get('display_name')
+    instrument = request.form.get('instrument', type=int)  # default playback instrument
 
-        return jsonify(sequence)
+    sequence = {}  # TODO process sequence, save to database, and return sequence data for frontend
 
-    return jsonify({"error": "Invalid recording format"}), 400
+    return jsonify(sequence)
 
 
 @app.route('/rename-sequence', methods=['POST'])
@@ -52,8 +52,11 @@ def rename_sequence():
     sequence_id = data.get('sequence_id')
     display_name = data.get('display_name')
 
-    if display_name is None:
+    if sequence_id is None or not isinstance(sequence_id, int):
         # TODO also validate that sequence ID exists as a record in database
+        return jsonify({"error": "Missing or invalid sequence ID"}), 400
+
+    if display_name is None:
         return jsonify({"error": "Missing new display name"}), 400
 
     # TODO process edit to sequence name, save to database
