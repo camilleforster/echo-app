@@ -2,6 +2,7 @@ from typing import Iterator, List
 import numpy as np
 import pyaudio
 from scipy.fft import rfft, rfftfreq
+
 class Song:
     def __init__(self, analyzer, file_path: str):
         self.frequency_queue = None
