@@ -10,12 +10,10 @@ def get_user_data(email):
     """
     Fetches data for a particular user.
 
-    Route Parameters:
-    - email (str): The email address of the user to fetch data for.
+    :param str email: The email address of the user to fetch data for.
     TODO only allow this route to provide data with verification from Duo authentication, rather than taking param
-    
-    Returns:
-    - A JSON response containing the user's data, including display name, sequences, and folders.
+
+    :return: A JSON response containing the user's data, including display name, sequences, and folders.
     """
 
     user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
@@ -27,14 +25,12 @@ def get_user_data(email):
 def process_recording():
     """
     Processes an uploaded vocal recording by converting it into a note sequence, saving it, and returning it to the frontend.
-    
-    Request Parameters:
-    - file (File): An MP3 file of the vocal recording of the audio sequence.
-    - display_name (str): The display name associated with the recording.
-    - instrument (int, optional): The ID of the default playback instrument.
-    
-    Returns:
-    - A JSON response containing the processed sequence data for the frontend.
+
+    :param File file: An MP3 file of the vocal recording of the audio sequence.
+    :param str display_name: The display name associated with the recording.
+    :param int instrument: The ID of the default playback instrument.
+
+    :return: A JSON response containing the processed sequence data for the frontend.
     """
 
     if 'file' not in request.files:
