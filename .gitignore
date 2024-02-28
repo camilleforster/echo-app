@@ -1,8 +1,9 @@
 # IDE Settings
 .idea
 
-# Python Virtual Environment
+# Python
 venv/
+__pycache__/
 
 # macOS
 .DS_Store
