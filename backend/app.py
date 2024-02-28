@@ -112,8 +112,7 @@ def create_folder():
     if sequences is None:
         return jsonify({"error": "Missing folder sequences"}), 400
 
-    if not isinstance(sequences, list) or not all(
-            isinstance(id, int) for id in sequences):  # TODO also verify all sequence IDs exist in database
+    if not isinstance(sequences, list) or not all(isinstance(sequence_id, int) for sequence_id in sequences):  # TODO also verify all sequence IDs exist in database
         return jsonify({"error": "Invalid sequence IDs"}), 400
 
     # TODO create folder in database
@@ -169,7 +168,7 @@ def update_folder_contents():
     if sequences is None:
         return jsonify({"error": "Missing folder sequences"}), 400
 
-    if not isinstance(sequences, list) or not all(isinstance(id, int) for id in sequences):
+    if not isinstance(sequences, list) or not all(isinstance(sequence_id, int) for sequence_id in sequences):
         return jsonify({"error": "Invalid sequence IDs"}), 400
 
     # TODO verify that folder ID exists
