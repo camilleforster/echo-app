@@ -5,11 +5,13 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
-@app.route('/user/<user>', methods=['GET'])
-def get_user_data():
+@app.route('/user/<email>', methods=['GET'])
+def get_user_data(email):
     """
     TODO create docstring
     """
+
+    # TODO only allow this route to provide data with verification from Duo authentication, rather than taking param
 
     user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
 
