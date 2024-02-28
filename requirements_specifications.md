@@ -135,4 +135,4 @@ The frontend will be written in React Native and as such should be accessible fr
 
 ### Standards & Conventions
 
-Our coding standards and conventions can be found in [this document](Echo_Coding_Standards.md).
+Our coding standards and conventions can be found in [this document](coding_standards.md).
