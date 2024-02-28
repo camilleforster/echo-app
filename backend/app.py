@@ -16,7 +16,7 @@ def get_user_data():
     return jsonify(user_data)
 
 
-@app.route('/process', methods=['POST'])
+@app.route('/process-recording', methods=['POST'])
 def process_recording():
     """
     TODO create docstring
