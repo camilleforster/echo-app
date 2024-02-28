@@ -50,7 +50,18 @@ pip install -r requirements.txt  # install necessary packages
 
 #### Testing
 
+##### Windows
+
 ```
+cd backend
+venv\Scripts\activate  # activate environment
+python3 app.py  # temporary API launch; can be run with more specific Flask settings
+```
+
+#### macOS/Linux
+
+```
+cd backend
 source venv/bin/activate  # activate environment
 python3 app.py  # temporary API launch; can be run with more specific Flask settings
 ```
