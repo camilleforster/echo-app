@@ -28,7 +28,7 @@ You can now scan the QR code in the terminal to test the app on mobile.
 
 #### Setup
 
-Make sure you have a virtual environment in place. You will also need `portaudio`` installed to install the package `pyaudio`.
+Make sure you have a virtual environment in place. You will also need `portaudio` installed to install the package `pyaudio`.
 
 ##### Windows
 
