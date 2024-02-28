@@ -8,10 +8,15 @@ app = Flask(__name__)
 @app.route('/user/<email>', methods=['GET'])
 def get_user_data(email):
     """
-    TODO create docstring
-    """
+    Fetches data for a particular user.
 
-    # TODO only allow this route to provide data with verification from Duo authentication, rather than taking param
+    Route Parameters:
+    - email (str): The email address of the user to fetch data for.
+    TODO only allow this route to provide data with verification from Duo authentication, rather than taking param
+    
+    Returns:
+    - A JSON response containing the user's data, including display name, sequences, and folders.
+    """
 
     user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
 
@@ -21,7 +26,15 @@ def get_user_data(email):
 @app.route('/process-recording', methods=['POST'])
 def process_recording():
     """
-    TODO create docstring
+    Processes an uploaded vocal recording by converting it into a note sequence, saving it, and returning it to the frontend.
+    
+    Request Parameters:
+    - file (File): An MP3 file of the vocal recording of the audio sequence.
+    - display_name (str): The display name associated with the recording.
+    - instrument (int, optional): The ID of the default playback instrument.
+    
+    Returns:
+    - A JSON response containing the processed sequence data for the frontend.
     """
 
     if 'file' not in request.files:
