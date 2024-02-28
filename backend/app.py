@@ -127,10 +127,10 @@ def edit_folder_name():
     return jsonify({"message": f"{original_name} renamed to {display_name}"})
 
 
-@app.route('/update-folder-sequences', methods=['POST'])
-def update_folder_sequences():
+@app.route('/update-folder-contents', methods=['POST'])
+def update_folder_contents():
     """
-    Used to add or remove sequences to a user folder.
+    Used to add or remove sequences to a user folder. The route takes in the new set of sequences in the folder.
     TODO include params
     """
 
