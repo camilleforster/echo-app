@@ -159,4 +159,4 @@ def update_folder_contents():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
