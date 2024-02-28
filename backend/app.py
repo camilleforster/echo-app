@@ -38,8 +38,8 @@ def process_recording():
     return jsonify({"error": "Invalid recording format"}), 400
 
 
-@app.route('/edit-sequence-name', methods=['POST'])
-def edit_sequence_name():
+@app.route('/rename-sequence', methods=['POST'])
+def rename_sequence():
     """
     TODO create docstring
     """
@@ -121,8 +121,8 @@ def create_folder():
     return jsonify({"message": f"{display_name} created for {owner} successfully"})
 
 
-@app.route('/edit-folder-name', methods=['POST'])
-def edit_folder_name():
+@app.route('/rename-folder', methods=['POST'])
+def rename_folder():
     """
     TODO create docstring
     """
