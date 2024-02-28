@@ -28,7 +28,7 @@ You can now scan the QR code in the terminal to test the app on mobile.
 
 #### Setup
 
-Make sure you have a virtual environment in place.
+Make sure you have a virtual environment in place. You will also need `portaudio`` installed to install the package `pyaudio`.
 
 ##### Windows
 
@@ -50,4 +50,7 @@ pip install -r requirements.txt  # install necessary packages
 
 #### Testing
 
-Coming soon!
+```
+source venv/bin/activate  # activate environment
+python3 app.py  # temporary API launch; can be run with more specific Flask settings
+```
