@@ -1,4 +1,4 @@
-# Echo - Voice to Tabs Coding Sandards Document
+# Echo - Voice to Tabs: Coding Sandards Document
 
 Backend Coding Style
 

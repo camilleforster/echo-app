@@ -1,5 +1,8 @@
 # IDE Settings
 .idea
 
+# Python Virtual Environment
+venv/
+
 # macOS
 .DS_Store
