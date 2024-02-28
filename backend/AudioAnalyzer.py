@@ -2,10 +2,7 @@ from typing import Iterator, List
 import numpy as np
 import pyaudio
 from scipy.fft import rfft, rfftfreq
-from typing import List
-import numpy as np
 from scipy.io import wavfile
-from scipy.fft import rfft, rfftfreq
 
 class AudioAnalyzer:
     A4_freq= 440.0
