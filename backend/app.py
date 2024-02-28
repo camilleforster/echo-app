@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+
 @app.route('/user/<user>', methods=['GET'])
 def get_user_data():
     """
@@ -23,7 +24,7 @@ def process_recording():
 
     if 'file' not in request.files:
         return jsonify({"error": "No recording provided"}), 400
-    
+
     recording = request.files['file']
 
     if recording and recording.filename.endswith('.mp3'):
@@ -45,7 +46,7 @@ def edit_recording():
 
     if not request.is_json:
         return jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
-    
+
     data = request.get_json()
 
     sequence_id = data.get('sequence_id')
@@ -58,7 +59,7 @@ def edit_recording():
     if updated_sequence is None:
         # TODO also validate format of new sequence data
         return jsonify({"error": "Missing new sequence data"}), 400
-    
+
     # TODO process edit to sequence, save to database
 
     return jsonify({"message": f"Sequence {sequence_id} updated successfully"})
@@ -88,7 +89,8 @@ def create_folder():
     if sequences is None:
         return jsonify({"error": "Missing folder sequences"}), 400
 
-    if not isinstance(sequences, list) or not all(isinstance(id, int) for id in sequences):  # TODO also verify all sequence IDs exist in database
+    if not isinstance(sequences, list) or not all(
+            isinstance(id, int) for id in sequences):  # TODO also verify all sequence IDs exist in database
         return jsonify({"error": "Invalid sequence IDs"}), 400
 
     # TODO create folder in database
@@ -114,7 +116,7 @@ def edit_folder_name():
 
     if display_name is None:
         return jsonify({"error": "Missing new folder name"}), 400
-    
+
     # TODO verify that folder ID exists
 
     original_name = ''  # TODO get original display name from database
@@ -146,7 +148,7 @@ def update_folder_contents():
 
     if not isinstance(sequences, list) or not all(isinstance(id, int) for id in sequences):
         return jsonify({"error": "Invalid sequence IDs"}), 400
-    
+
     # TODO verify that folder ID exists
 
     # TODO update "Contains" table in database
