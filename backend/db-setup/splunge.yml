@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    image: t23image
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # contact David for password; include in a t23image.env file in this directory with this variable
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - echodat:/var/lib/mysql
+    ports:
+      - "53316:3306"
+
+volumes:
+  echodat:
