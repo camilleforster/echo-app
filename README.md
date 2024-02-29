@@ -58,7 +58,7 @@ venv\Scripts\activate  # activate environment
 python3 app.py  # temporary API launch; can be run with more specific Flask settings
 ```
 
-#### macOS/Linux
+##### macOS/Linux
 
 ```
 cd backend
