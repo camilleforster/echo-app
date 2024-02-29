@@ -1,6 +1,7 @@
 # Database Setup
 
-You will need to create a file called `t23image.env` in this directory with the MYSQL_ROOT_PASSWORD variable defined.
+If you need to recreate the image, you will need to create a file called
+`t23image.env` in this directory with the MYSQL_ROOT_PASSWORD variable defined.
 Contact David for the password in use in the current image.
 
 ## Building Docker Image
