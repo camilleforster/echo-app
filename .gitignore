@@ -1,6 +1,9 @@
 # IDE Settings
 .idea
 
+# Environment Variables
+*.env
+
 # Python
 venv/
 __pycache__/
