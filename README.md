@@ -41,6 +41,8 @@ pip install -r requirements.txt  # install necessary packages
 
 ##### macOS/Linux
 
+Python 3 has built-in support for creating virtual environments. You can use any other way to create a virtual environment. After the initial setup, you will only need to activate the environment you initially created.
+
 ```
 cd backend
 python3 -m venv venv  # create virtual environment
@@ -48,10 +50,9 @@ source venv/bin/activate  # activate environment
 pip install -r requirements.txt  # install necessary packages
 ```
 
-#### Testing
+### Running
 
 ##### Windows
-
 ```
 cd backend
 venv\Scripts\activate  # activate environment
@@ -64,4 +65,17 @@ python3 app.py  # temporary API launch; can be run with more specific Flask sett
 cd backend
 source venv/bin/activate  # activate environment
 python3 app.py  # temporary API launch; can be run with more specific Flask settings
+```
+
+#### Testing
+To run the unit tests, use the following command: 
+```
+cd backend
+python -m pytest -q
+```
+Remove the `-q` option for a more detailed version of the testing output and use the `-v` option for the most verbose output.
+
+To generate an output file of the result of the test file:
+```
+python -m pytest --junitxml="test_result.xml"
 ```

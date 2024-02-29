@@ -4,6 +4,12 @@
 # Python
 venv/
 __pycache__/
+*/__pycache__/
+backend/.pytest_cache/
 
-# macOS
+# macOS meta files
 .DS_Store
+
+# testing
+test_result.xml
+tests/test_data/
