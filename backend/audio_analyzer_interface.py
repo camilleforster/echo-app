@@ -1,12 +1,14 @@
 from typing import Iterator, List
 import numpy as np
-import pyaudio
+#import pyaudio
 from scipy.fft import rfft, rfftfreq
 
+"""
+A class representing the audio file before analysis.
+"""
 class Song:
-    def __init__(self, analyzer, file_path: str):
+    def __init__(self, file_path: str):
         self.frequency_queue = None
-        self.analyzer = analyzer
         self.file_path = file_path
 
     def audio_to_frequency(self, filter_noise=True) -> Iterator[float]:
@@ -14,6 +16,7 @@ class Song:
         # and create the frequency iterator that outputs a chunk of the audio every time next is called.
         # Placeholder for actual implementation
         pass
+
 
 class AudioAnalyzer:
     def __init__(self, sampling_rate: int, chunk_size: int, channels: int):
@@ -26,10 +29,16 @@ class AudioAnalyzer:
         # Placeholder for actual implementation
         pass
 
-    def frequency_to_note_name(self, frequencies: Iterator[float]):
+    def _frequencies_to_note_name(self, frequencies: Iterator[float]):
         # Converts frequencies to note names
         # Placeholder for actual implementation
         return AnalyzedSong()
+
+    def song_to_notes(self, song: Song):
+        # Converts frequencies to note names
+        # Placeholder for actual implementation
+        return self._frequencies_to_note_name(Song.audio_to_frequency())
+
 
 class AnalysisPoint:
     def __init__(self, time_stamp: float, frequency: float, note_name: str):
