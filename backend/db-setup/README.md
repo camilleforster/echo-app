@@ -26,5 +26,5 @@ mysql -h localhost -P 53316 --protocol=TCP -u root -p
 
 When prompted to enter password, use the root password listed in your `t23image.env` file.
 
-You can interact with the project database with `use echo_db`.
+You can interact with the project database in the MySQL CLI with `use echo_db`.
 
