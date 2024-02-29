@@ -116,8 +116,6 @@ The frontend will be written in React Native and as such should be accessible fr
 
 ![Database Schema](diagrams/schema.png)
 
-TODO: add "display_name: string" to Folder schema in diagram
-
 #### Class Diagram
 
 ![Frontend Class Diagram](diagrams/frontend-class-diagram.png)
