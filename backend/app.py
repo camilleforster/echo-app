@@ -49,7 +49,7 @@ def process_recording():
     return jsonify(sequence)
 
 
-@app.route('/rename-sequence', methods=['POST'])
+@app.route('/rename-sequence', methods=['PATCH'])
 def rename_sequence():
     """
     TODO create docstring
@@ -75,8 +75,8 @@ def rename_sequence():
     return jsonify({"message": f"Sequence {sequence_id} renamed to {display_name} successfully"})
 
 
-@app.route('/edit-sequence-data', methods=['POST'])
-def edit_sequence_data():
+@app.route('/update-sequence-data', methods=['PUT'])
+def update_sequence_data():
     """
     TODO create docstring
     """
@@ -135,7 +135,7 @@ def create_folder():
     return jsonify({"message": f"{display_name} created for {owner} successfully"})
 
 
-@app.route('/rename-folder', methods=['POST'])
+@app.route('/rename-folder', methods=['PATCH'])
 def rename_folder():
     """
     TODO create docstring
@@ -163,7 +163,7 @@ def rename_folder():
     return jsonify({"message": f"{original_name} renamed to {display_name} successfully"})
 
 
-@app.route('/update-folder-contents', methods=['POST'])
+@app.route('/update-folder-contents', methods=['PUT'])
 def update_folder_contents():
     """
     Used to add or remove sequences to a user folder. The route takes in the new set of sequences in the folder.
