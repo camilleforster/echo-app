@@ -1,3 +1,23 @@
+"""Flast App
+
+This script creates routes ....
+
+This script requires that `flask` be installed within the Python
+environment you are running this script in.
+
+This file can also be imported as a module and contains the following
+functions:
+
+    * get_user_data - returns the column headers of the file
+    * process_recording - 
+    * rename_sequence - 
+    * update_sequence_data - 
+    * create_folder - 
+    * rename_folder
+    * update_folder_contents - 
+    * main - the main function of the script
+"""
+
 from flask import Flask, request, jsonify
 
 # TODO create unit tests for routes
@@ -7,13 +27,18 @@ app = Flask(__name__)
 
 @app.route('/user/<email>', methods=['GET'])
 def get_user_data(email):
-    """
-    Fetches data for a particular user.
+    """Fetches data for a particular user.
 
-    :param str email: The email address of the user to fetch data for.
+    Parameters
+    ----------
+    email : str
+        The email address of the user to fetch data for.
     TODO only allow this route to provide data with verification from Duo authentication, rather than taking param
 
-    :return: A JSON response containing the user's data, including display name, sequences, and folders.
+    Returns
+    -------
+    JSON response
+        A JSON response containing the user's data, including display name, sequences, and folders.
     """
 
     user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
@@ -26,11 +51,16 @@ def process_recording():
     """
     Processes an uploaded vocal recording by converting it into a note sequence, saving it, and returning it to the frontend.
 
-    :param File file: An MP3 file of the vocal recording of the audio sequence.
-    :param str display_name: The display name associated with the recording.
-    :param int instrument: The ID of the default playback instrument.
+    Parameters
+    ----------
+    File file: An MP3 file of the vocal recording of the audio sequence.
+    str display_name: The display name associated with the recording.
+    int instrument: The ID of the default playback instrument.
 
-    :return: A JSON response containing the processed sequence data for the frontend.
+    Returns
+    -------
+    JSON response
+        A JSON response containing the processed sequence data for the frontend.
     """
 
     if 'file' not in request.files:
@@ -52,7 +82,10 @@ def process_recording():
 @app.route('/rename-sequence', methods=['PATCH'])
 def rename_sequence():
     """
-    TODO create docstring
+    Returns
+    -------
+    JSON response
+        A JSON response containing ...
     """
 
     if not request.is_json:
@@ -78,7 +111,10 @@ def rename_sequence():
 @app.route('/update-sequence-data', methods=['PUT'])
 def update_sequence_data():
     """
-    TODO create docstring
+    Returns
+    -------
+    JSON response
+        A JSON response containing ...
     """
 
     if not request.is_json:
@@ -105,7 +141,10 @@ def update_sequence_data():
 @app.route('/create-folder', methods=['POST'])
 def create_folder():
     """
-    TODO create docstring
+    Returns
+    -------
+    JSON response
+        A JSON response containing ...
     """
 
     if not request.is_json:
@@ -138,7 +177,10 @@ def create_folder():
 @app.route('/rename-folder', methods=['PATCH'])
 def rename_folder():
     """
-    TODO create docstring
+    Returns
+    -------
+    JSON response
+        A JSON response containing ...
     """
 
     if not request.is_json:
@@ -166,8 +208,10 @@ def rename_folder():
 @app.route('/update-folder-contents', methods=['PUT'])
 def update_folder_contents():
     """
-    Used to add or remove sequences to a user folder. The route takes in the new set of sequences in the folder.
-    TODO include params
+    Returns
+    -------
+    JSON response
+        A JSON response containing ...
     """
 
     if not request.is_json:
