@@ -62,7 +62,10 @@ class Song:
         analyzed_song = AnalyzedSong()
 
         # Define constants
-        chunk_size = int(0.25 * sampling_rate)  # Number of samples in each 0.25 second chunk
+        chunk_size = int(0.25
+                         
+                         
+                          * sampling_rate)  # Number of samples in each 0.25 second chunk
         num_chunks = len(data) // chunk_size
 
         # Process each chunk
@@ -101,7 +104,7 @@ class Song:
 
 
 # Example usage
-file_path = 'sample2.wav'  # Update this path to your audio file
+file_path = 'sample1.wav'  # Update this path to your audio file
 sampling_rate = 44100  # This should match the sampling rate of your audio file
 analyzer = AudioAnalyzer(sampling_rate)
 song = Song(analyzer, file_path)
