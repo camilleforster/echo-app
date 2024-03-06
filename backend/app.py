@@ -49,7 +49,8 @@ def get_user_data(email):
 @app.route('/process-recording', methods=['POST'])
 def process_recording():
     """
-    Processes an uploaded vocal recording by converting it into a note sequence, saving it, and returning it to the frontend.
+    Processes an uploaded vocal recording by converting it into
+    a note sequence, saving it, and returning it to the frontend.
 
     Parameters
     ----------
@@ -82,7 +83,7 @@ def process_recording():
 @app.route('/rename-sequence', methods=['PATCH'])
 def rename_sequence():
     """
-    Returns
+    TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
@@ -111,7 +112,7 @@ def rename_sequence():
 @app.route('/update-sequence-data', methods=['PUT'])
 def update_sequence_data():
     """
-    Returns
+    TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
@@ -141,7 +142,7 @@ def update_sequence_data():
 @app.route('/create-folder', methods=['POST'])
 def create_folder():
     """
-    Returns
+    TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
@@ -177,7 +178,7 @@ def create_folder():
 @app.route('/rename-folder', methods=['PATCH'])
 def rename_folder():
     """
-    Returns
+    TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
@@ -208,7 +209,7 @@ def rename_folder():
 @app.route('/update-folder-contents', methods=['PUT'])
 def update_folder_contents():
     """
-    Returns
+    TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
