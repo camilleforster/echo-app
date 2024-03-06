@@ -1,4 +1,6 @@
-"""Flast App
+"""Flask App
+
+TODO complete docstring
 
 This script creates routes ....
 
@@ -15,7 +17,7 @@ functions:
     * create_folder - 
     * rename_folder
     * update_folder_contents - 
-    * main - the main function of the script
+    * main - executes when the script is run directly; launches the API
 """
 
 from flask import Flask, request, jsonify
@@ -24,6 +26,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+# TODO look into if each route can go into other files/modules
 
 @app.route('/user/<email>', methods=['GET'])
 def get_user_data(email):
@@ -74,6 +77,8 @@ def process_recording():
 
     display_name = request.form.get('display_name')
     instrument = request.form.get('instrument', type=int)  # default playback instrument
+
+    # TODO ensure all parameters are here
 
     sequence = {}  # TODO process sequence, save to database, and return sequence data for frontend
 
@@ -175,7 +180,7 @@ def create_folder():
     return jsonify({"message": f"{display_name} created for {owner} successfully"})
 
 
-@app.route('/rename-folder', methods=['PATCH'])
+@app.route('/rename-folder', methods=['PATCH'])  # TODO change method to PUT
 def rename_folder():
     """
     TODO complete docstring
@@ -230,6 +235,7 @@ def update_folder_contents():
 
     if not isinstance(sequences, list) or not all(isinstance(sequence_id, int) for sequence_id in sequences):
         # TODO also verify all sequence IDs exist in database
+        # TODO verify that all sequences belong to the user whos folder it is
         return jsonify({"error": "Invalid sequence IDs"}), 400
 
     # TODO verify that folder ID exists
@@ -240,6 +246,7 @@ def update_folder_contents():
 
     return jsonify({"message": f"{display_name} updated successfully"})
 
+# TODO add routes to delete sequences and folders
 
 if __name__ == '__main__':
     app.run(debug=True)

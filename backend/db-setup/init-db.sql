@@ -1,5 +1,7 @@
 CREATE DATABASE echo_db;
 
+-- TODO see if we can use variables for string lengths
+
 CREATE TABLE IF NOT EXISTS User (
     email VARCHAR(255) PRIMARY KEY, -- maximum length for email and display_name to handle any future allowances in UW system for student accounts
     display_name VARCHAR(255)
@@ -13,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Instrument (
 CREATE TABLE IF NOT EXISTS Sequence (
     sequence_id INT AUTO_INCREMENT PRIMARY KEY,
     instrument INT,
-    bpm INT,
+    bpm INT,  -- TODO possibly remove/just store in files
     creator VARCHAR(255),
     display_name VARCHAR(255), -- can be shortened in the future
     filename VARCHAR(255),
