@@ -20,11 +20,23 @@ functions:
     * main - executes when the script is run directly; launches the API
 """
 
+import dotenv, os
 from flask import Flask, request, jsonify
+from flask_mysqldb import MySQL
 
 # TODO create unit tests for routes
 
+dotenv.load_dotenv()
+
 app = Flask(__name__)
+
+app.config['MYSQL_HOST'] = 'cs506-team-23.cs.wisc.edu'
+app.config['MYSQL_USER'] = 'root'  # TODO create new user
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
+app.config['MYSQL_DB'] = 'echo_db'
+app.config['MYSQL_PORT'] = 53346
+
+db = MySQL(app)
 
 # TODO look into if each route can go into other files/modules
 
@@ -247,6 +259,18 @@ def update_folder_contents():
     return jsonify({"message": f"{display_name} updated successfully"})
 
 # TODO add routes to delete sequences and folders
+
+@app.route('/db-demo/<email>/<username>', methods=['POST'])
+def db_demo(email, username):
+    cursor = db.connection.cursor()
+    query = "INSERT INTO User (email, display_name) VALUES (%s, %s)"
+    cursor.execute(query, (email, username))
+    db.connection.commit()
+    cursor.close()
+    # TODO in future, rollback DB in case of errors
+    message = f"Database updated successfully; new user ({username}) created"
+    print(message)
+    return jsonify({"message": message})
 
 if __name__ == '__main__':
     app.run(debug=True)
