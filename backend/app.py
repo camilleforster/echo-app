@@ -30,7 +30,7 @@ dotenv.load_dotenv()
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'cs506-team-23.cs.wisc.edu'
+app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'  # TODO create new user
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
 app.config['MYSQL_DB'] = 'echo_db'

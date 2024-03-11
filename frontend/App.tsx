@@ -8,7 +8,7 @@ export default function App() {
   const [status, setStatus] = useState("");
 
   async function submit() {
-    const url = `http://127.0.0.1:5000/db-demo/${encodeURIComponent(email)}/${encodeURIComponent(username)}`;
+    const url = `localhost:5000/db-demo/${encodeURIComponent(email)}/${encodeURIComponent(username)}`;
 
     const response = await fetch(url, {
       method: 'POST',
