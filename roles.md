@@ -6,7 +6,7 @@ All team members should be familiar with the entire codebase and might pick up t
 
 These members are responsible for prototyping in Figma and [frontend development in JavaScript](/frontend/), using the React Native framework.
 
-* Andy
+* Jin
 * Camille
 * Justin
 
@@ -16,7 +16,7 @@ These members are responsible for MySQL database administration and [backend dev
 
 * David
 * Aisha
-* Jin
+* Andy
 
 # Agile Scrum Roles
 
