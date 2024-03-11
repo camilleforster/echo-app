@@ -23,6 +23,7 @@ functions:
 import dotenv, os
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+from flask_cors import CORS
 
 # TODO create unit tests for routes
 
@@ -30,13 +31,14 @@ dotenv.load_dotenv()
 
 app = Flask(__name__)
 
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = '127.0.0.1'
 app.config['MYSQL_USER'] = 'root'  # TODO create new user
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
 app.config['MYSQL_DB'] = 'echo_db'
 app.config['MYSQL_PORT'] = 53346
 
 db = MySQL(app)
+CORS(app)
 
 # TODO look into if each route can go into other files/modules
 
@@ -270,7 +272,9 @@ def db_demo(email, username):
     # TODO in future, rollback DB in case of errors
     message = f"Database updated successfully; new user ({username}) created"
     print(message)
-    return jsonify({"message": message})
+    response = jsonify({"message": message})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
