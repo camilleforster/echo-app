@@ -21,7 +21,7 @@ docker compose -f splunge.yml --env-file t23image.env -p t23image_1 up -d
 ### Command Line
 
 ```
-mysql -h localhost -P 53316 --protocol=TCP -u root -p
+mysql -h localhost -P 53346 --protocol=TCP -u root -p
 ```
 
 When prompted to enter password, use the root password listed in your `t23image.env` file.

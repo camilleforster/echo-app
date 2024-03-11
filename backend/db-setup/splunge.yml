@@ -9,7 +9,7 @@ services:
     volumes:
       - echodat:/var/lib/mysql
     ports:
-      - "53316:3306"
+      - "53346:3306"
 
 volumes:
   echodat:
