@@ -18,10 +18,10 @@ lilypond_code = """
 }
 
 \\score {
-  \\relative c' {
+  \\relative c'' {
     \\key c \\major
     \\time 4/4
-    c4 d e f | g a b c | c b a g | f e d c |
+      g a a a g d a g f' d d d f d 
   }
   \\layout { }
   \\midi { }
@@ -35,10 +35,12 @@ file_path = os.path.join(output_dir, "file.ly")
 with open(file_path, "w") as file:
     file.write(lilypond_code)
 
-# Running LilyPond to process the file with the cwd parameter set to the output directory
-subprocess.run([str(lilypond.executable()), file_path], cwd=output_dir)
+# Running LilyPond to process the file
+# Note: Ensure lilypond.executable() returns the correct path for the LilyPond executable
+subprocess.run([str(lilypond.executable()), file_path])
 
-print(f"LilyPond file '{file_path}' has been created and processed. Check the '{output_dir}' directory for the output files.")
+print(f"LilyPond file '{file_path}' has been created and processed.")
+
 
 
 
