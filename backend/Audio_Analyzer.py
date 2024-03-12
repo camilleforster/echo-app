@@ -146,6 +146,8 @@ class AnalyzedSong:
             for point in self.data:
                 file.write(f"{point}\n")
 
+
+
 # The Song class receives a raw audio file and readies it for processing
 class Song:
     """A class representing the audio file before analysis.
@@ -232,11 +234,66 @@ class Song:
 
         return analyzed_song
 
+    
+def combine_notes(analyzed_song):
+    combined_notes = []
+    current_note = None
+    current_start_time = 0.0
+    duration = 0.0
+
+    for point in analyzed_song.get_analysis():
+        if current_note == point.note_name:
+            duration += 0.25  # assuming each segment represents 0.25s as per your example
+        else:
+            if current_note is not None:
+                combined_notes.append((current_note, current_start_time, duration))
+            current_note = point.note_name
+            current_start_time = point.time_stamp
+            duration = 0.25
+
+    # Add the last note
+    if current_note is not None:
+        combined_notes.append((current_note, current_start_time, duration))
+
+    return combined_notes
+
+def duration_to_lilypond(duration):
+    # Assuming 0.25 seconds per quarter note
+    quarter_note_duration = 0.25  # seconds
+    duration_in_quarters = duration / quarter_note_duration
+    
+    # Define common musical note lengths in terms of quarter note durations
+    note_lengths = {
+        4.0: "1",  # Whole note
+        2.0: "2",  # Half note
+        1.0: "4",  # Quarter note
+        0.5: "8",  # Eighth note
+        0.25: "16",  # Sixteenth note
+        # Add more if needed
+    }
+    
+    # Find the closest note length to the duration_in_quarters
+    closest_note_length = min(note_lengths.keys(), key=lambda length: abs(length - duration_in_quarters))
+    return note_lengths[closest_note_length]
+
+def notes_to_lilypond(notes):
+    lilypond_notation = "\\relative c' {\n    \\key c \\major\n    \\time 4/4\n    "
+    for note, start_time, duration in notes:
+        note_name = note[:-1].lower()  # Extract the note letter(s) and make them lowercase
+        octave = int(note[-1])  # Extract the octave as an integer
+        octave_difference = octave - 4  # Determine octave difference from C4
+        octave_adjustment = "'" * octave_difference if octave_difference > 0 else "," * -octave_difference
+        
+        lily_duration = duration_to_lilypond(duration)
+        lilypond_notation += f"{note_name}{octave_adjustment}{lily_duration} "
+    lilypond_notation += "\n}"
+    return lilypond_notation
+
 
 
 
 # Example usage
-file_path = 'sample1.wav'  # Update this path to your audio file
+file_path = 'sample3.wav'  # Update this path to your audio file
 sampling_rate = 44100  # This should match the sampling rate of your audio file
 analyzer = AudioAnalyzer(sampling_rate)
 song = Song(analyzer, file_path)
@@ -245,5 +302,9 @@ analyzed_song = song.audio_to_frequency()
 for analysis_point in analyzed_song.get_analysis():
     print(analysis_point)
 
+combined_notes = combine_notes(analyzed_song)
+lilypond_notation = notes_to_lilypond(combined_notes)
+print(combined_notes)
+print(lilypond_notation)
 # Optionally save the analysis to a file
 analyzed_song.save_to_file("analysis_result.txt")
