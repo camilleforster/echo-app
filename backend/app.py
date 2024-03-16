@@ -22,9 +22,22 @@ functions:
 
 from flask import Flask, request, jsonify
 
+from db_client import Client
 # TODO create unit tests for routes
 
 app = Flask(__name__)
+
+client = Client()
+
+app.config['MYSQL_HOST'] = client.db_host
+app.config['MYSQL_DB'] = client.db_name
+app.config['MYSQL_PORT'] = client.db_port
+app.config['MYSQL_USER'] = client.user  # TODO create new user
+app.config['MYSQL_PASSWORD'] = client.password
+
+db = MySQL(app)
+CORS(app)
+
 
 # TODO look into if each route can go into other files/modules
 
@@ -247,6 +260,21 @@ def update_folder_contents():
     return jsonify({"message": f"{display_name} updated successfully"})
 
 # TODO add routes to delete sequences and folders
+
+
+@app.route('/create_user/<email>/<username>', methods=['POST'])
+def create_user(email, username):
+    cursor = db.connection.cursor()
+    query = client.create_user(email, username)
+    cursor.execute(query)
+    db.connection.commit()
+    cursor.close()
+    # TODO in future, rollback DB in case of errors
+    message = f"Database updated successfully; new user ({username}) created"
+    print(message)
+    response = jsonify({"message": message})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
