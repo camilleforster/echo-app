@@ -131,7 +131,7 @@ class AnalysisPoint:
     """
 
     def __init__(self, time_stamp: float, frequency: float, note_name: str):
-         """
+        """
         Parameters
         ----------
         time_stamp : float
@@ -164,7 +164,7 @@ class AnalyzedSong:
         Summary of description.
     """
     def __init__(self):
-         """
+        """
         Parameters
         ----------
         data : list[AnalysisPoint]
