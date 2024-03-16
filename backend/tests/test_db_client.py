@@ -51,12 +51,21 @@ def test_create_user(client, email, username):
 
 
 
-@pytest.mark.parametrize(('folder_name', 'username'), [
-	("folder1", "username1"),
-	("folder2", "username2")
+@pytest.mark.parametrize(('email', 'folder_name'), [
+	("email1", "folder1"),
+	("email2", "folder2")
 	])
-def test_create_folder(client, folder_name, username):
-	assert client.create_folder(folder_name, username) == f"INSERT INTO Folder (display_name, owner) VALUES ('{folder_name}', '{username}')"
+def test_create_folder(client, email, folder_name):
+	assert client.create_folder(email, folder_name) == f"INSERT INTO Folder (display_name, owner) VALUES ('{folder_name}', '{email}')"
+
+
+@pytest.mark.parametrize(('email', 'instrument_id', 'bpm', 'name', 'filename', 'datetime'), [
+    ("email1", 1, 10, 'name1', 'filename1', 'datetime1'),
+    ("email2", 2, 20, 'name2', 'filename2', 'datetime2')
+    ])
+def test_create_sequence(client, email, instrument_id, bpm, name, filename, datetime):
+    assert client.create_sequence(email, instrument_id, bpm, name, filename, datetime) == f"INSERT INTO Sequence (instrument, bpm, creator, display_name, filename, created) VALUES ('{instrument_id}', '{bpm}, {email}, {name}, {filename}, {datetime}')"
+
 
 
 
