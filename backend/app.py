@@ -21,6 +21,8 @@ functions:
 """
 
 from flask import Flask, request, jsonify
+from flask_mysqldb import MySQL
+from flask_cors import CORS
 
 from db_client import Client
 # TODO create unit tests for routes

@@ -12,5 +12,7 @@ Werkzeug==3.0.1
 zipp==3.17.0
 numpy
 pandas
-pyaudio
 scipy
+flask-mysqldb
+flask_cors
+pyaudio
