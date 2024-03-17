@@ -37,7 +37,7 @@ app.config['MYSQL_DB'] = client.db_name
 app.config['MYSQL_PORT'] = client.db_port
 app.config['MYSQL_USER'] = client.user  # TODO create new user
 app.config['MYSQL_PASSWORD'] = client.password
-mysql.init_app(application)
+db.init_app(app)
 
 
 
