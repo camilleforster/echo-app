@@ -40,6 +40,16 @@ app.config['MYSQL_PASSWORD'] = client.password
 db = MySQL(app)
 CORS(app)
 
+def execute_query(query):
+    try:
+        cursor = db.connection.cursor()
+        query = client.create_user(email, username)
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        db.connection.commit() # save changes to the database
+        cursor.close()
+    except Exception as e:
+        return 'Failure'
 
 # TODO look into if each route can go into other files/modules
 
@@ -58,6 +68,7 @@ def get_user_data(email):
     JSON response
         A JSON response containing the user's data, including display name, sequences, and folders.
     """
+    query = client.get_user_data(email)
 
     user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
 
@@ -94,7 +105,12 @@ def process_recording():
     instrument = request.form.get('instrument', type=int)  # default playback instrument
 
     # TODO ensure all parameters are here
-
+    email = ""
+    instrument_id = -1
+    bpm = -1
+    filename = ""
+    datetime = ""
+    query = client.create_sequence(email, instrument_id, bpm, display_name, filename, datetime)
     sequence = {}  # TODO process sequence, save to database, and return sequence data for frontend
 
     return jsonify(sequence)
@@ -125,6 +141,7 @@ def rename_sequence():
         return jsonify({"error": "Missing new display name"}), 400
 
     # TODO process edit to sequence name, save to database
+    query = client.update_sequence_data(sequence_id, {'display_name': display_name})
 
     return jsonify({"message": f"Sequence {sequence_id} renamed to {display_name} successfully"})
 
@@ -155,6 +172,7 @@ def update_sequence_data():
         return jsonify({"error": "Missing new sequence data"}), 400
 
     # TODO process edit to sequence, save to database
+    query = client.update_sequence_data(sequence_id, {}) # TODO: fill the dict with new values
 
     return jsonify({"message": f"Sequence {sequence_id} updated successfully"})
 
@@ -191,6 +209,11 @@ def create_folder():
         return jsonify({"error": "Invalid sequence IDs"}), 400
 
     # TODO create folder in database
+    query = client.create_folder(owner, display_name)
+    folder_id = -1 # folder id assigned by the database to the new folder
+    for sequence in sequences:
+        client.add_sequence_to_folder(sequence, folder_id)
+
 
     return jsonify({"message": f"{display_name} created for {owner} successfully"})
 
@@ -222,6 +245,7 @@ def rename_folder():
     original_name = ''  # TODO get original display name from database
 
     # TODO update folder name in database
+    query = client.update_folder_data(folder_id, {'display_name': display_name})
 
     return jsonify({"message": f"{original_name} renamed to {display_name} successfully"})
 
@@ -256,8 +280,11 @@ def update_folder_contents():
     # TODO verify that folder ID exists
 
     # TODO update "Contains" table in database
+    for sequence in sequences:
+        query = client.add_sequence_to_folder(sequence, folder_id)
 
     display_name = ''  # TODO get display name from database
+    query = client.get_folder_data(folder_id) # extract 'display_name' fromt he result of this query
 
     return jsonify({"message": f"{display_name} updated successfully"})
 
@@ -266,17 +293,18 @@ def update_folder_contents():
 
 @app.route('/create_user/<email>/<username>', methods=['POST'])
 def create_user(email, username):
-    cursor = db.connection.cursor()
     query = client.create_user(email, username)
-    cursor.execute(query)
-    db.connection.commit()
-    cursor.close()
-    # TODO in future, rollback DB in case of errors
-    message = f"Database updated successfully; new user ({username}) created"
-    print(message)
+    result = execute_query(query)
+    if result:     
+        # TODO in future, rollback DB in case of errors
+        message = f"Database updated successfully; new user ({username}) created"
+    else: # database query didn't succeed
+        message = f"Database couldn't create new user ({username})"
     response = jsonify({"message": message})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+
 if __name__ == '__main__':
     app.run(debug=True)
+

@@ -47,8 +47,7 @@ def test_init(client, host_name, port, name, user, password):
 	("example2@gmail.com", "username2")
 	])
 def test_create_user(client, email, username):
-	assert client.create_user(email, username) == f"INSERT INTO User (email, display_name) VALUES ('{email}', '{username}')"
-
+	assert client.create_user(email, username) == f"INSERT INTO Users (email, display_name) VALUES ('{email}', '{username}'); SELECT LAST_INSERT_ID();"
 
 
 @pytest.mark.parametrize(('email', 'folder_name'), [
@@ -56,7 +55,7 @@ def test_create_user(client, email, username):
 	("email2", "folder2")
 	])
 def test_create_folder(client, email, folder_name):
-	assert client.create_folder(email, folder_name) == f"INSERT INTO Folder (display_name, owner) VALUES ('{folder_name}', '{email}')"
+	assert client.create_folder(email, folder_name) == f"INSERT INTO Folders (display_name, owner) VALUES ('{folder_name}', '{email}'); SELECT LAST_INSERT_ID();"
 
 
 @pytest.mark.parametrize(('email', 'instrument_id', 'bpm', 'name', 'filename', 'datetime'), [
@@ -64,12 +63,7 @@ def test_create_folder(client, email, folder_name):
     ("email2", 2, 20, 'name2', 'filename2', 'datetime2')
     ])
 def test_create_sequence(client, email, instrument_id, bpm, name, filename, datetime):
-    assert client.create_sequence(email, instrument_id, bpm, name, filename, datetime) == f"INSERT INTO Sequence (instrument, bpm, creator, display_name, filename, created) VALUES ('{instrument_id}', '{bpm}, {email}, {name}, {filename}, {datetime}')"
-
-
-
-
-
+    assert client.create_sequence(email, instrument_id, bpm, name, filename, datetime) == f"INSERT INTO Sequences (instrument, bpm, creator, display_name, filename, created) VALUES ({instrument_id}, {bpm}, '{email}', '{name}', '{filename}', {datetime}); SELECT LAST_INSERT_ID();"
 
 
 
