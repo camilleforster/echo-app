@@ -293,7 +293,7 @@ def notes_to_lilypond(notes):
 
 
 # Example usage
-file_path = 'sample3.wav'  # Update this path to your audio file
+file_path = 'sample5.wav'  # Update this path to your audio file
 sampling_rate = 44100  # This should match the sampling rate of your audio file
 analyzer = AudioAnalyzer(sampling_rate)
 song = Song(analyzer, file_path)
