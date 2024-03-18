@@ -1310,6 +1310,9 @@ const ParentComponent = () => {
 ## Commenting
 - Only add comments to explain non-obvious logic, while still resorting to declarative programming
 
+## Documentation
+- Use JSDoc styling to create a comment header for each component/page
+
 ## Security
 - Sanitize user inputs to prevent XSS attacks
 - HTTPS not HTTP
