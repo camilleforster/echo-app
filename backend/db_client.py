@@ -111,7 +111,7 @@ class Client:
         """
         return f"INSERT INTO Sequences (instrument, bpm, creator, display_name, filename) VALUES ({instrument_id}, {bpm}, '{email}', '{name}', '{filename}'); SELECT LAST_INSERT_ID() as id;"
 
-    def add_sequence_to_folder(self, sequence_id, folder_id):
+    def add_sequence_to_folder(self, folder_id, sequence_id):
         """Returns an SQL query for adding a sequence to a specific folder
 
         Parameters
