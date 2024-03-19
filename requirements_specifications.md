@@ -81,11 +81,8 @@ During our next meeting with our customer (Daniel), we will ask for an ordering 
 
 The application will require an authentication screen for the user to identify which account's data should be retrieved. Once that data is retrieved, the user should be presented with a menu of all previous recordings, which can each be expanded for playback and exporting, as well as making edits in a simple editing interface that holds only a few capabilities so that the interface does not present the user with an intensive cognitive load. The editor should still be capable of adjusting the pitch and length of particular notes via a drag-and-drop mechanism that is illustrated to the user with a tutorial/demo on first-time use. This menu screen should include a central button on the bottom of the screen from which a new recording can be initiated - and once it is completed, the recording will be instantly viewable, exportable, and editable just like any other previous recording as the menu is instantly populated with it.
 
-Below are some preliminary prototypes of what the new recording screen, previous recording menu, and individual previous recording screen might look somewhat like, respectively from left to right.
-
-![New Recording Screen](/assets/record.png)
-![Previous Recording Menu](/assets/archive.png)
-![Individual Previous Recording](/assets/sheet.png)
+Below is the Figma which contains the fully-functional and compentized prototype of the app, to be used by the Frontend team to convert these designs into React
+https://www.figma.com/file/BQ6nWTqpsBi8f0BEzgt0Bg/Prototype-v2?type=design&node-id=0%3A1&mode=design&t=Z0jGmehtWZJWxkVX-1 
 
 ### Security Requirements
 
