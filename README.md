@@ -28,7 +28,7 @@ You can now scan the QR code in the terminal to test the app on mobile.
 
 #### Setup
 
-Make sure you have a virtual environment in place. You will also need `portaudio` installed to install the package `pyaudio`.
+Make sure you have a virtual environment in place. You will also need `portaudio` installed to install the package `pyaudio`. You will need a mysql client installed on ypur computer and the following vars defined in your env: MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS. 
 
 ##### Windows
 
