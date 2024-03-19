@@ -1,20 +1,15 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import RecordingFooter from '../components/RecordingFooter';
+import React from "react";
+import RecordingFooter from "../components/RecordingFooter";
+import { Container } from "./styles/LibraryPage.styled";
 
-// TODO: Write comments
+/**
+ * Contains the content accessible within the "My Library" folder
+ **/
 const LibraryPage = () => {
   return (
-    <View style={styles.container}>
-      <RecordingFooter recordingCount={32} />
-    </View>
+    <Container>
+      <RecordingFooter />
+    </Container>
   );
 };
 export default LibraryPage;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-  },
-});
