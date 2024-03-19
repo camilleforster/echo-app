@@ -39,7 +39,7 @@ class Client:
     create_folder(folder_name, username)
         Returns an SQL query for creating a new folder with name folder_name for user username.
     
-    create_sequence(email, instrument_id, bpm, name, filename, datetime)
+    create_sequence(email, instrument_id, bpm, name, filename)
         Returns an SQL query for creating a new recording with name 
 
     get_user_data(email)
@@ -62,7 +62,7 @@ class Client:
 
     def create_user(self, email, username):
         """Returns an SQL query for creating a new user username whose email is email.
-        and returning the id of the inserted user
+       The query then returns the id of the inserted user in a column namesd "id"
 
         Parameters
         ----------
@@ -73,12 +73,12 @@ class Client:
         -------
         str
         """
-        return f"INSERT INTO Users (email, display_name) VALUES ('{email}', '{username}'); SELECT LAST_INSERT_ID();"
+        return f"INSERT INTO Users (email, display_name) VALUES ('{email}', '{username}'); SELECT LAST_INSERT_ID() as id;"
 
 
     def create_folder(self, email, folder_name):
         """Returns an SQL query for creating a new folder with name folder_name for user username.
-        and returning the id of the inserted folder
+        The query then returns the id of the inserted folder in a column namesd "id".
 
         Parameters
         ----------
@@ -89,11 +89,12 @@ class Client:
         -------
         str
         """
-        return f"INSERT INTO Folders (display_name, owner) VALUES ('{folder_name}', '{email}'); SELECT LAST_INSERT_ID();"
+        return f"INSERT INTO Folders (display_name, owner) VALUES ('{folder_name}', '{email}'); SELECT LAST_INSERT_ID() as id;"
 
-    def create_sequence(self, email, instrument_id, bpm, name, filename, datetime):
-        """Returns an SQL query for creating a new recording with name 
-        and returning the id of the inserted sequence
+    def create_sequence(self, email, instrument_id, bpm, name, filename):
+        """Returns an SQL query for creating a new sequence with the properties given as arguments
+        ans asks the database to set the value of the "created" column of the sequence
+        automatically. The query then returns the id of the inserted sequence in a column namesd "id"
 
         Parameters
         ----------
@@ -103,13 +104,12 @@ class Client:
         bpm : int
         instrument_name : str
         filename : str
-        datetime : str
 
         Returns
         -------
         str
         """
-        return f"INSERT INTO Sequences (instrument, bpm, creator, display_name, filename, created) VALUES ({instrument_id}, {bpm}, '{email}', '{name}', '{filename}', {datetime}); SELECT LAST_INSERT_ID();"
+        return f"INSERT INTO Sequences (instrument, bpm, creator, display_name, filename) VALUES ({instrument_id}, {bpm}, '{email}', '{name}', '{filename}'); SELECT LAST_INSERT_ID() as id;"
 
     def add_sequence_to_folder(self, sequence_id, folder_id):
         """Returns an SQL query for adding a sequence to a specific folder
@@ -142,7 +142,7 @@ class Client:
         str
             returns an SQL query that gets the folder name and its owner's email 
         """
-        return f"SELECT display_name, owner FROM Folders WHERE folder_id  == '{folder_id}'"
+        return f"SELECT display_name as folder_name, owner as user_email FROM Folders WHERE folder_id  = {folder_id}"
 
     def get_user_data(self, email):
         """Returns an SQL query for the user's data, including display name,
@@ -160,12 +160,13 @@ class Client:
             sequence id, sequence name of every sequence created by the user
         """
         return f"""
-        SELECT Users.display_name, Folders.folder_id, Folders.display_name,
-        Sequences.sequence_id, Sequences.display_name
+        SELECT Users.display_name as username, Folders.folder_id as folder_id,
+        Folders.display_name as folder_name, Sequences.sequence_id as sequence_id,
+        Sequences.display_name as sequence_name 
         FROM Users, Folders, Sequences, Contains 
-        WHERE Users.email == '{email}' AND Folders.owner == '{email}'
-        AND Contains.folder == Folders.folder_id
-        AND Contains.sequence == Sequences.sequence_id"""
+        WHERE Users.email = '{email}' AND Folders.owner = '{email}'
+        AND Contains.folder = Folders.folder_id
+        AND Contains.sequence = Sequences.sequence_id"""
 
     def update_sequence_data(self, sequence_id, fields_to_values):
         """Returns an SQL query for the updating sequence (sequence_id)'s data using a dict of (column name, value) pairs
@@ -190,7 +191,7 @@ class Client:
         str_typed_columns = set(['display_name', 'filename', 'creator'])
         updated_col_to_val = [f"{f} = '{v}'" if f in str_typed_columns else f"{f} = {v}"for f,v in fields_to_values.items()]
         updated_col_to_val_str = ", ".join(updated_col_to_val)
-        return f"UPDATE Sequences SET {updated_col_to_val_str} WHERE sequence_id == {sequence_id}"
+        return f"UPDATE Sequences SET {updated_col_to_val_str} WHERE sequence_id = {sequence_id}"
 
     def update_folder_data(self, folder_id, fields_to_values):
         """Returns an SQL query for the updating folder (folder_id)'s data using a dict of (column name, value) pairs
@@ -211,4 +212,5 @@ class Client:
         str_typed_columns = set(['display_name', 'owner'])
         updated_col_to_val = [f"{f} = '{v}'" if f in str_typed_columns else f"{f} = {v}"for f,v in fields_to_values.items()]
         updated_col_to_val_str = ", ".join(updated_col_to_val)
-        return f"UPDATE Folders SET {updated_col_to_val_str} WHERE folder_id == {folder_id}"
+        return f"UPDATE Folders SET {updated_col_to_val_str} WHERE folder_id = {folder_id}"
+
