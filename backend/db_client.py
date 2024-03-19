@@ -214,3 +214,5 @@ class Client:
         updated_col_to_val_str = ", ".join(updated_col_to_val)
         return f"UPDATE Folders SET {updated_col_to_val_str} WHERE folder_id = {folder_id}"
 
+client = Client()
+print(client.create_user("email1", "name1"))
