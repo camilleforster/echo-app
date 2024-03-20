@@ -25,8 +25,8 @@ const RecordingContext = createContext<RecordingContextType | undefined>(
 );
 
 /**
- * Custom hook to use the recording context. Must be used within a `RecordingProvider`.
- * @throws Error if used outside of a `RecordingProvider`
+ * Custom hook to use the recording context. Must be used within a {@link RecordingProvider}.
+ * @throws Error if used outside of a {@link RecordingProvider}
  * @returns The recording context
  */
 export const useRecording = () => {
