@@ -20,6 +20,7 @@ import {
 
 /**
  * A footer component that enables users to manage (record, name, save, and discard) their recordings.
+ * Uses the @see {@link useRecording} hook to decide what is displayed to the user.
  */
 const RecordingFooter = () => {
   const {

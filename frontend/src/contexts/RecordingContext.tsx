@@ -10,14 +10,14 @@ import React, {
  * Interface defining the shape of the context for recording.
  */
 interface RecordingContextType {
-  isRecording: boolean; // Indicates if a recording is currently in progress
-  showConfirmOptions: boolean; // Indicates if the confirm options should be shown
-  startRecording: () => void; // Function to start the recording
-  stopRecording: () => void; // Function to stop the recording
-  saveRecording: () => void; // Function to save the recording
-  discardRecording: () => void; // Function to discard the recording
-  recordingTitle: string; // The title of the recording
-  setRecordingTitle: (title: string) => void; // Function to set the recording title
+  isRecording: boolean;
+  showConfirmOptions: boolean;
+  startRecording: () => void;
+  stopRecording: () => void;
+  saveRecording: () => void;
+  discardRecording: () => void;
+  recordingTitle: string;
+  setRecordingTitle: (title: string) => void;
 }
 
 const RecordingContext = createContext<RecordingContextType | undefined>(
@@ -26,8 +26,8 @@ const RecordingContext = createContext<RecordingContextType | undefined>(
 
 /**
  * Custom hook to use the recording context. Must be used within a `RecordingProvider`.
- * @throws Error if used outside of a `RecordingProvider`.
- * @returns The recording context.
+ * @throws Error if used outside of a `RecordingProvider`
+ * @returns The recording context
  */
 export const useRecording = () => {
   const context = useContext(RecordingContext);
@@ -40,7 +40,8 @@ export const useRecording = () => {
 /**
  * Provides the recording context to its child components.
  * Manages the state related to recording operations.
- * @param children - The children components that will have access to the context.
+ * @param children - The children components that will have access to the context
+ * @return The recording provider
  */
 export const RecordingProvider: React.FC<PropsWithChildren> = ({
   children,
