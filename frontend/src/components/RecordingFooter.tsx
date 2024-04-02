@@ -59,18 +59,18 @@ const RecordingFooter = () => {
           </TopView>
         )}
         {isRecording ? (
-          <Pressable onPress={stopRecording}>
+          <Pressable testID="stop-recording" onPress={stopRecording}>
             <StopRecordingIcon />
           </Pressable>
         ) : showConfirmOptions ? (
           showConfirmOptions && (
             <ConfirmRecording>
-              <Pressable onPress={discardRecording}>
+              <Pressable testID="discard-recording" onPress={discardRecording}>
                 <ButtonFrame>
                   <Exit />
                 </ButtonFrame>
               </Pressable>
-              <Pressable onPress={saveRecording}>
+              <Pressable testID="save-recording" onPress={saveRecording}>
                 <ButtonFrame>
                   <Checkmark />
                 </ButtonFrame>
@@ -78,7 +78,7 @@ const RecordingFooter = () => {
             </ConfirmRecording>
           )
         ) : (
-          <Pressable onPress={startRecording}>
+          <Pressable testID="start-recording" onPress={startRecording}>
             <RecordingIcon />
           </Pressable>
         )}

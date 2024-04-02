@@ -20,7 +20,7 @@ interface RecordingContextType {
   setRecordingTitle: (title: string) => void;
 }
 
-const RecordingContext = createContext<RecordingContextType | undefined>(
+export const RecordingContext = createContext<RecordingContextType | undefined>(
   undefined,
 );
 
@@ -41,7 +41,7 @@ export const useRecording = () => {
  * Provides the recording context to its child components.
  * Manages the state related to recording operations.
  * @param children - The children components that will have access to the context
- * @return The recording provider
+ * @returns The recording provider
  */
 export const RecordingProvider: React.FC<PropsWithChildren> = ({
   children,

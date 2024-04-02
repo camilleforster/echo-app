@@ -33,6 +33,12 @@ npm run format
 npm run lint
 ```
 
+#### Unit Testing
+
+```
+npm run test
+```
+
 ### Backend
 
 #### Setup
