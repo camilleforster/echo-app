@@ -24,6 +24,21 @@ npm run start
 
 You can now scan the QR code in the terminal to test the app on mobile.
 
+#### Formatting
+
+To ensure the files follow TSDoc and Prettier standards, run
+
+```
+npm run format
+npm run lint
+```
+
+#### Unit Testing
+
+```
+npm run test
+```
+
 ### Backend
 
 #### Setup
