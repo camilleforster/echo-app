@@ -37,18 +37,17 @@ app.config['MYSQL_DB'] = client.db_name
 app.config['MYSQL_PORT'] = client.db_port
 app.config['MYSQL_USER'] = client.user  # TODO create new user
 app.config['MYSQL_PASSWORD'] = client.password
+
 db.init_app(app)
-
-
+CORS(app)
 
 def execute_query(query):
     try:
-        CORS(app)
         cursor = db.connection.cursor()
-        query = client.create_user(email, username)
         cursor.execute(query)
         rows = cursor.fetchall()
         db.connection.commit() # save changes to the database
+        return rows
     except Exception as e:
         return 'Failure'
     finally:
@@ -72,7 +71,8 @@ def get_user_data(email):
         A JSON response containing the user's data, including display name, sequences, and folders.
     """
     query = client.get_user_data(email)
-
+    raw_data = execute_query(query)
+    print(raw_data)
     user_data = {}  # TODO populate from database; data includes display name, folders, and sequences
 
     return jsonify(user_data)
