@@ -1,0 +1,38 @@
+stages:
+  - build
+  - test
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - backend/.venv/
+    - backend/__pycache__/
+
+build-backend:
+  stage: build
+  script:
+    - cd backend
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install -r requirements.txt
+  artifacts:
+    paths:
+      - backend/.venv
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+test-backend:
+  stage: test
+  script:
+    - cd backend
+    - source .venv/bin/activate
+    - pip install -r requirements.txt
+    - pytest tests
+  artifacts:
+    when: always
+    reports:
+      junit: result.xml
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
