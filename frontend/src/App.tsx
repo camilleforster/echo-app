@@ -1,11 +1,9 @@
 import React from "react";
-import { View, Text, ActivityIndicator } from "react-native";
-import LibraryPage from "./src/screens/LibraryPage";
-import { RecordingProvider } from "./src/contexts/RecordingContext";
+import { Text } from "react-native";
+import LibraryPage from "./screens/LibraryPage";
+import { RecordingProvider } from "./contexts/RecordingContext";
 import { useFonts } from "expo-font";
-import { ThemeProvider } from "styled-components";
-import theme from "./theme";
-
+import Theme from "./Theme";
 import {
   WorkSans_400Regular,
   WorkSans_500Medium,
@@ -14,9 +12,9 @@ import {
 } from "@expo-google-fonts/work-sans";
 
 /**
- * An app that converts a user's voice to notes
+ * An app that converts a user's voice to notes.
  */
-const App = () => {
+const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
     WorkSans_400Regular,
     WorkSans_500Medium,
@@ -30,11 +28,11 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <Theme>
       <RecordingProvider>
         <LibraryPage />
       </RecordingProvider>
-    </ThemeProvider>
+    </Theme>
   );
 };
 

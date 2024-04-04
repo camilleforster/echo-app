@@ -1,9 +1,8 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import RecordingFooter from "../../components/RecordingFooter";
-import { ThemeProvider } from "styled-components";
-import theme from "../../../theme";
 import * as RecordingContext from "../../contexts/RecordingContext";
+import Theme from "../../Theme";
 
 /**
  * Interface defining the parameters for setting up the mock implementation of useRecording hook.
@@ -53,9 +52,9 @@ describe("RecordingFooter", () => {
   * @returns The RecordingFooter component with the default theme
    */
   const renderComponent = () => render(
-    <ThemeProvider theme={theme}>
+    <Theme>
       <RecordingFooter />
-    </ThemeProvider>
+    </Theme>
   );
 
   it("should render start recording button when not recording and no confirm options", () => {
