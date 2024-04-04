@@ -43,7 +43,7 @@ export const useRecording = (): RecordingContextType => {
  * @param children - The children components that will have access to the context
  * @returns The recording provider
  */
-export const RecordingProvider: React.FC<PropsWithChildren<{}>> = ({
+export const RecordingProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [isRecording, setIsRecording] = useState<boolean>(false);

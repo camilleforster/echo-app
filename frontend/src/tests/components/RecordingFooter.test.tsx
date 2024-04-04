@@ -26,7 +26,7 @@ describe("RecordingFooter", () => {
 
   /**
    * Sets up the mock implementation for the useRecording hook.
-   * 
+   *
    * @param params - The parameters to customize the mock implementation
    */
   const useRecordingMock = ({
@@ -34,7 +34,7 @@ describe("RecordingFooter", () => {
     showConfirmOptions = false,
     recordingTitle = "",
   }: UseRecordingMockParams = {}) => {
-    jest.spyOn(RecordingContext, 'useRecording').mockImplementation(() => ({
+    jest.spyOn(RecordingContext, "useRecording").mockImplementation(() => ({
       isRecording,
       showConfirmOptions,
       startRecording: mockStartRecording,
@@ -47,15 +47,16 @@ describe("RecordingFooter", () => {
   };
 
   /**
-  * Renders the RecordingFooter component wrapped in a ThemeProvider with the default theme.
-  * 
-  * @returns The RecordingFooter component with the default theme
+   * Renders the RecordingFooter component wrapped in a ThemeProvider with the default theme.
+   *
+   * @returns The RecordingFooter component with the default theme
    */
-  const renderComponent = () => render(
-    <Theme>
-      <RecordingFooter />
-    </Theme>
-  );
+  const renderComponent = () =>
+    render(
+      <Theme>
+        <RecordingFooter />
+      </Theme>,
+    );
 
   it("should render start recording button when not recording and no confirm options", () => {
     useRecordingMock();
@@ -74,7 +75,10 @@ describe("RecordingFooter", () => {
   });
 
   it("should render confirm options when showConfirmOptions is true", () => {
-    useRecordingMock({ showConfirmOptions: true, recordingTitle: "Test Title" });
+    useRecordingMock({
+      showConfirmOptions: true,
+      recordingTitle: "Test Title",
+    });
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("discard-recording")).toBeTruthy();
     expect(queryByTestId("save-recording")).toBeTruthy();
