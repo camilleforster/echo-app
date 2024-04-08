@@ -10,8 +10,9 @@ cache:
 
 build-backend:
   stage: build
-  image: python:3.9
+  image: python:3.11
   script:
+    - apt-get update && apt-get install -y portaudio19-dev
     - cd backend
     - python -m venv .venv
     - source .venv/bin/activate
@@ -25,8 +26,9 @@ build-backend:
 
 test-backend:
   stage: test
-  image: python:3.9
+  image: python:3.11
   script:
+    - apt-get update && apt-get install -y portaudio19-dev
     - cd backend
     - source .venv/bin/activate
     - pip install -r requirements.txt
