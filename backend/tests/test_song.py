@@ -30,11 +30,11 @@
 #     assert isinstance(song, Song)
 #     assert song.file_path == file_path
 #     assert song.frequency_queue is None
-
-
+# 
+# 
 # def test_audio_to_frequency(song):
 #     pass
 
-def dummy_test():
+def test_dummy():
     pass
 
