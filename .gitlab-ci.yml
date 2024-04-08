@@ -1,0 +1,42 @@
+stages:
+  - build
+  - test
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - backend/.venv/
+    - backend/__pycache__/
+
+build-backend:
+  stage: build
+  image: python:3.11
+  script:
+    - apt-get update && apt-get install -y portaudio19-dev
+    - cd backend
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install -r requirements.txt
+  artifacts:
+    paths:
+      - backend/.venv
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+test-backend:
+  stage: test
+  image: python:3.11
+  script:
+    - apt-get update && apt-get install -y portaudio19-dev
+    - cd backend
+    - source .venv/bin/activate
+    - pip install -r requirements.txt
+    - pytest tests --junitxml=result.xml
+  artifacts:
+    when: always
+    reports:
+      junit: backend/result.xml
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
