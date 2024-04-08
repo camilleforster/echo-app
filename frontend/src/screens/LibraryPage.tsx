@@ -5,7 +5,7 @@ import { Container } from "./styles/LibraryPage.styled";
 /**
  * Contains the content accessible within the "My Library" folder
  **/
-const LibraryPage = () => {
+const LibraryPage: React.FC = () => {
   return (
     <Container>
       <RecordingFooter />

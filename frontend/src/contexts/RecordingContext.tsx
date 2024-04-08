@@ -29,7 +29,7 @@ export const RecordingContext = createContext<RecordingContextType | undefined>(
  * @throws Error if used outside of a {@link RecordingProvider}
  * @returns The recording context
  */
-export const useRecording = () => {
+export const useRecording = (): RecordingContextType => {
   const context = useContext(RecordingContext);
   if (context === undefined) {
     throw new Error("useRecording must be used within a RecordingProvider");
@@ -46,10 +46,10 @@ export const useRecording = () => {
 export const RecordingProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [isRecording, setIsRecording] = useState(false);
-  const [showConfirmOptions, setShowConfirmOptions] = useState(false);
-  const [recordingCount, setRecordingCount] = useState(0); // TODO: fetch recordingCount from backend
-  const [recordingTitle, setRecordingTitle] = useState(
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [showConfirmOptions, setShowConfirmOptions] = useState<boolean>(false);
+  const [recordingCount, setRecordingCount] = useState<number>(0); // TODO: fetch recordingCount from backend
+  const [recordingTitle, setRecordingTitle] = useState<string>(
     `Untitled ${recordingCount + 1}`,
   );
 
