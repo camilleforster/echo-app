@@ -10,6 +10,7 @@ cache:
 
 build-backend:
   stage: build
+  image: python:3.9
   script:
     - cd backend
     - python -m venv .venv
@@ -24,6 +25,7 @@ build-backend:
 
 test-backend:
   stage: test
+  image: python:3.9
   script:
     - cd backend
     - source .venv/bin/activate
