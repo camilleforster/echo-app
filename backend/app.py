@@ -25,7 +25,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 
-from db_client import Client
+# from db_client import Client
 
 NOTE_DATA_PATH = './note-data'
 AUDIO_DATA_PATH = './audio-data'
@@ -33,13 +33,19 @@ AUDIO_DATA_PATH = './audio-data'
 app = Flask(__name__)
 db = MySQL()
 
-client = Client()
+# client = Client()
 
-app.config['MYSQL_HOST'] = client.db_host
-app.config['MYSQL_DB'] = client.db_name
-app.config['MYSQL_PORT'] = client.db_port
-app.config['MYSQL_USER'] = client.user  # TODO create new user
-app.config['MYSQL_ROOT_PASSWORD'] = client.password
+# app.config['MYSQL_HOST'] = client.db_host
+# app.config['MYSQL_DB'] = client.db_name
+# app.config['MYSQL_PORT'] = client.db_port
+# app.config['MYSQL_USER'] = client.user  # TODO create new user
+# app.config['MYSQL_ROOT_PASSWORD'] = client.password
+
+app.config['MYSQL_HOST'] = '127.0.0.1'
+app.config['MYSQL_USER'] = 'root'  # TODO create new user
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
+app.config['MYSQL_DB'] = 'echo_db'
+app.config['MYSQL_PORT'] = 53346
 
 db.init_app(app)
 CORS(app)
