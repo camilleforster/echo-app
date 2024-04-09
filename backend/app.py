@@ -321,13 +321,13 @@ def create_folder(display_name, owner):
     cursor = db.connection.cursor()
     query = "INSERT INTO Folders (display_name, owner) VALUES (%s, %s)"
     cursor.execute(query, (display_name, owner))
-    folder = cursor.fetchone()
-    folder_id = folder[0]
+    # folder = cursor.fetchone()
+    # folder_id = folder[0]
     db.connection.commit()
     cursor.close()
     response = jsonify({
         "message": f"{display_name} created for {owner} successfully",
-        "folder_id": folder_id,
+    #    "folder_id": folder_id,
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
