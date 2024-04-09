@@ -498,7 +498,7 @@ def create_user(email, username):
     cursor.execute(query, (email, username))
     db.connection.commit()
     cursor.close()
-    response = jsonify({"message": f"Database updated successfully"})
+    response = jsonify({"message": f"{username}'s account created"})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
