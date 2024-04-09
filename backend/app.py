@@ -494,7 +494,7 @@ def delete_sequence(sequence_id):
 @app.route('/create-user/<email>/<username>', methods=['POST'])
 def create_user(email, username):
     cursor = db.connection.cursor()
-    query = "INSERT INTO User (email, display_name) VALUES (%s, %s)"
+    query = "INSERT INTO Users (email, display_name) VALUES (%s, %s)"
     cursor.execute(query, (email, username))
     db.connection.commit()
     cursor.close()
