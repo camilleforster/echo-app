@@ -3,9 +3,9 @@ import { Pressable, KeyboardAvoidingView, Platform } from "react-native";
 import { useRecording } from "../contexts/RecordingContext";
 import {
   AudioWavePlaceholder,
-  Checkmark,
-  Exit,
-  RecordingIcon,
+  CheckmarkIcon,
+  ExitIcon,
+  RecordIcon,
   StopRecordingIcon,
 } from "../assets/icons";
 import {
@@ -67,19 +67,19 @@ const RecordingFooter = () => {
             <ConfirmRecording>
               <Pressable testID="discard-recording" onPress={discardRecording}>
                 <ButtonFrame>
-                  <Exit />
+                  <ExitIcon />
                 </ButtonFrame>
               </Pressable>
               <Pressable testID="save-recording" onPress={saveRecording}>
                 <ButtonFrame>
-                  <Checkmark />
+                  <CheckmarkIcon />
                 </ButtonFrame>
               </Pressable>
             </ConfirmRecording>
           )
         ) : (
           <Pressable testID="start-recording" onPress={startRecording}>
-            <RecordingIcon />
+            <RecordIcon />
           </Pressable>
         )}
       </Footer>
