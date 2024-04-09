@@ -20,6 +20,7 @@ functions:
     * main - executes when the script is run directly; launches the API
 """
 
+import os
 from flask import Flask, request, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
@@ -121,19 +122,22 @@ def get_user_data(email):
         display_name = raw_sequence[2]
         filename = raw_sequence[3]
         created = raw_sequence[4]
+        notes = ''
+        path = f'{NOTE_DATA_PATH}/{filename}.txt'
 
-        with open(f'{NOTE_DATA_PATH}/{filename}.txt', 'r') as f:
-            notes = f.read()
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                notes = f.read()
 
-            sequence = {
-                "id": sequence_id,
-                "bpm": bpm,
-                "display_name": display_name,
-                "created": created,
-                "notes": notes,
-            }
+        sequence = {
+            "id": sequence_id,
+            "bpm": bpm,
+            "display_name": display_name,
+            "created": created,
+            "notes": notes,
+        }
 
-            sequences.append(sequence)
+        sequences.append(sequence)
 
     user_data = {
         "username": username,
