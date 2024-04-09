@@ -146,7 +146,7 @@ def get_user_data(email):
     return response
 
 
-@app.route('/get-recording-file/<sequence-id>', methods=['GET'])
+@app.route('/get-recording-file/<sequence_id>', methods=['GET'])
 def get_recording_file(sequence_id):
     """Fetches the MP3 file corresponding to a recorded sequence.
 

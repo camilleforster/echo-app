@@ -11,7 +11,7 @@ DB_PORT = '53346'
 DB_NAME = 'echo_db'
 
 DB_USER = 'root' # create more users
-DB_PASSWORD = os.environ['MYSQL_PASSWORD']
+DB_PASSWORD = os.environ['MYSQL_ROOT_PASSWORD']
 
 
 
