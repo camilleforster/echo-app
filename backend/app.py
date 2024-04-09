@@ -51,17 +51,18 @@ db.init_app(app)
 CORS(app)
 
 
-# def execute_query(query): TODO update routes to leverage DB client
-#     try:
-#         cursor = db.connection.cursor()
-#         query = client.create_user(email, username)
-#         cursor.execute(query)
-#         rows = cursor.fetchall()
-#         db.connection.commit() # save changes to the database
-#     except Exception as e:
-#         return 'Failure'
-#     finally:
-#         cursor.close()
+def execute_query(query): # TODO update routes to leverage DB client
+    #     try:
+    #         cursor = db.connection.cursor()
+    #         query = client.create_user(email, username)
+    #         cursor.execute(query)
+    #         rows = cursor.fetchall()
+    #         db.connection.commit() # save changes to the database
+    #     except Exception as e:
+    #         return 'Failure'
+    #     finally:
+    #         cursor.close()
+    pass
 
 
 @app.route('/user/<email>', methods=['GET'])
@@ -189,7 +190,7 @@ def get_recording_file(sequence_id):
     return response
 
 
-@app.route('/process-recording', methods=['POST'])
+@app.route('/process-recording', methods=['POST'])  # TODO
 def process_recording():
     """
     Processes an uploaded vocal recording by converting it into
@@ -278,7 +279,7 @@ def rename_sequence():
     return response
 
 
-@app.route('/update-sequence-data', methods=['PUT'])
+@app.route('/update-sequence-data', methods=['PUT'])  # TODO
 def update_sequence_data():
     """
     TODO complete docstring
@@ -320,9 +321,14 @@ def create_folder(display_name, owner):
     cursor = db.connection.cursor()
     query = "INSERT INTO Folders (display_name, owner) VALUES (%s, %s)"
     cursor.execute(query, (display_name, owner))
+    folder = cursor.fetchone()
+    folder_id = folder[0]
     db.connection.commit()
     cursor.close()
-    response = jsonify({"message": f"{display_name} created for {owner} successfully"})
+    response = jsonify({
+        "message": f"{display_name} created for {owner} successfully",
+        "folder_id": folder_id,
+    })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
