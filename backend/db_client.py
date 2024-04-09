@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv, find_dotenv
 
-_ = load_dotenv(find_dotenv()) # read local .env file
+load_dotenv(find_dotenv()) # read local .env file
 
 
 # Creating a connection object.
@@ -215,4 +215,3 @@ class Client:
         return f"UPDATE Folders SET {updated_col_to_val_str} WHERE folder_id = {folder_id}"
 
 client = Client()
-print(client.create_user("email1", "name1"))
