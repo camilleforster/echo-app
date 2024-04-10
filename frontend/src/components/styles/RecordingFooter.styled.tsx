@@ -36,6 +36,7 @@ export const TopView = styled(View)`
   margin-bottom: 40px;
   gap: 40px;
 `;
+
 export const TextContent = styled(View)`
   align-items: center;
 `;
