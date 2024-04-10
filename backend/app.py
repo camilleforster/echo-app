@@ -157,7 +157,7 @@ def get_user_data(email):
     return response
 
 
-@app.route('/get-recording-file/<sequence_id>', methods=['GET'])
+@app.route('/get-recording-file/<int:sequence_id>', methods=['GET'])
 def get_recording_file(sequence_id):
     """Fetches the MP3 file corresponding to a recorded sequence.
 
@@ -231,28 +231,14 @@ def process_recording():
     return jsonify(sequence)
 
 
-@app.route('/rename-sequence', methods=['PUT'])
-def rename_sequence():
+@app.route('/rename-sequence/<int:sequence_id>/<display_name>', methods=['PUT'])
+def rename_sequence(sequence_id, display_name):
     """
     TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
     """
-
-    if not request.is_json:
-        return jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
-
-    data = request.get_json()
-
-    sequence_id = data.get('sequence_id')
-    display_name = data.get('display_name')
-
-    if sequence_id is None or not isinstance(sequence_id, int):
-        response = jsonify({"error": "Missing or invalid sequence ID"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-    
     cursor = db.connection.cursor()
     query = "SELECT * FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
@@ -261,12 +247,6 @@ def rename_sequence():
     if sequence is None:
         cursor.close()
         response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
-    if display_name is None:
-        cursor.close()
-        response = jsonify({"error": "Missing new display name"}), 400
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -327,44 +307,19 @@ def create_folder(display_name, owner):
     db.connection.commit()
     cursor.close()
     folder_id = folder[0]
-
-    response = jsonify({
-        "message": f"{display_name} created for {owner} successfully",
-        "folder_id": folder_id,
-    })
-
+    response = jsonify({"folder_id": folder_id})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
-@app.route('/rename-folder', methods=['PUT'])
-def rename_folder():
+@app.route('/rename-folder/<int:folder_id>/<display_name>', methods=['PUT'])
+def rename_folder(folder_id, display_name):
     """
     TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
     """
-
-    if not request.is_json:
-        response = jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
-    data = request.get_json()
-    folder_id = data.get('folder_id')
-    display_name = data.get('display_name')
-
-    if folder_id is None:
-        response = jsonify({"error": "Missing folder ID"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
-    if display_name is None:
-        response = jsonify({"error": "Missing new folder name"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-
     cursor = db.connection.cursor()
     query = "SELECT * FROM Folders WHERE folder_id = %s"
     cursor.execute(query, (folder_id,))
@@ -473,7 +428,7 @@ def update_folder_contents():
     return response
 
 
-@app.route('/delete-folder/<folder_id>', methods=['DELETE'])
+@app.route('/delete-folder/<int:folder_id>', methods=['DELETE'])
 def delete_folder(folder_id):
     cursor = db.connection.cursor()
     query = "DELETE FROM Folders WHERE folder_id = %s"
@@ -487,7 +442,7 @@ def delete_folder(folder_id):
     return response
 
 
-@app.route('/delete-sequence/<sequence_id>', methods=['DELETE'])
+@app.route('/delete-sequence/<int:sequence_id>', methods=['DELETE'])
 def delete_sequence(sequence_id):
     cursor = db.connection.cursor()
     query = "DELETE FROM Sequences WHERE sequence_id = %s"
