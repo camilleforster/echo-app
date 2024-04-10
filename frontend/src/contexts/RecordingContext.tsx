@@ -58,7 +58,7 @@ export const RecordingProvider: React.FC<PropsWithChildren> = ({
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(
     RecordingStatus.Idle,
   );
-  const [recordingCount, setRecordingCount] = useState<number>(0); // TODO: Fetch from backend
+  const [recordingCount] = useState<number>(0); // TODO: Fetch from backend
   const [recordingTitle, setRecordingTitle] = useState<string>(
     `Untitled ${recordingCount + 1}`,
   );
