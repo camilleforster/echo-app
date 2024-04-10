@@ -81,7 +81,7 @@ def get_user_data(email):
     """
     cursor = db.connection.cursor()
     query = "SELECT * FROM Users WHERE email = %s"
-    cursor.execute(query, (email))
+    cursor.execute(query, (email,))
     user = cursor.fetchone()
 
     if user is None:
@@ -94,7 +94,7 @@ def get_user_data(email):
     sequences = []
 
     query = "SELECT folder_id, display_name, created FROM Folders WHERE owner = %s"
-    cursor.execute(query, (email))
+    cursor.execute(query, (email,))
     raw_folders = cursor.fetchall()
 
     for raw_folder in raw_folders:
@@ -110,7 +110,7 @@ def get_user_data(email):
         }
 
         query = "SELECT sequence FROM Contains WHERE folder = %s"
-        cursor.execute(query, (email))
+        cursor.execute(query, (email,))
         folder_sequences = cursor.fetchall()
 
         for sequence in folder_sequences:
@@ -120,7 +120,7 @@ def get_user_data(email):
         folders.append(folder)
 
     query = "SELECT sequence_id, bpm, display_name, filename, created FROM Sequences WHERE creator = %s"
-    cursor.execute(query, (email))
+    cursor.execute(query, (email,))
     raw_sequences = cursor.fetchall()
 
     for raw_sequence in raw_sequences:
@@ -173,7 +173,7 @@ def get_recording_file(sequence_id):
     """
     cursor = db.connection.cursor()
     query = "SELECT display_name, filename FROM Sequences WHERE sequence_id = %s"
-    cursor.execute(query, (sequence_id))
+    cursor.execute(query, (sequence_id,))
     sequence = cursor.fetchone()
     cursor.close()
 
@@ -231,7 +231,7 @@ def process_recording():
     return jsonify(sequence)
 
 
-@app.route('/rename-sequence', methods=['PATCH'])
+@app.route('/rename-sequence', methods=['PUT'])
 def rename_sequence():
     """
     TODO complete docstring
@@ -255,7 +255,7 @@ def rename_sequence():
     
     cursor = db.connection.cursor()
     query = "SELECT * FROM Sequences WHERE sequence_id = %s"
-    cursor.execute(query, (sequence_id))
+    cursor.execute(query, (sequence_id,))
     sequence = cursor.fetchone()
 
     if sequence is None:
@@ -327,7 +327,7 @@ def create_folder(display_name, owner):
     cursor.close()
     response = jsonify({
         "message": f"{display_name} created for {owner} successfully",
-        "folder_id": folder_id,
+        "folder_id": folder_id
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -363,7 +363,7 @@ def rename_folder():
 
     cursor = db.connection.cursor()
     query = "SELECT * FROM Folders WHERE folder_id = %s"
-    cursor.execute(query, (folder_id))
+    cursor.execute(query, (folder_id,))
     folder = cursor.fetchone()
 
     if folder is None:
@@ -418,7 +418,7 @@ def update_folder_contents():
     
     cursor = db.connection.cursor()
     query = "SELECT * FROM Folders WHERE folder_id = %s"
-    folder = cursor.execute(query, (folder_id))
+    folder = cursor.execute(query, (folder_id,))
 
     if folder is None:
         cursor.close()
@@ -430,7 +430,7 @@ def update_folder_contents():
 
     for sequence_id in sequences:
         query = "SELECT creator FROM Sequences WHERE sequence_id = %s"
-        cursor.execute(query, (sequence_id))
+        cursor.execute(query, (sequence_id,))
         sequence = cursor.fetchone()
 
         if sequence is None:
@@ -448,7 +448,7 @@ def update_folder_contents():
             return response
         
     query = "SELECT sequence FROM Contains WHERE folder = %s"
-    cursor.execute(query, (folder_id))
+    cursor.execute(query, (folder_id,))
     current_sequences = folder.fetchall()
     current_sequence_ids = [sequence[0] for sequence in current_sequences]
 
@@ -460,7 +460,7 @@ def update_folder_contents():
     for sequence_id in current_sequence_ids:  # remove newly removed sequences
         if sequence_id not in sequences:
             query = "DELETE FROM Contains WHERE sequence = %s"
-            cursor.execute(query, (sequence_id))
+            cursor.execute(query, (sequence_id,))
  
     cursor.close()
     display_name = folder[1]
@@ -473,9 +473,9 @@ def update_folder_contents():
 def delete_folder(folder_id):
     cursor = db.connection.cursor()
     query = "DELETE FROM Folders WHERE folder_id = %s"
-    cursor.execute(query, (folder_id))
+    cursor.execute(query, (folder_id,))
     query = "DELETE FROM Contains WHERE folder = %s"
-    cursor.execute(query, (folder_id))
+    cursor.execute(query, (folder_id,))
     db.connection.commit()
     cursor.close()
     response = jsonify({"message": f"Database updated successfully"})
@@ -487,9 +487,9 @@ def delete_folder(folder_id):
 def delete_sequence(sequence_id):
     cursor = db.connection.cursor()
     query = "DELETE FROM Sequences WHERE sequence_id = %s"
-    cursor.execute(query, (sequence_id))
+    cursor.execute(query, (sequence_id,))
     query = "DELETE FROM Contains WHERE sequence = %s"
-    cursor.execute(query, (sequence_id))
+    cursor.execute(query, (sequence_id,))
     db.connection.commit()
     cursor.close()
     response = jsonify({"message": f"Database updated successfully"})
