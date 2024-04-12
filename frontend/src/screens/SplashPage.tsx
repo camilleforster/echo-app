@@ -13,9 +13,10 @@ const Splash = () => {
     <SplashBackground
       resizeMode="cover"
       source={require("../assets/Splash0.png")}
+      testID = "splashBackground"
     >
       
-      <Echo>{`echo `}</Echo>
+      <Echo testID = "echoLogo">{`echo `}</Echo>
     </SplashBackground>
   );
 };
