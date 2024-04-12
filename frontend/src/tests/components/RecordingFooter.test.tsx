@@ -66,8 +66,42 @@ describe("RecordingFooter", () => {
     jest.clearAllMocks();
   });
 
-  it("should render start recording button when Idle", () => {
-    useRecordingMock({ recordingStatus: RecordingStatus.Idle });
+  /**
+   * Sets up the mock implementation for the useRecording hook.
+   *
+   * @param params - The parameters to customize the mock implementation
+   */
+  const useRecordingMock = ({
+    isRecording = false,
+    showConfirmOptions = false,
+    recordingTitle = "",
+  }: UseRecordingMockParams = {}) => {
+    jest.spyOn(RecordingContext, "useRecording").mockImplementation(() => ({
+      isRecording,
+      showConfirmOptions,
+      startRecording: mockStartRecording,
+      stopRecording: mockStopRecording,
+      saveRecording: mockSaveRecording,
+      discardRecording: mockDiscardRecording,
+      recordingTitle,
+      setRecordingTitle: mockSetRecordingTitle,
+    }));
+  };
+
+  /**
+   * Renders the RecordingFooter component wrapped in a ThemeProvider with the default theme.
+   *
+   * @returns The RecordingFooter component with the default theme
+   */
+  const renderComponent = () =>
+    render(
+      <ThemeProvider theme={theme}>
+        <RecordingFooter />
+      </ThemeProvider>,
+    );
+
+  it("should render start recording button when not recording and no confirm options", () => {
+    useRecordingMock();
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("start-recording")).toBeTruthy();
     expect(queryByTestId("stop-recording")).toBeNull();
@@ -82,8 +116,11 @@ describe("RecordingFooter", () => {
     expect(queryByTestId("start-recording")).toBeNull();
   });
 
-  it("should render confirm options when Confirming", () => {
-    useRecordingMock({ recordingStatus: RecordingStatus.Confirming });
+  it("should render confirm options when showConfirmOptions is true", () => {
+    useRecordingMock({
+      showConfirmOptions: true,
+      recordingTitle: "Test Title",
+    });
     const { queryByTestId } = renderComponent();
     expect(queryByTestId("discard-recording")).toBeTruthy();
     expect(queryByTestId("save-recording")).toBeTruthy();
