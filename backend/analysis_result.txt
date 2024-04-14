@@ -1,37 +1,32 @@
-Time: 0.0s, Frequency: 60.0Hz, Note: B1
-Time: 0.25s, Frequency: 120.0Hz, Note: B2
-Time: 0.5s, Frequency: 120.0Hz, Note: B2
-Time: 0.75s, Frequency: 120.0Hz, Note: B2
-Time: 1.0s, Frequency: 120.0Hz, Note: B2
-Time: 1.25s, Frequency: 392.0Hz, Note: G4
-Time: 1.5s, Frequency: 392.0Hz, Note: G4
-Time: 1.75s, Frequency: 392.0Hz, Note: G4
-Time: 2.0s, Frequency: 440.0Hz, Note: A4
-Time: 2.25s, Frequency: 472.0Hz, Note: A#4
-Time: 2.5s, Frequency: 468.0Hz, Note: A#4
-Time: 2.75s, Frequency: 444.0Hz, Note: A4
-Time: 3.0s, Frequency: 392.0Hz, Note: G4
-Time: 3.25s, Frequency: 392.0Hz, Note: G4
-Time: 3.5s, Frequency: 392.0Hz, Note: G4
-Time: 3.75s, Frequency: 296.0Hz, Note: D4
-Time: 4.0s, Frequency: 292.0Hz, Note: D4
-Time: 4.25s, Frequency: 232.0Hz, Note: A#3
-Time: 4.5s, Frequency: 232.0Hz, Note: A#3
-Time: 4.75s, Frequency: 392.0Hz, Note: G4
-Time: 5.0s, Frequency: 392.0Hz, Note: G4
-Time: 5.25s, Frequency: 348.0Hz, Note: F4
-Time: 5.5s, Frequency: 348.0Hz, Note: F4
-Time: 5.75s, Frequency: 348.0Hz, Note: F4
-Time: 6.0s, Frequency: 312.0Hz, Note: D#4
-Time: 6.25s, Frequency: 312.0Hz, Note: D#4
-Time: 6.5s, Frequency: 296.0Hz, Note: D4
-Time: 6.75s, Frequency: 312.0Hz, Note: D#4
-Time: 7.0s, Frequency: 348.0Hz, Note: F4
-Time: 7.25s, Frequency: 348.0Hz, Note: F4
-Time: 7.5s, Frequency: 312.0Hz, Note: D#4
-Time: 7.75s, Frequency: 312.0Hz, Note: D#4
-Time: 8.0s, Frequency: 312.0Hz, Note: D#4
-Time: 8.25s, Frequency: 312.0Hz, Note: D#4
-Time: 8.5s, Frequency: 312.0Hz, Note: D#4
-Time: 8.75s, Frequency: 312.0Hz, Note: D#4
-Time: 9.0s, Frequency: 56.0Hz, Note: A1
+Time: 0.0s, Frequency: 56.0Hz, Note: A1, Duration: 0.25sec
+Time: 0.25s, Frequency: 56.0Hz, Note: A1, Duration: 0.25sec
+Time: 0.5s, Frequency: 56.0Hz, Note: A1, Duration: 0.25sec
+Time: 0.75s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 1.0s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 1.25s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 1.5s, Frequency: 292.0Hz, Note: D4, Duration: 0.25sec
+Time: 1.75s, Frequency: 292.0Hz, Note: D4, Duration: 0.25sec
+Time: 2.0s, Frequency: 332.0Hz, Note: E4, Duration: 0.25sec
+Time: 2.25s, Frequency: 328.0Hz, Note: E4, Duration: 0.25sec
+Time: 2.5s, Frequency: 328.0Hz, Note: E4, Duration: 0.25sec
+Time: 2.75s, Frequency: 348.0Hz, Note: F4, Duration: 0.25sec
+Time: 3.0s, Frequency: 348.0Hz, Note: F4, Duration: 0.25sec
+Time: 3.25s, Frequency: 348.0Hz, Note: F4, Duration: 0.25sec
+Time: 3.5s, Frequency: 392.0Hz, Note: G4, Duration: 0.25sec
+Time: 3.75s, Frequency: 392.0Hz, Note: G4, Duration: 0.25sec
+Time: 4.0s, Frequency: 348.0Hz, Note: F4, Duration: 0.25sec
+Time: 4.25s, Frequency: 348.0Hz, Note: F4, Duration: 0.25sec
+Time: 4.5s, Frequency: 348.0Hz, Note: F4, Duration: 0.25sec
+Time: 4.75s, Frequency: 332.0Hz, Note: E4, Duration: 0.25sec
+Time: 5.0s, Frequency: 328.0Hz, Note: E4, Duration: 0.25sec
+Time: 5.25s, Frequency: 328.0Hz, Note: E4, Duration: 0.25sec
+Time: 5.5s, Frequency: 292.0Hz, Note: D4, Duration: 0.25sec
+Time: 5.75s, Frequency: 292.0Hz, Note: D4, Duration: 0.25sec
+Time: 6.0s, Frequency: 292.0Hz, Note: D4, Duration: 0.25sec
+Time: 6.25s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 6.5s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 6.75s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 7.0s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 7.25s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 7.5s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
+Time: 7.75s, Frequency: 260.0Hz, Note: C4, Duration: 0.25sec
