@@ -1,9 +1,12 @@
+import subprocess
+import os
 from typing import Iterator, List
 import numpy as np
 import pyaudio
 from scipy.fft import rfft, rfftfreq
 from scipy.io import wavfile
 from midiutil.MidiFile import MIDIFile
+import lilypond
 import librosa
 
 class AudioAnalyzer:
@@ -130,7 +133,7 @@ class AnalysisPoint:
             
         lily_duration = self._duration_to_lilypond()
         lilypond_notation += f"{name}{octave_adjustment}{lily_duration} "
-        lilypond_notation += "\n}"
+        #lilypond_notation += "\n}"
         return lilypond_notation
 
     def __repr__(self):
@@ -192,7 +195,7 @@ class AnalyzedSong:
         """
         return self.data
 
-    def combine_notes(self, chunk_duration):
+    def _combine_notes(self, chunk_duration):
         """Updates self.data array to combine consecutive identical notes together
         """
         combined_notes = []
@@ -233,11 +236,12 @@ class AnalyzedSong:
 
     def notes_to_lilypond(self, chunk_duration):
         #combine consecutive identical notes
-        analyzed_song.combine_notes(chunk_duration)
-        lilypond_notation = "\\relative c' {\n    \\key c \\major\n    \\time 4/4\n    "
+        analyzed_song._combine_notes(chunk_duration)
+        lilypond_notation = "\\relative c' {\n    \\key c \\major\n    \\time 4/4\n"
 
         for point in self.data:
             lilypond_notation += point.note_to_lilypond()
+        lilypond_notation += "\n}"
         return lilypond_notation
 
     def save_to_MIDI(self, filename: str,):
@@ -268,10 +272,32 @@ class AnalyzedSong:
         with open(filename+".mid", 'wb') as outf:
             mf.writeFile(outf)
 
+    def generate_sheet_music(self, image_name, chunk_duration=0.25):
+        # LilyPond code as a Python string
+        lilypond_code = """
+        \\version "2.20.0"
 
+        \\header {
+          title = "A Simple Melody"
+          composer = "Composer Name"
+        }
 
-    def generate_sheet_music(self, chunk_duration, image_name):
-        pass
+        \\score {
+          {""" + self.notes_to_lilypond(chunk_duration) + """
+          }
+          \\layout { }
+          \\midi { }
+        }
+        """
+        file_path = os.path.join("output", image_name+".ly")
+        os.makedirs("output", exist_ok=True)
+
+        # Writing the LilyPond code to a file in the output directory
+        with open(file_path, "w") as file:
+            file.write(lilypond_code)
+
+        subprocess.run([str(lilypond.executable()), file_path])
+
 
 class Song:
     """A class representing the audio file before analysis.
@@ -364,8 +390,9 @@ analyzed_song.save_to_file("analysis_result.txt")
 analyzed_song.save_to_MIDI('midi1')
 print("*************************")
 
-analyzed_song.notes_to_lilypond(chunk_duration)
+print(analyzed_song.notes_to_lilypond(chunk_duration))
 for analysis_point in analyzed_song.get_analysis():
     print(analysis_point)
 
+analyzed_song.generate_sheet_music('sheet1')
 
