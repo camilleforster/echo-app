@@ -1,13 +1,7 @@
-import subprocess
-import os
 from typing import Iterator, List
 import numpy as np
 import pyaudio
 from scipy.fft import rfft, rfftfreq
-from scipy.io import wavfile
-from midiutil.MidiFile import MIDIFile
-import lilypond
-import librosa
 
 class AudioAnalyzer:
     """A class representing the audio file analyzer.
