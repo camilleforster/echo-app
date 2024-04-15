@@ -101,7 +101,7 @@ def get_user_data(email):
     for raw_folder in raw_folders:
         folder_id = raw_folder[0]
         display_name = raw_folder[1]
-        created = raw_sequence[2]
+        created = raw_folder[2]
 
         folder = {
             "id": folder_id,
@@ -174,7 +174,7 @@ def get_recording_file(sequence_id):
         The recorded sequence as an MP3 file
     """
     cursor = db.connection.cursor()
-    query = "SELECT display_name, filename FROM Sequences WHERE sequence_id = %s"
+    query = "SELECT filename FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
     sequence = cursor.fetchone()
     cursor.close()
@@ -183,11 +183,10 @@ def get_recording_file(sequence_id):
         response = jsonify({"error": "Sequence does not exist"}), 400
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
-    
-    display_name = sequence[0]
-    filename = sequence[1]
+
+    filename = sequence[0]
     path = f'{AUDIO_DATA_PATH}/{filename}.mp3'
-    response = send_file(path, as_attachment=True, attachment_filename=f'{display_name}.mp3')
+    response = send_file(path, as_attachment=True)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -367,7 +366,7 @@ def update_folder_contents():
         response = jsonify({"error": "Invalid sequence IDs"}), 400
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
-    
+
     cursor = db.connection.cursor()
     query = "SELECT * FROM Folders WHERE folder_id = %s"
     folder = cursor.execute(query, (folder_id,))
@@ -377,7 +376,7 @@ def update_folder_contents():
         response = jsonify({"error": f"Folder does not exist"}), 400
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
-    
+
     folder_owner = folder[2]
 
     for sequence_id in sequences:
@@ -390,7 +389,7 @@ def update_folder_contents():
             response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
-        
+
         sequence_owner = sequence[0]
 
         if sequence_owner != folder_owner:
