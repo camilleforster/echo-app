@@ -101,7 +101,7 @@ def get_user_data(email):
     for raw_folder in raw_folders:
         folder_id = raw_folder[0]
         display_name = raw_folder[1]
-        created = raw_sequence[2]
+        created = raw_folder[2]
 
         folder = {
             "id": folder_id,
