@@ -25,7 +25,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 
-# from db_client import Client
+from db_client import Client
 
 NOTE_DATA_PATH = './note-data'
 AUDIO_DATA_PATH = './audio-data'

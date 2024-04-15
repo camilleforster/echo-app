@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile-api
+    restart: always
+    command: sh -c "while !</dev/tcp/db/3306; do sleep 1; done; flask run"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      FLASK_ENV: development
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # contact David for password; include in a .env file in this directory with this variable
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - echodat:/var/lib/mysql
+    ports:
+      - "53346:3306"
+
+volumes:
+  echodat:

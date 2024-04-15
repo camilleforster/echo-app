@@ -1,7 +1,7 @@
 from scipy.io import wavfile
 
-from analyzed_song import AnalyzedSong
-from audio_analyzer import AudioAnalyzer
+from backend.audio_processing.analyzed_song import AnalyzedSong
+from backend.audio_processing.audio_analyzer import AudioAnalyzer
 
 class Song:
     """A class representing the audio file before analysis.
