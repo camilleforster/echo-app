@@ -65,7 +65,7 @@ def execute_query(query): # TODO update routes to leverage DB client
     pass
 
 
-@app.route('/user/<email>', methods=['GET'])
+@app.route('/get-user-data/<email>', methods=['GET'])
 def get_user_data(email):
     """
     Fetches data for a particular user.
