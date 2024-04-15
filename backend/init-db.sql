@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS Sequences (
     display_name VARCHAR(255), -- can be shortened in the future
     filename VARCHAR(255),
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (instrument) REFERENCES Instrument(instrument_id),
-    FOREIGN KEY (creator) REFERENCES User(email)
+    FOREIGN KEY (instrument) REFERENCES Instruments(instrument_id),
+    FOREIGN KEY (creator) REFERENCES Users(email)
 );
 
 CREATE TABLE IF NOT EXISTS Folders (
@@ -31,13 +31,13 @@ CREATE TABLE IF NOT EXISTS Folders (
     display_name VARCHAR(255), -- can be shortened in the future
     owner VARCHAR(255),
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (owner) REFERENCES User(email)
+    FOREIGN KEY (owner) REFERENCES Users(email)
 );
 
 CREATE TABLE IF NOT EXISTS Contains (
     folder INT,
     sequence INT,
     created DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (folder) REFERENCES Folder(folder_id),
-    FOREIGN KEY (sequence) REFERENCES Sequence(sequence_id)
+    FOREIGN KEY (folder) REFERENCES Folders(folder_id),
+    FOREIGN KEY (sequence) REFERENCES Sequences(sequence_id)
 );
