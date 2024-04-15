@@ -6,7 +6,6 @@ from scipy.fft import rfft, rfftfreq
 class AudioAnalyzer:
     """A class representing the audio file analyzer.
 
-    Its initialized by the sampling rate of the audio file in (samples/sec).
     It offers methods for detecting the dominant frequency in an audio sample
     and other methods for converting that frequency to a note.
 
@@ -19,28 +18,35 @@ class AudioAnalyzer:
 
     Methods
     -------
-    audio_chunk_to_frequency(self, chunk_data)
+    audio_chunk_to_frequency(self, chunk_data, sampling_rate)
         Detects the frequency with the highest magnitude in the audio chunk.
     frequency_to_note_name(self, frequency)
-        Converts the detected frequncy to a standard not name
+        Converts the detected frequncy to a standard note name
     """
 
     A4_freq= 440.0
     Note_Names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
-    def __init__(self, sampling_rate):
+    def __init__(self):
         """
+        """
+        pass
+
+    def audio_chunk_to_frequency(self, chunk_data, sampling_rate):
+        """Detects the frequency with the highest magnitude in the audio chunk.
+
+
+        
         Parameters
         ----------
+        chunk_data : 
         sampling_rate : int
-            the rate for the algorithm to detect sample sounds.
-        """
-        self.sampling_rate = sampling_rate
+            Its initialized by the sampling rate of the audio chunk in (samples/sec).
 
-    def audio_chunk_to_frequency(self, chunk_data):
+        """
         # Calculate FFT for the chunk
         fft_result = rfft(chunk_data)
-        freqs = rfftfreq(len(chunk_data), 1 / self.sampling_rate)
+        freqs = rfftfreq(len(chunk_data), 1 / sampling_rate)
         magnitudes = np.abs(fft_result)
 
         # Filter out frequencies outside the human hearing range

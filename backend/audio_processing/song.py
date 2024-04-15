@@ -7,18 +7,22 @@ class Song:
     """A class representing the audio file before analysis.
 
     The Song class is instantiated with a raw audio file.
-    It opens the file, samples data points, and uses an AudioAnalyzer
+    It loads the file for anbalysis. The main function is audio_to_notes 
+    which samples data points, instantiates an AudioAnalyzer, and uses it
+    to return an AnalyzedSong instance.
     to analyze it.
 
     Attributes
     ----------
     file_path : str
         The full path of the raw audio file before analysis
+    chunk_duration: float
+        the duration of one beat in secs defaults to 0.25 sec.
 
     Methods
     -------
-    audio_to_frequency(filter_noise=True)
-        Converts the audio file to an Iterator of frequencies.
+    audio_to_notes()
+        Converts the audio file to an AnalyzedSong object.
     """
 
     def __init__(self, file_path: str, chunk_duration=0.25):
@@ -33,44 +37,37 @@ class Song:
         self.file_path = file_path
         self.chunk_duration = chunk_duration
 
-    def audio_to_notes(self, ) -> AnalyzedSong:
+    def audio_to_notes(self) -> AnalyzedSong:
         """ Converts the audio file to an AnalyzedSong object.
-
-        Parameters
-        ----------
-        filter_noise : boolean, optional
-            Filter noise from the audio before converting it to frequencies (default is True)
         
         Returns
         -------
         AnalyzedSong
-            an AnalyzedSong object which contains the processed information about the song.
+            an AnalyzedSong object which contains the processed notes of the audio
         """
 
-        # returns sampling_rate (in samples/sec) and data array of amplitudes
+        # returns sampling_rate (in samples/sec) and array of audio amplitudes
         sampling_rate, data = wavfile.read(self.file_path) # 
-        # only keep the left channel. assume audio is mono for simplicity
+        # only keep the left channel. we assume audio is mono for simplicity
         if data.ndim > 1:
             data = data[:, 0]
 
         analyzer = AudioAnalyzer(sampling_rate)
         analyzed_song = AnalyzedSong()
 
-        # Define constants
-        chunk_n_samples = int(self.chunk_duration* sampling_rate)  # Number of samples in each 0.25 second chunk
-        num_chunks = len(data) // chunk_n_samples
+        chunk_n_samples = int(self.chunk_duration* sampling_rate)  # #samples in each 0.25s chunk
+        num_chunks = len(data) // chunk_n_samples 
 
-        # sample chunks
         for chunk_idx in range(num_chunks):
             start_sample = chunk_idx * chunk_n_samples
             end_sample = start_sample + chunk_n_samples
             chunk_data = data[start_sample:end_sample]
 
-            max_freq = analyzer.audio_chunk_to_frequency(chunk_data)
+            max_freq = analyzer.audio_chunk_to_frequency(chunk_data, sampling_rate)
 
             # Convert frequency to note name
             note_name = analyzer.frequency_to_note_name(max_freq)
-            time_stamp = chunk_idx * 0.25  # Time stamp for the current chunk
+            time_stamp = chunk_idx * chunk_duration  # Time stamp for the current chunk
 
             # Add point to analyzed song
             analyzed_song.add_point(time_stamp, max_freq, note_name, chunk_duration)
