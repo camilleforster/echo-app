@@ -30,7 +30,7 @@ This document outlines the parameters, outputs, effects, and intended usage of a
             "display_name" (string): # folder display name,
             "created" (string): # created timestamp,
             "sequences" (int[]): # an array of the sequence IDs contained in the folder
-        }
+        },
         ...
     ],
     "sequences": [
@@ -40,7 +40,7 @@ This document outlines the parameters, outputs, effects, and intended usage of a
             "display_name" (string): # sequence display name,
             "created" (string): # created timestamp,
             "notes" (string): # the notes of the sequence, formatted sequentially as a string
-        }
+        },
         ...
     ]
 }
