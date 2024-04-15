@@ -313,7 +313,7 @@ def rename_folder(folder_id, display_name):
         A JSON response containing ...
     """
     cursor = db.connection.cursor()
-    query = "SELECT * FROM Folders WHERE folder_id = %s"
+    query = "SELECT display_name FROM Folders WHERE folder_id = %s"
     cursor.execute(query, (folder_id,))
     folder = cursor.fetchone()
 
@@ -323,7 +323,7 @@ def rename_folder(folder_id, display_name):
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-    original_name = folder[1]
+    original_name = folder[0]
     query = "UPDATE Folders SET display_name = %s WHERE folder_id = %s"
     cursor.execute(query, (display_name, folder_id))
     db.connection.commit()
