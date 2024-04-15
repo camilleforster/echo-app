@@ -67,7 +67,8 @@ def execute_query(query): # TODO update routes to leverage DB client
 
 @app.route('/user/<email>', methods=['GET'])
 def get_user_data(email):
-    """Fetches data for a particular user.
+    """
+    Fetches data for a particular user.
 
     Parameters
     ----------
@@ -159,7 +160,8 @@ def get_user_data(email):
 
 @app.route('/get-recording-file/<int:sequence_id>', methods=['GET'])
 def get_recording_file(sequence_id):
-    """Fetches the MP3 file corresponding to a recorded sequence.
+    """
+    Fetches the MP3 file corresponding to a recorded sequence.
 
     Parameters
     ----------
@@ -259,30 +261,21 @@ def rename_sequence(sequence_id, display_name):
     return response
 
 
-@app.route('/update-sequence-data', methods=['PUT'])  # TODO
-def update_sequence_data():
+@app.route('/update-sequence-data/<int:sequence_id>/<updated_sequence>', methods=['PUT'])  # TODO
+def update_sequence_data(sequence_id, updated_sequence):
     """
     TODO complete docstring
     -------
     JSON response
         A JSON response containing ...
     """
+    if True:
+        # TODO validate that sequence ID exists as a record in database
+        return jsonify({"error": "Invalid sequence ID"}), 400
 
-    if not request.is_json:
-        return jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
-
-    data = request.get_json()
-
-    sequence_id = data.get('sequence_id')
-    updated_sequence = data.get('updated_sequence')
-
-    if sequence_id is None or not isinstance(sequence_id, int):
-        # TODO also validate that sequence ID exists as a record in database
-        return jsonify({"error": "Missing or invalid sequence ID"}), 400
-
-    if updated_sequence is None:
-        # TODO also validate format of new sequence data
-        return jsonify({"error": "Missing new sequence data"}), 400
+    if True:
+        # TODO validate format of new sequence data
+        return jsonify({"error": "Invalid new sequence data"}), 400
 
     # TODO process edit to sequence, save to database
     query = client.update_sequence_data(sequence_id, {}) # TODO: fill the dict with new values
