@@ -23,7 +23,7 @@ This document outlines the parameters, outputs, effects, and intended usage of a
 
 ```
 {
-    "username": # the user's display name,
+    "username" (string): # the user's display name,
     "folders": [
         {
             "id" (int): # folder ID,
