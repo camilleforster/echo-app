@@ -1,6 +1,5 @@
-import { View, Text, ImageBackground } from "react-native";
+import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
-import { LinearGradient } from "react-native-svg";
 
 export const Echo = styled(Text)`
   position: absolute;

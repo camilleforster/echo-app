@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Text, StyleSheet, ImageBackground } from "react-native";
+
 import { SplashBackground, Echo } from "./styles/Splash.styled";
-import styled from "styled-components";
-import { useFonts } from "expo-font";
 
 /**
  * Splash page that is shown to users while they load the app
- * 
+ *
  * @returns the Splash page that users see when they load the app
  */
 const Splash = () => {
