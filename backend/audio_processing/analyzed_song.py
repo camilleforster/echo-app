@@ -16,6 +16,8 @@ class AnalysisPoint:
         description
     note_name : str
         description
+    duration: float
+        duration of the note in secs
     """
     def __init__(self, time_stamp: float, frequency: float,
         note_name: str, duration: float):
@@ -28,13 +30,22 @@ class AnalysisPoint:
             the dominant frequency at each time segments.
         note_name : str
             the note name that corresponds to the dominant frequency.
+        duration: float
+            duration of the note in secs
         """
         self.time_stamp = time_stamp
         self.frequency = frequency
         self.note_name = note_name
         self.duration = duration
 
-    def _duration_to_lilypond(self):
+    def _duration_to_lilypond(self, chunk_duration):
+        """A helper function for note_to_lilypond
+
+        Parameters
+        ----------
+        chunk_duration: float
+            duration of one beat secs
+        """
         # Assuming 0.25 seconds per quarter note
         quarter_note_duration = 0.25  # seconds
         duration_in_quarters = self.duration / quarter_note_duration
@@ -53,14 +64,26 @@ class AnalysisPoint:
         closest_note_length = min(note_lengths.keys(), key=lambda length: abs(length - duration_in_quarters))
         return note_lengths[closest_note_length]
 
-    def note_to_lilypond(self):
+    def note_to_lilypond(self, chunk_duration):
+        """Returns a string representatiion of the note in lilypond format
+
+        Parameters
+        ----------
+        chunk_duration: float
+            duration of one beat secs
+
+        Returns
+        -------
+        str
+            a string representatiion of the note in lilypond format
+        """
         lilypond_notation = ""
         name = self.note_name[:-1].lower()  # Extract the note letter(s) and make them lowercase
         octave = int(self.note_name[-1])  # Extract the octave as an integer
         octave_difference = octave - 4  # Determine octave difference from C4
         octave_adjustment = "'" * octave_difference if octave_difference > 0 else "," * -octave_difference
-            
-        lily_duration = self._duration_to_lilypond()
+        
+        lily_duration = self._duration_to_lilypond(chunk_duration)
         lilypond_notation += f"{name}{octave_adjustment}{lily_duration} "
         #lilypond_notation += "\n}"
         return lilypond_notation
@@ -88,6 +111,13 @@ class AnalyzedSong:
         Returns the list of analyzed data points.
     save_to_file(filename)
         Saves the analysis results to a file.
+    save_to_MIDI(self, filename: str)
+        Saves the audio analysis results to an MIDI file.
+    notes_to_lilypond(self, chunk_duration)
+        Returns a represtnation of the song notes in lilypond format.
+    generate_sheet_music(self, image_name, chunk_duration=0.25)
+        Generates a represtnation of the song notes in lilypond format
+        and saves it to a PDF file. 
     """
     def __init__(self):
         """
@@ -112,6 +142,8 @@ class AnalyzedSong:
             the dominant frequency at each time segments.
         note_name : str
             the note name that corresponds to the dominant frequency.
+        duration: float
+            duration of the note in secs
         """
         self.data.append(AnalysisPoint(time_stamp, frequency, note_name, duration))
 
@@ -127,6 +159,11 @@ class AnalyzedSong:
 
     def _combine_notes(self, chunk_duration):
         """Updates self.data array to combine consecutive identical notes together
+
+        Parameters
+        ----------
+        chunk_duration: float
+            duration of one beat in secs
         """
         combined_notes = []
         current_note = None
@@ -165,22 +202,34 @@ class AnalyzedSong:
                 file.write(f"{point}\n")
 
     def notes_to_lilypond(self, chunk_duration):
+        """Returns a represtnation of the song notes in lilypond format
+
+        Parameters
+        ----------
+        chunk_duration: float
+            duration of one beat secs
+
+        Returns
+        -------
+        str
+            A represtnation of the song notes in lilypond format
+        """
         #combine consecutive identical notes
         self._combine_notes(chunk_duration)
         lilypond_notation = "\\relative c' {\n    \\key c \\major\n    \\time 4/4\n"
 
         for point in self.data:
-            lilypond_notation += point.note_to_lilypond()
+            lilypond_notation += point.note_to_lilypond(chunk_duration)
         lilypond_notation += "\n}"
         return lilypond_notation
 
-    def save_to_MIDI(self, filename: str,):
-        """ Saves the analysis results to a file.
+    def save_to_MIDI(self, filename: str):
+        """ Saves the audio analysis results to an MIDI file.
 
         Parameters
         -------
         filename : str
-            name of the file to save the analysis to.
+            name of the file to save the notes sequence to.
         """
         # create an MIDI object
         mf = MIDIFile(1)     # only 1 track
@@ -190,7 +239,7 @@ class AnalyzedSong:
         mf.addTrackName(track, time, "Track")
         mf.addTempo(track, time, 120) # 120 BPM assuming 0.25 sec per note
 
-        # add some notes
+        # add the notes
         channel = 0
         volume = 100
 
@@ -198,11 +247,20 @@ class AnalyzedSong:
             mf.addNote(track, channel, librosa.note_to_midi(point.note_name),
                 point.time_stamp//0.25, point.duration//0.25, volume)
 
-        # write it to disk
         with open(filename+".mid", 'wb') as outf:
             mf.writeFile(outf)
 
     def generate_sheet_music(self, image_name, chunk_duration=0.25):
+        """Generates a represtnation of the song notes in lilypond format
+        and saves it to a PDF file. 
+        
+        Parameters
+        -------
+        image_name : str
+            name of the pdf file to save the notes representation to.
+        chunk_duration: float
+            duration of one beat in secs
+        """
         # LilyPond code as a Python string
         lilypond_code = """
         \\version "2.20.0"

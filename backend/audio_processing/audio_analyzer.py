@@ -28,21 +28,25 @@ class AudioAnalyzer:
     Note_Names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
     def __init__(self):
-        """
-        """
         pass
 
     def audio_chunk_to_frequency(self, chunk_data, sampling_rate):
         """Detects the frequency with the highest magnitude in the audio chunk.
 
+        It Calculate FFT for the audio chunk and then finds the freq with the 
+        highest magnitude.
 
-        
         Parameters
         ----------
         chunk_data : 
+            array of audio chunk
         sampling_rate : int
             Its initialized by the sampling rate of the audio chunk in (samples/sec).
 
+        Returns
+        -------
+        float
+            the frequency with the highest magnitude in the input audio chunk.
         """
         # Calculate FFT for the chunk
         fft_result = rfft(chunk_data)
@@ -66,7 +70,16 @@ class AudioAnalyzer:
 
     def frequency_to_note_name(self, frequency: float) -> str:
         """
-        Converts a single frequency to a note name
+        Converts a single frequency to a note name.
+
+        Parameters
+        ----------
+        frequency: float
+
+        Returns
+        -------
+        str
+            the standard name of the note        
         """
         if frequency < 20:  # Below human hearing range
             return "None"
