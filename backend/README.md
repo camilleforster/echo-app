@@ -26,20 +26,20 @@ This document outlines the parameters, outputs, effects, and intended usage of a
     "username": # the user's display name,
     "folders": [
         {
-            "id": # folder ID,
-            "display_name": # folder display name,
-            "created": # created timestamp,
-            "sequences": # an array of the sequence IDs contained in the folder
+            "id" (int): # folder ID,
+            "display_name" (string): # folder display name,
+            "created" (string): # created timestamp,
+            "sequences" (int[]): # an array of the sequence IDs contained in the folder
         }
         ...
     ],
     "sequences": [
         {
-            "id": # sequence ID,
-            "bpm": # sequence BPM,
-            "display_name": # sequence display name,
-            "created": # created timestamp,
-            "notes": # the notes of the sequence, formatted sequentially as a string
+            "id" (int): # sequence ID,
+            "bpm" (int): # sequence BPM,
+            "display_name" (string): # sequence display name,
+            "created" (string): # created timestamp,
+            "notes" (string): # the notes of the sequence, formatted sequentially as a string
         }
         ...
     ]
@@ -70,11 +70,11 @@ Currently under construction.
 
 ```
 {
-    "id": # sequence ID,
-    "bpm": # sequence BPM,
-    "display_name": # sequence display name,
-    "created": # created timestamp,
-    "notes": # the notes of the sequence, formatted sequentially as a string
+    "id" (int): # sequence ID,
+    "bpm" (int): # sequence BPM,
+    "display_name" (string): # sequence display name,
+    "created" (string): # created timestamp,
+    "notes" (string): # the notes of the sequence, formatted sequentially as a string
 }
 ```
 
@@ -119,7 +119,7 @@ Currently under construction.
 
 ```
 {
-    "folder_id": # folder_id
+    "folder_id" (int): # folder_id
 }
 ```
 
