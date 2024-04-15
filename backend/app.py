@@ -86,8 +86,8 @@ def get_user_data(email):
     user = cursor.fetchone()
 
     if user is None:
-        response = {"error": "User does not exist"}
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response = jsonify({"error": "User does not exist"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     username = user[1]
