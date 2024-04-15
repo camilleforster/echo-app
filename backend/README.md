@@ -8,7 +8,7 @@ This document outlines the parameters, outputs, effects, and intended usage of a
 
 * **Function**: create a new user
 * **REST Method**: `POST`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **email** (string) - the user's email, which will serve as the user's unique DB identifier and a parameter for other API routes when the user in question is relevant
     * **username** (string) - the user's display name (may go unused, but stored currently in case used on welcome pages, etc. in the future)
 * **Returns**: a JSON confirmation
@@ -84,7 +84,7 @@ Currently under construction.
 
 * **Function**: update the note data associated with an audio sequence, as indicated by the user
 * **REST Method**: `PUT`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **sequence_id** (int) - the unique identifier for a particular audio sequence
     * **updated_sequence** (string) - the new note data of the sequence, formatted sequentially as a string
 * **Returns**: a JSON confirmation
@@ -93,7 +93,7 @@ Currently under construction.
 
 * **Function**: rename a sequence
 * **REST Method**: `PUT`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **sequence_id** (int) - the unique identifier for a particular audio sequence
     * **display_name** (string) - the new name of the sequence
 * **Returns**: a JSON confirmation
@@ -102,7 +102,7 @@ Currently under construction.
 
 * **Function**: delete a sequence
 * **REST Method**: `DELETE`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **sequence_id** (int) - the unique identifier for the particular sequence
 * **Returns**: a JSON confirmation
 
@@ -112,7 +112,7 @@ Currently under construction.
 
 * **Function**: create an empty folder owned by a particular user
 * **REST Methods**: `POST`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **display_name** (string) - the display name for the folder
     * **owner** (string) - the email of the user who created the folder
 * **Returns**: a JSON response containing the folder ID
@@ -127,7 +127,7 @@ Currently under construction.
 
 * **Function**: rename a folder
 * **REST Method**: `PUT`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **folder_id** (int) - the unique identifier for a particular folder
     * **display_name** (string) - the new name of the folder
 * **Returns**: a JSON confirmation
@@ -147,6 +147,6 @@ The frontend team has requested that this route be replaced with `add` and `dele
 
 * **Function**: delete a folder
 * **REST Method**: `DELETE`
-* **Parameters** (URL-based)
+* **Parameters** (URI-based)
     * **folder_id** (int) - the unique identifier for the particular folder
 * **Returns**: a JSON confirmation
