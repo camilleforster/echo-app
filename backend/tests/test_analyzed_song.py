@@ -1,7 +1,7 @@
 # import os
 # import pytest
 
-# from audio_analyzer_interface import AnalysisPoint, AnalyzedSong
+# from audio_processing import AnalysisPoint, AnalyzedSong
 
 # @pytest.fixture
 # def analyzed_song():

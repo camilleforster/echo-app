@@ -2,7 +2,7 @@
 # import pytest
 
 
-# from audio_analyzer_interface import Song
+# from audio_processing import Song
 
 
 # """
@@ -30,8 +30,8 @@
 #     assert isinstance(song, Song)
 #     assert song.file_path == file_path
 #     assert song.frequency_queue is None
-# 
-# 
+
+
 # def test_audio_to_frequency(song):
 #     pass
 
