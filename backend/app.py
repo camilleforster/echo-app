@@ -181,7 +181,7 @@ def get_recording_file(sequence_id):
 
     if sequence is None:
         response = jsonify({"error": "Sequence does not exist"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     filename = sequence[0]
@@ -248,7 +248,7 @@ def rename_sequence(sequence_id, display_name):
     if sequence is None:
         cursor.close()
         response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     query = "UPDATE Sequences SET display_name = %s WHERE sequence_id = %s"
@@ -320,7 +320,7 @@ def rename_folder(folder_id, display_name):
     if folder is None:
         cursor.close()
         response = jsonify({"error": "Folder does not exist in database"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     original_name = folder[1]
@@ -345,7 +345,7 @@ def update_folder_contents():
 
     if not request.is_json:
         response = jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     data = request.get_json()
@@ -354,17 +354,17 @@ def update_folder_contents():
 
     if folder_id is None:
         response = jsonify({"error": "Missing folder ID"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     if sequences is None:
         response = jsonify({"error": "Missing folder sequences"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     if not isinstance(sequences, list) or not all(isinstance(sequence_id, int) for sequence_id in sequences):
         response = jsonify({"error": "Invalid sequence IDs"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     cursor = db.connection.cursor()
@@ -374,7 +374,7 @@ def update_folder_contents():
     if folder is None:
         cursor.close()
         response = jsonify({"error": f"Folder does not exist"}), 400
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
     folder_owner = folder[2]
@@ -387,7 +387,7 @@ def update_folder_contents():
         if sequence is None:
             cursor.close()
             response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
-            response.headers.add('Access-Control-Allow-Origin', '*')
+            response[0].headers.add('Access-Control-Allow-Origin', '*')
             return response
 
         sequence_owner = sequence[0]
@@ -395,7 +395,7 @@ def update_folder_contents():
         if sequence_owner != folder_owner:
             cursor.close()
             response = jsonify({"error": f"Sequence {sequence_id} is not owned by {folder_owner}"}), 400
-            response.headers.add('Access-Control-Allow-Origin', '*')
+            response[0].headers.add('Access-Control-Allow-Origin', '*')
             return response
         
     query = "SELECT sequence FROM Contains WHERE folder = %s"
