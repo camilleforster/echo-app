@@ -1,10 +1,12 @@
 stages:
   - build
   - test
+  - check
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
+    - frontend/node_modules/
     - backend/.venv/
     - backend/__pycache__/
 
@@ -38,5 +40,47 @@ test-backend:
     reports:
       junit: backend/result.xml
     expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+build-frontend:
+  stage: build
+  image: node:latest
+  script:
+    - cd frontend
+    - npm install
+    - npm run lint
+    - npm run format
+  cache:
+    paths:
+      - frontend/node_modules/
+    policy: pull-push
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+test-frontend:
+  stage: test
+  image: node:latest
+  script:
+    - cd frontend
+    - npm install
+    - npm run test
+  artifacts:
+    when: always
+    paths:
+      - frontend/test-reports
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+check-frontend:
+  stage: check
+  image: node:latest
+  script:
+    - export PORT=8081
+    - cd frontend
+    - npm install
+    - npm run start --port=${PORT} &
+    - npx wait-on http://localhost:${PORT} -t 30000
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"

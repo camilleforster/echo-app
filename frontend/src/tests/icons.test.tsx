@@ -16,7 +16,7 @@ import {
   MoveFolderIcon,
   SearchIcon,
 } from "../assets/icons";
-import Theme from "../Theme";
+import Theme from "../../Theme";
 
 describe("Icon Components", () => {
   it("should render BackIcon correctly", () => {

@@ -359,7 +359,7 @@ def update_folder_contents():
         return response
 
     if sequences is None:
-        response =  jsonify({"error": "Missing folder sequences"}), 400
+        response = jsonify({"error": "Missing folder sequences"}), 400
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 

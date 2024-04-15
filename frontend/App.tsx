@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
-import LibraryPage from "./screens/LibraryPage";
-import { RecordingProvider } from "./contexts/RecordingContext";
+import LibraryPage from "./src/screens/LibraryPage";
+import { RecordingProvider } from "./src/contexts/RecordingContext";
 import { useFonts } from "expo-font";
 import Theme from "./Theme";
 import {

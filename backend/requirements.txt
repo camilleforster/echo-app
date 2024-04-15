@@ -11,6 +11,9 @@ MarkupSafe==2.1.5
 Werkzeug==3.0.1
 zipp==3.17.0
 numpy
+midiutil
+librosa
+lilypond
 pandas
 scipy
 flask-mysqldb
