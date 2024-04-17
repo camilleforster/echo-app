@@ -86,7 +86,7 @@ def get_user_data(email):
     user = cursor.fetchone()
 
     if user is None:
-        response = jsonify({"error": "User does not exist"}), 400
+        response = jsonify({"error": "User does not exist"}), 400  # TODO look into right error codes for each context
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -139,7 +139,6 @@ def get_user_data(email):
 
         sequence = {
             "id": sequence_id,
-            "bpm": bpm,
             "display_name": display_name,
             "created": created,
             "notes": notes,
