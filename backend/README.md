@@ -36,7 +36,6 @@ This document outlines the parameters, outputs, effects, and intended usage of a
     "sequences": [
         {
             "id" (int): # sequence ID,
-            "bpm" (int): # sequence BPM,
             "display_name" (string): # sequence display name,
             "created" (string): # created timestamp,
             "notes" (string): # the notes of the sequence, formatted sequentially as a string
@@ -71,7 +70,6 @@ Currently under construction.
 ```
 {
     "id" (int): # sequence ID,
-    "bpm" (int): # sequence BPM,
     "display_name" (string): # sequence display name,
     "created" (string): # created timestamp,
     "notes" (string): # the notes of the sequence, formatted sequentially as a string
