@@ -6,6 +6,12 @@ import { useTheme } from "styled-components/native";
 export interface ChordCarouselProps {
   chordDiagrams: number[]; // TODO: Change to hold actual chord data
 }
+
+/**
+ * A carousel to display the chord diagram variations of a note
+ *
+ * @param chordDiagrams - a map of chord diagrams to be displayed
+ */
 const ChordCarousel: React.FC<ChordCarouselProps> = ({ chordDiagrams }) => {
   const theme = useTheme();
 

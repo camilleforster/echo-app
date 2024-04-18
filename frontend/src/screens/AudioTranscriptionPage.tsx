@@ -6,7 +6,9 @@ import AudioPlaybackControls from "../components/AudioPlayerControls";
 import AudioTranscriptionControls from "../components/AudioTranscriptionControls";
 import ChordCarousel from "../components/ChordCarousel";
 
-// TODO: Connect with navigation
+/**
+ * The page that contains audio transcription data and controls for the chosen audio
+ */
 const AudioTranscriptionPage = () => {
   return (
     <Container>

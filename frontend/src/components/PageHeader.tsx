@@ -10,6 +10,12 @@ import { BackIcon, UploadIcon } from "../assets/icons/icons";
 export interface PageHeaderProps {
   headerTitle: string;
 }
+
+/**
+ * Header that displays the title of the page and any button the page might contain
+ *
+ * @param headerTitle the title of the page
+ */
 const PageHeader: React.FC<PageHeaderProps> = ({ headerTitle }) => {
   return (
     <Container>

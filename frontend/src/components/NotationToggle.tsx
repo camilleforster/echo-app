@@ -10,6 +10,14 @@ export interface NotationToggleProps {
   onClick: (notation: NotationType) => void;
   testID?: string;
 }
+
+/**
+ * Notation toggle that allows you to choose between a sharp or flat notation
+ *
+ * @param selectedValue - the selected notation
+ * @param onClick - function to be called upon clicking the notation
+ * @param testID - the testID for the notation toggle
+ */
 const NotationToggle: React.FC<NotationToggleProps> = ({
   selectedValue,
   onClick,

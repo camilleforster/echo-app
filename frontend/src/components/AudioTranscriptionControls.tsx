@@ -10,6 +10,9 @@ import NumberForm from "./NumberForm";
 import { useTranscriptionControls } from "../contexts/TranscriptionControlsContext";
 import NotationToggle from "./NotationToggle";
 
+/**
+  Contains controls for settings for how the Chord Diagram is displayed
+ */
 const AudioTranscriptionControls = () => {
   const {
     leftHanded,

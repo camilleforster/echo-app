@@ -8,6 +8,15 @@ export interface NumberFormProps {
   onDecrease: () => void;
   testID?: string;
 }
+
+/**
+ * A number form that allows you to increase or decrease a count
+ *
+ * @param value - the current count
+ * @param onIncrease - function to call on increase count
+ * @param onDecrease - function to call on decrease count
+ * @param testID - testing id for the form
+ */
 const NumberForm: React.FC<NumberFormProps> = ({
   value,
   onIncrease,

@@ -20,7 +20,8 @@ describe("AudioPlayerWave", () => {
     const background = getByTestId("audio-player-background");
     expect(background.props.source).toEqual(
       {
-        source: require("../../assets/player-background.png")
-      }.source);
+        source: require("../../assets/player-background.png"),
+      }.source,
+    );
   });
 });

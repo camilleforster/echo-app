@@ -10,6 +10,14 @@ export interface GradientSwitchProps {
   onToggle: () => void;
   testID?: string;
 }
+
+/**
+ * A switch with a graident background
+ *
+ * @param value - the state of the switch (on/off)
+ * @param onToggle - function to be called on switch toggle
+ * @param testID - testing id for the switch
+ */
 const GradientSwitch: React.FC<GradientSwitchProps> = ({
   value,
   onToggle,

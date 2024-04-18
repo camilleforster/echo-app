@@ -7,6 +7,9 @@ import {
 import { LabelType, LabelSize } from "../types/LabelType";
 import Label from "./Label";
 
+/**
+  Contains the audio playback waveform and note descriptions of the selected audio
+ */
 const AudioPlayerWave = () => {
   return (
     <Container>

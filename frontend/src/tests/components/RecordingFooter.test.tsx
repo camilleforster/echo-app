@@ -21,9 +21,6 @@ jest.mock("../../contexts/RecordingContext", () => {
   };
 });
 
-/**
- * Interface defining the parameters for setting up the mock implementation of useRecording hook.
- */
 interface UseRecordingMockParams {
   recordingStatus?: RecordingStatus;
   recordingTitle?: string;

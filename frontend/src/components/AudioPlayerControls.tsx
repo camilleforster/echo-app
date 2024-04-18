@@ -15,7 +15,9 @@ import {
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 
-// TODO: Make functional
+/**
+  Contains controls for playing the audio including play, pause, rewind, and forward
+ */
 const AudioPlayerControls = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
