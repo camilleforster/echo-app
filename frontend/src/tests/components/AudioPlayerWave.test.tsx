@@ -7,17 +7,20 @@ import AudioPlayerWave from "../../components/AudioPlayerWave";
  * Renders the AudioPlayerWave component wrapped in a ThemeProvider with the default theme.
  */
 const renderComponent = () =>
-    render(
-        <Theme>
-            <AudioPlayerWave />
-        </Theme>
-    );
+  render(
+    <Theme>
+      <AudioPlayerWave />
+    </Theme>,
+  );
 
 describe("AudioPlayerWave", () => {
-    it("renders the background image", () => {
-        const { getByTestId } = renderComponent();
+  it("renders the background image", () => {
+    const { getByTestId } = renderComponent();
 
-        const background = getByTestId("audio-player-background");
-        expect(background.props.source).toEqual(require('../../assets/player-background.png'));
-    });
+    const background = getByTestId("audio-player-background");
+    expect(background.props.source).toEqual(
+      {
+        source: require("../../assets/player-background.png")
+      }.source);
+  });
 });

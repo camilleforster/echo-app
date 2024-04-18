@@ -1,4 +1,4 @@
 export enum NotationType {
-    Sharp = "#",
-    Flat = "b",
+  Sharp = "#",
+  Flat = "b",
 }

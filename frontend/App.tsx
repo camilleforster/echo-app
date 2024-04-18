@@ -33,8 +33,8 @@ const App: React.FC = () => {
     <Theme>
       <RecordingProvider>
         <TranscriptionControlsProvider>
-        {/* <LibraryPage /> */}
-        <AudioTranscriptionPage/>
+          {/* <LibraryPage /> */}
+          <AudioTranscriptionPage />
         </TranscriptionControlsProvider>
       </RecordingProvider>
     </Theme>

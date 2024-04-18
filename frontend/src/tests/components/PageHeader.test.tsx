@@ -9,17 +9,17 @@ import Theme from "../../../Theme";
  * @param props - The props respective to the PageHeader
  */
 const renderComponent = (props: PageHeaderProps): RenderAPI =>
-    render(
-      <Theme>
-        <PageHeader {...props} />
-      </Theme>
-    );
+  render(
+    <Theme>
+      <PageHeader {...props} />
+    </Theme>,
+  );
 
 describe("PageHeader", () => {
-    it("renders the header title correctly", () => {
-        const testTitle = "Test Page Title";
-        const { getByText } = renderComponent({ headerTitle: testTitle });
+  it("renders the header title correctly", () => {
+    const testTitle = "Test Page Title";
+    const { getByText } = renderComponent({ headerTitle: testTitle });
 
-        expect(getByText(testTitle)).toBeTruthy();
-    });
+    expect(getByText(testTitle)).toBeTruthy();
+  });
 });

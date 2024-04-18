@@ -1,9 +1,9 @@
 export enum LabelType {
-    Solid = "solid",
-    Outlined = "outlined"
+  Solid = "solid",
+  Outlined = "outlined",
 }
 
 export enum LabelSize {
-    Regular = "regular",
-    Small = "small"
+  Regular = "regular",
+  Small = "small",
 }

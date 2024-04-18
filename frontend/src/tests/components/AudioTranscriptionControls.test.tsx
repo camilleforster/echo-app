@@ -8,15 +8,21 @@ import { NotationType } from "../../types/NotationType";
 
 // Mock the useTranscriptionControls context hook
 jest.mock("../../contexts/TranscriptionControlsContext", () => {
-  const actual = jest.requireActual("../../contexts/TranscriptionControlsContext");
+  const actual = jest.requireActual(
+    "../../contexts/TranscriptionControlsContext",
+  );
   return {
     ...actual,
     useTranscriptionControls: jest.fn(),
   };
 });
 
-const setupTranscriptionControlsContext = (values: Partial<TranscriptionControlsContextType> = {}) => {
-(TranscriptionControlsContext.useTranscriptionControls as jest.Mock).mockImplementation(() => ({
+const setupTranscriptionControlsContext = (
+  values: Partial<TranscriptionControlsContextType> = {},
+) => {
+  (
+    TranscriptionControlsContext.useTranscriptionControls as jest.Mock
+  ).mockImplementation(() => ({
     leftHanded: false,
     toggleLeftHanded: jest.fn(),
     playback: false,
@@ -30,11 +36,12 @@ const setupTranscriptionControlsContext = (values: Partial<TranscriptionControls
   }));
 };
 
-const renderAudioTranscriptionControls = () => render(
-  <Theme>
-    <AudioTranscriptionControls />
-  </Theme>
-);
+const renderAudioTranscriptionControls = () =>
+  render(
+    <Theme>
+      <AudioTranscriptionControls />
+    </Theme>,
+  );
 
 describe("AudioTranscriptionControls", () => {
   beforeEach(() => {
@@ -81,7 +88,7 @@ describe("AudioTranscriptionControls", () => {
     const mockToggleLeftHanded = jest.fn();
     setupTranscriptionControlsContext({
       leftHanded: false,
-      toggleLeftHanded: mockToggleLeftHanded
+      toggleLeftHanded: mockToggleLeftHanded,
     });
 
     const { getByTestId } = renderAudioTranscriptionControls();
@@ -93,7 +100,7 @@ describe("AudioTranscriptionControls", () => {
     const mockTogglePlayback = jest.fn();
     setupTranscriptionControlsContext({
       playback: false,
-      togglePlayback: mockTogglePlayback
+      togglePlayback: mockTogglePlayback,
     });
 
     const { getByTestId } = renderAudioTranscriptionControls();

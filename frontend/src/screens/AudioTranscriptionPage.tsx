@@ -8,17 +8,17 @@ import ChordCarousel from "../components/ChordCarousel";
 
 // TODO: Connect with navigation
 const AudioTranscriptionPage = () => {
-    return (
-        <Container>
-            <PageHeader headerTitle={"alternative bass line for Kanye"} />
-            <AudioPlaybackWave />
-            <Bottom>
-                <AudioPlaybackControls />
-                <AudioTranscriptionControls />
-                { /* TODO: Supply actual Chord Diagram data */ }
-                <ChordCarousel chordDiagrams={[0, 1, 2]} />
-            </Bottom>
-        </Container>
-    );
-}
+  return (
+    <Container>
+      <PageHeader headerTitle={"alternative bass line for Kanye"} />
+      <AudioPlaybackWave />
+      <Bottom>
+        <AudioPlaybackControls />
+        <AudioTranscriptionControls />
+        {/* TODO: Supply actual Chord Diagram data */}
+        <ChordCarousel chordDiagrams={[0, 1, 2]} />
+      </Bottom>
+    </Container>
+  );
+};
 export default AudioTranscriptionPage;
