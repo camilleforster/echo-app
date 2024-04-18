@@ -7,7 +7,7 @@ import {
   ExitIcon,
   RecordIcon,
   StopRecordingIcon,
-} from "../assets/icons";
+} from "../assets/icons/icons";
 import {
   Footer,
   TopView,

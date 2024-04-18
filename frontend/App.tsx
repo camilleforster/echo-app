@@ -10,6 +10,8 @@ import {
   WorkSans_600SemiBold,
   WorkSans_700Bold,
 } from "@expo-google-fonts/work-sans";
+import AudioTranscriptionPage from "./src/screens/AudioTranscriptionPage";
+import { TranscriptionControlsProvider } from "./src/contexts/TranscriptionControlsContext";
 
 /**
  * An app that converts a user's voice to notes.
@@ -30,7 +32,10 @@ const App: React.FC = () => {
   return (
     <Theme>
       <RecordingProvider>
-        <LibraryPage />
+        <TranscriptionControlsProvider>
+          {/* <LibraryPage /> */}
+          <AudioTranscriptionPage />
+        </TranscriptionControlsProvider>
       </RecordingProvider>
     </Theme>
   );

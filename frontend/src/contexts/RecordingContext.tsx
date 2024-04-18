@@ -14,9 +14,6 @@ export enum RecordingStatus {
   Confirming,
 }
 
-/**
- * Interface defining the shape of the context for recording.
- */
 interface RecordingContextType {
   recordingStatus: RecordingStatus;
   startRecording: () => void;
