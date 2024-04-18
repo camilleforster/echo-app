@@ -2,20 +2,19 @@ import { Text, ImageBackground } from "react-native";
 import styled from "styled-components/native";
 
 export const Echo = styled(Text)`
-  position: absolute;
-  marginleft: -44.5px;
-  top: 379;
-  left: 50%;
-  fontsize: 45px;
-  fontstyle: italic;
   color: #fff;
-  font-weight: 300;
+
+  font-size: 45px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
 `;
 
 export const SplashBackground = styled(ImageBackground)`
-  flex: 1;
+  display: flex;
   width: 100%;
   height: 100%;
-  overflow: "hidden";
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;

@@ -14,7 +14,7 @@ const Splash = () => {
       source={require("../assets/Splash0.png")}
       testID="splashBackground"
     >
-      <Echo testID="echoLogo">{`echo `}</Echo>
+      <Echo testID="echoLogo">echo</Echo>
     </SplashBackground>
   );
 };
