@@ -15,7 +15,7 @@ import {
   AddFolderIcon,
   MoveFolderIcon,
   SearchIcon,
-} from "../assets/icons";
+} from "../assets/icons/icons";
 import Theme from "../../Theme";
 
 describe("Icon Components", () => {
