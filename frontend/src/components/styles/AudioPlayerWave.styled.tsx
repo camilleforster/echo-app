@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
-import { ImageBackground, View } from "react-native";
+import { Image, View } from "react-native";
 
-export const Background = styled(ImageBackground)`
+export const Background = styled(Image)`
     width: 100%;
     height: 135px;
 `

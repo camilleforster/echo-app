@@ -1,20 +1,20 @@
 import React from "react";
 import { SwitchContainer, Gradient, StyledSwitch } from "./styles/GradientSwitch.styled";
 
-interface GradientSwitchProps {
+export interface GradientSwitchProps {
      value: boolean;
      onToggle: () => void;
+     testID?: string;
 }
-const GradientSwitch: React.FC<GradientSwitchProps> = ({ value, onToggle }) => {
-    const backgroundImage = require('../assets/gradient.png');
-
+const GradientSwitch: React.FC<GradientSwitchProps> = ({ value, onToggle, testID }) => {
     return (
         <SwitchContainer>
             <Gradient
-                source={backgroundImage}
+                source={require('../assets/gradient.png')}
                 imageStyle={{ borderRadius: 15 }}
             />
             <StyledSwitch
+                testID={testID || "switch"}
                 value={value}
                 onValueChange={onToggle}
                 onColor="transparent"

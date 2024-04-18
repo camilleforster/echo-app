@@ -3,7 +3,7 @@ import { Carousel } from "react-native-ui-lib";
 import { View, Text } from "react-native";
 import { useTheme } from "styled-components/native";
 
-interface ChordCarouselProps {
+export interface ChordCarouselProps {
     chordDiagrams: number[]; // TODO: Change to hold actual chord data
 }
 const ChordCarousel: React.FC<ChordCarouselProps> = ({ chordDiagrams }) => {
@@ -23,11 +23,16 @@ const ChordCarousel: React.FC<ChordCarouselProps> = ({ chordDiagrams }) => {
             }}
             pageControlPosition={Carousel.pageControlPositions.UNDER}
             allowAccessibleLayout
+            testID="carousel"
         >
             {chordDiagrams.map((item, i) => {
                 return (
                     // TODO: Replace with actual chord diagram
-                    <View key={i} style={{ width: 200, justifyContent: 'center', alignItems: 'center' }}>
+                    <View 
+                        key={i}
+                        style={{ width: 200, justifyContent: 'center', alignItems: 'center' }}
+                        testID={`carousel-item-${i}`}
+                    >
                         <Text>{item}</Text>
                     </View>
                 );

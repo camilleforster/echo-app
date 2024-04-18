@@ -2,14 +2,14 @@ import * as React from "react";
 import { StyledText, StyledLabel } from "./styles/Label.styled";
 import { LabelType, LabelSize } from "../types/LabelType";
 
-interface LabelProps {
+export interface LabelProps {
     type: LabelType;
     size: LabelSize;
     children: string;
 }
 const Label: React.FC<LabelProps> = ({ type, size, children }) => {
     return (
-        <StyledLabel type={type} size={size}>
+        <StyledLabel testID="label" type={type} size={size}>
             <StyledText type={type} size={size}>
                 {children}
             </StyledText>

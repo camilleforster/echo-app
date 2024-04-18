@@ -4,17 +4,16 @@ import { LabelType, LabelSize } from "../types/LabelType";
 import Label from "./Label";
 
 const AudioPlayerWave = () => {
-    const backgroundImage = require("../assets/player-background.png");
-
     return (
         <Container>
             <LabelContainer>
+                { /* TODO: Connect with time */ }
                 <Label type={LabelType.Outlined} size={LabelSize.Regular}>
                     C
                 </Label>
             </LabelContainer>
             { /* TODO: Insert Audio Wave */ }
-            <Background source={backgroundImage} />
+            <Background testID="audio-player-background" source={require('../assets/player-background.png')} />
         </Container>
     );
 };

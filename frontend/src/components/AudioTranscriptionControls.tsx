@@ -13,19 +13,19 @@ const AudioTranscriptionControls = () => {
             <Content>
                 <SelectionItem>
                     <SelectionItemLabel>Left Handed</SelectionItemLabel>
-                    <GradientSwitch value={leftHanded} onToggle={toggleLeftHanded} />
+                    <GradientSwitch testID="left-handed-switch" value={leftHanded} onToggle={toggleLeftHanded} />
                 </SelectionItem>
                 <SelectionItem>
                     <SelectionItemLabel>Capo</SelectionItemLabel>
-                    <NumberForm value={capoValue} onDecrease={decrementCapo} onIncrease={incrementCapo} />
+                    <NumberForm testID="capo-number-form" value={capoValue} onDecrease={decrementCapo} onIncrease={incrementCapo} />
                 </SelectionItem>
                 <SelectionItem>
                     <SelectionItemLabel>Notation</SelectionItemLabel>
-                    <NotationToggle selectedValue={selectedNotation} onClick={setSelectedNotation} />
+                    <NotationToggle testID="notation-toggle" selectedValue={selectedNotation} onClick={setSelectedNotation} />
                 </SelectionItem>
                 <SelectionItem>
                     <SelectionItemLabel>Playback</SelectionItemLabel>
-                    <GradientSwitch value={playback} onToggle={togglePlayback} />
+                    <GradientSwitch testID="playback-switch" value={playback} onToggle={togglePlayback} />
                 </SelectionItem>
             </Content>
         </Container>

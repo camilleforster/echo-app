@@ -3,16 +3,17 @@ import { LabelType, LabelSize } from "../types/LabelType";
 import Label from "./Label";
 import { TouchableOpacity } from "react-native";
 import { LabelContainer } from "./styles/NotationToggle.styled";
-import { NotationType } from "../contexts/TranscriptionControlsContext";
+import { NotationType } from "../types/NotationType";
 
-interface NotationToggleProps {
+export interface NotationToggleProps {
     selectedValue: NotationType;
     onClick: (notation: NotationType) => void;
+    testID?: string;
 }
-const NotationToggle: React.FC<NotationToggleProps> = ({ selectedValue, onClick }) => {
+const NotationToggle: React.FC<NotationToggleProps> = ({ selectedValue, onClick, testID }) => {
     return (
-        <LabelContainer>
-            <TouchableOpacity onPress={() => onClick(NotationType.Sharp)}>
+        <LabelContainer testID={testID}>
+            <TouchableOpacity testID="sharp-button" onPress={() => onClick(NotationType.Sharp)}>
                 <Label
                     type={selectedValue === NotationType.Sharp ? LabelType.Solid : LabelType.Outlined}
                     size={LabelSize.Small}
@@ -20,7 +21,7 @@ const NotationToggle: React.FC<NotationToggleProps> = ({ selectedValue, onClick 
                     #
                 </Label>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => onClick(NotationType.Flat)}>
+            <TouchableOpacity testID="flat-button" onPress={() => onClick(NotationType.Flat)}>
                 <Label
                     type={selectedValue === NotationType.Flat ? LabelType.Solid : LabelType.Outlined}
                     size={LabelSize.Small}

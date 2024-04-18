@@ -2,23 +2,24 @@ import * as React from "react";
 import { Container, Content, StyledText } from "./styles/NumberForm.styled";
 import { TouchableOpacity } from "react-native";
 
-interface NumberFormProps {
+export interface NumberFormProps {
     value: number;
     onIncrease: () => void;
     onDecrease: () => void;
+    testID?: string;
 }
-const NumberForm: React.FC<NumberFormProps> = ({ value, onIncrease, onDecrease }) => {
+const NumberForm: React.FC<NumberFormProps> = ({ value, onIncrease, onDecrease, testID }) => {
     const disabledMin = value <= 0;
     const disabledMax = value >= 10;
 
     return (
-        <Container>
+        <Container testID={testID}>
             <Content>
-                <TouchableOpacity onPress={onDecrease} disabled={disabledMin}>
+                <TouchableOpacity testID="minus-button" onPress={onDecrease} disabled={disabledMin}>
                     <StyledText disabled={disabledMin}>-</StyledText>
                 </TouchableOpacity>
                 <StyledText>{value}</StyledText>
-                <TouchableOpacity onPress={onIncrease} disabled={disabledMax}>
+                <TouchableOpacity testID="plus-button" onPress={onIncrease} disabled={disabledMax}>
                     <StyledText disabled={disabledMax}>+</StyledText>
                 </TouchableOpacity>
             </Content>

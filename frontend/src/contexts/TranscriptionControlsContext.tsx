@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
+import { NotationType } from "../types/NotationType";
 
-export enum NotationType {
-    Sharp = "#",
-    Flat = "b",
-}
-
-interface TranscriptionControlsContextType {
+export interface TranscriptionControlsContextType {
     selectedNotation: NotationType;
     setSelectedNotation: (notation: NotationType) => void;
     capoValue: number;
@@ -29,7 +25,7 @@ export const useTranscriptionControls = (): TranscriptionControlsContextType => 
     return context;
 };
 
-export const TranscriptionControlsProvider: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
+export const TranscriptionControlsProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const [selectedNotation, setSelectedNotation] = useState<NotationType>(NotationType.Sharp);
     const [capoValue, setCapoValue] = useState<number>(0);
     const [playback, setPlayback] = useState<boolean>(false);
