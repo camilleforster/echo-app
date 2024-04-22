@@ -12,29 +12,36 @@ import {
   PauseIcon,
   RewindIcon,
 } from "../assets/icons/icons";
-import { useState } from "react";
 import { TouchableOpacity } from "react-native";
+import { usePlayback } from "../contexts/PlaybackContext";
+import { PlaybackStatus } from "../contexts/PlaybackContext";
 
 /**
   Contains controls for playing the audio including play, pause, rewind, and forward
  */
 const AudioPlayerControls = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { playAudio, pauseAudio, rewindAudio, forwardAudio, playbackStatus, audioLength, currentPosition, skipTo } = usePlayback();
 
   const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+    if (playbackStatus === PlaybackStatus.Playing) {
+      pauseAudio();
+    } else {
+      playAudio();
+    }
   };
 
   return (
     <Container>
-      <StyledSlider onValueChange={(value) => console.log(value)} />
+      <StyledSlider onValueChange={(value) => skipTo(value)} maximumValue={audioLength} />
       <Time>
-        <TimeText>0:00</TimeText>
-        <TimeText>3:56</TimeText>
+        <TimeText>{currentPosition}</TimeText>
+        <TimeText>{audioLength}</TimeText>
       </Time>
       <Controls>
-        <RewindIcon />
-        {isPlaying ? (
+        <TouchableOpacity onPress={rewindAudio}>
+          <RewindIcon />
+        </TouchableOpacity>
+        {playbackStatus === PlaybackStatus.Playing ? (
           <TouchableOpacity onPress={togglePlayPause}>
             <PauseIcon />
           </TouchableOpacity>
@@ -43,7 +50,9 @@ const AudioPlayerControls = () => {
             <PlayIcon />
           </TouchableOpacity>
         )}
-        <ForwardIcon />
+        <TouchableOpacity onPress={forwardAudio}>
+          <ForwardIcon />
+        </TouchableOpacity>
       </Controls>
     </Container>
   );

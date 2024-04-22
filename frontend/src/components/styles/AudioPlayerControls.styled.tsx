@@ -9,8 +9,7 @@ export const Container = styled(View)`
 
 export const StyledSlider = styled(Slider).attrs((props) => ({
   minimumValue: 0,
-  maximumValue: 100,
-  value: 50,
+  value: 0,
   minimumTrackTintColor: `${props.theme.textDarkBlue}`,
   maximumTrackTintColor: `${props.theme.backgroundLightBlue}`,
   thumbTintColor: `${props.theme.textDarkBlue}`,
