@@ -12,6 +12,7 @@ import {
 } from "@expo-google-fonts/work-sans";
 import AudioTranscriptionPage from "./src/screens/AudioTranscriptionPage";
 import { TranscriptionControlsProvider } from "./src/contexts/TranscriptionControlsContext";
+import SignUp from "./src/screens/SignInPage";
 
 /**
  * An app that converts a user's voice to notes.
@@ -30,14 +31,15 @@ const App: React.FC = () => {
   }
 
   return (
-    <Theme>
-      <RecordingProvider>
-        <TranscriptionControlsProvider>
-          {/* <LibraryPage /> */}
-          <AudioTranscriptionPage />
-        </TranscriptionControlsProvider>
-      </RecordingProvider>
-    </Theme>
+    <SignUp></SignUp>
+    // <Theme>
+    //   <RecordingProvider>
+    //     <TranscriptionControlsProvider>
+    //       {/* <LibraryPage /> */}
+    //       <AudioTranscriptionPage />
+    //     </TranscriptionControlsProvider>
+    //   </RecordingProvider>
+    // </Theme>
   );
 };
 
