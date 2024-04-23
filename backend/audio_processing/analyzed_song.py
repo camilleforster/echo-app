@@ -201,7 +201,7 @@ class AnalyzedSong:
 
     def __repr__(self):
         """
-        Represents the song as a comma-delineated sequence of notes and their durations.
+        Represents the song as a comma-delimited sequence of notes and their durations.
         """
         string = ''
 
