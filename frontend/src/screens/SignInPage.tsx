@@ -4,23 +4,21 @@ import { SigninContanier,StyledPressable, ButtonBackground, ContentRow, ButtonTe
 
 function SignUp() {
 
+    const [myEmail, setMyEmail] = useState("")
     const [myUsername, setMyUsername] = useState("")
-    const [myPassword, setMyPassword] = useState("")
     //const [repeatPassword, setRepeatPassword] = useState("")
 
     return <SigninContanier>
-        <TitleText>Sign Up</TitleText>
+        <TitleText>Sign In</TitleText>
         <TextInputContainer>
         <Text>Email</Text>
         <SignUpTextInput autoCapitalize="none" onChangeText={text => {
-            setMyUsername(text)
-            console.log(myUsername)}}  
+            setMyEmail(text)
+            console.log(myEmail)}}  
+        value={myEmail}/>
+        <Text>Username</Text>
+        <SignUpTextInput autoCapitalize="none" onChangeText={text => setMyUsername(text)}  
         value={myUsername}/>
-        <Text>Password</Text>
-        <TextInput autoCapitalize="none" onChangeText={text => setMyPassword(text)} style = {styles.textinput}
-        secureTextEntry= {true} value={myPassword}/>
-        <SignUpTextInput autoCapitalize="none" onChangeText={text => setMyPassword(text)}  
-        secureTextEntry= {true} value={myPassword}/>
         {/* <Text>Confirm Password</Text>
         <SignUpTextInput autoCapitalize="none" onChangeText={text => setRepeatPassword(text)}
         secureTextEntry= {true} value={repeatPassword}/> */}

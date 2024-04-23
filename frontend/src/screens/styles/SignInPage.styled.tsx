@@ -1,4 +1,4 @@
-import { Text, ImageBackground, View, Pressable } from "react-native";
+import { Text, ImageBackground, View, Pressable, TextInput } from "react-native";
 import styled from "styled-components/native";
 
 export const StyledPressable = styled(Pressable)`
@@ -56,7 +56,7 @@ export const ButtonText = styled(Text)`
   align-items: center;
 `;
 
-export const SignUpTextInput = styled(Text)`
+export const SignUpTextInput = styled(TextInput)`
 height: 40px;
   border-width: 0;
   border-bottom-width: 1px;
@@ -64,7 +64,8 @@ height: 40px;
   padding: 10px;
   width: 100%;
   margin-top: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  border-color: #ccc
   
 `
 
