@@ -1,23 +1,11 @@
-"""Flask App
+"""
+Echo Flask API
 
-TODO complete docstring
+Flask-based REST API that serves as the backend for the Echo mobile application.
 
-This script creates routes ....
-
-This script requires that `flask` be installed within the Python
-environment you are running this script in.
-
-This file can also be imported as a module and contains the following
-functions:
-
-    * get_user_data - returns the column headers of the file
-    * process_recording - 
-    * rename_sequence - 
-    * update_sequence_data - 
-    * create_folder - 
-    * rename_folder
-    * update_folder_contents - 
-    * main - executes when the script is run directly; launches the API
+Includes various routes that all involve interacting with the MySQL database,
+for creating, updating, and retrieving user data, as well as processing audio recordings
+to generate note sequences viewable on the frontend.
 """
 
 import os
