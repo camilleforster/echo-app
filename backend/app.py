@@ -79,12 +79,12 @@ def get_user_data(email):
         }
 
         query = "SELECT sequence FROM Contains WHERE folder = %s"
-        cursor.execute(query, (email,))
+        cursor.execute(query, (folder_id,))
         folder_sequences = cursor.fetchall()
 
         for sequence in folder_sequences:
             sequence_id = sequence[0]
-            folder[sequences].append(sequence_id)
+            folder["sequences"].append(sequence_id)
 
         folders.append(folder)
 
@@ -444,7 +444,8 @@ def update_folder_contents():
 
     cursor = db.connection.cursor()
     query = "SELECT * FROM Folders WHERE folder_id = %s"
-    folder = cursor.execute(query, (folder_id,))
+    cursor.execute(query, (folder_id,))
+    folder = cursor.fetchone()
 
     if folder is None:
         cursor.close()
@@ -475,7 +476,7 @@ def update_folder_contents():
         
     query = "SELECT sequence FROM Contains WHERE folder = %s"
     cursor.execute(query, (folder_id,))
-    current_sequences = folder.fetchall()
+    current_sequences = cursor.fetchall()
     current_sequence_ids = [sequence[0] for sequence in current_sequences]
 
     for sequence_id in sequences:  # add newly added sequences
@@ -488,6 +489,7 @@ def update_folder_contents():
             query = "DELETE FROM Contains WHERE sequence = %s"
             cursor.execute(query, (sequence_id,))
  
+    db.connection.commit()
     cursor.close()
     display_name = folder[1]
     response = jsonify({"message": f"{display_name} updated successfully"})
@@ -512,9 +514,9 @@ def delete_folder(folder_id):
     """
 
     cursor = db.connection.cursor()
-    query = "DELETE FROM Folders WHERE folder_id = %s"
-    cursor.execute(query, (folder_id,))
     query = "DELETE FROM Contains WHERE folder = %s"
+    cursor.execute(query, (folder_id,))
+    query = "DELETE FROM Folders WHERE folder_id = %s"
     cursor.execute(query, (folder_id,))
     db.connection.commit()
     cursor.close()
@@ -540,9 +542,9 @@ def delete_sequence(sequence_id):
     """
 
     cursor = db.connection.cursor()
-    query = "DELETE FROM Sequences WHERE sequence_id = %s"
-    cursor.execute(query, (sequence_id,))
     query = "DELETE FROM Contains WHERE sequence = %s"
+    cursor.execute(query, (sequence_id,))
+    query = "DELETE FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
     db.connection.commit()
     cursor.close()
