@@ -5,22 +5,30 @@ import { Container, Bottom } from "./styles/AudioTranscriptionPage.styled";
 import AudioPlaybackControls from "../components/AudioPlayerControls";
 import AudioTranscriptionControls from "../components/AudioTranscriptionControls";
 import ChordCarousel from "../components/ChordCarousel";
+import PlaybackProvider from "../contexts/PlaybackContext";
+import { useRoute } from "@react-navigation/native";
+import { AudioTranscriptionPageProps } from "../types/NavigationStackTypes";
 
 /**
  * The page that contains audio transcription data and controls for the chosen audio
  */
-const AudioTranscriptionPage = () => {
+const AudioTranscriptionPage: React.FC<AudioTranscriptionPageProps> = () => {
+  const route = useRoute<AudioTranscriptionPageProps['route']>();
+  const { uri } = route.params;
+
   return (
-    <Container>
-      <PageHeader headerTitle={"alternative bass line for Kanye"} />
-      <AudioPlaybackWave />
-      <Bottom>
-        <AudioPlaybackControls />
-        <AudioTranscriptionControls />
-        {/* TODO: Supply actual Chord Diagram data */}
-        <ChordCarousel chordDiagrams={[0, 1, 2]} />
-      </Bottom>
-    </Container>
+    <PlaybackProvider uri={uri}>
+      <Container>
+        <PageHeader headerTitle={"alternative bass line for Kanye"} />
+        <AudioPlaybackWave />
+        <Bottom>
+          <AudioPlaybackControls />
+          <AudioTranscriptionControls />
+          {/* TODO: Supply actual Chord Diagram data */}
+          <ChordCarousel chordDiagrams={[0, 1, 2]} />
+        </Bottom>
+      </Container>
+    </PlaybackProvider>
   );
 };
 export default AudioTranscriptionPage;

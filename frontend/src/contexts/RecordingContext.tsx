@@ -114,7 +114,7 @@ export const RecordingProvider: React.FC<PropsWithChildren> = ({
   const saveRecording = useCallback(async () => {
     if (recording) {
       await recording.stopAndUnloadAsync();
-      console.log("Recording saved.");
+      console.log("Recording saved at.", recording.getURI());
 
       // TODO: Send file to backend
       // const uri = await recording.getURI();

@@ -4,7 +4,7 @@ import {
   Container,
   LabelContainer,
 } from "./styles/AudioPlayerWave.styled";
-import { LabelType, LabelSize } from "../types/LabelType";
+import { LabelType, LabelSize } from "../types/LabelTypes";
 import Label from "./Label";
 
 /**
@@ -13,12 +13,12 @@ import Label from "./Label";
 const AudioPlayerWave = () => {
   return (
     <Container>
-      <LabelContainer>
+      {/* <LabelContainer> */}
         {/* TODO: Connect with time */}
-        <Label type={LabelType.Outlined} size={LabelSize.Regular}>
+        {/* <Label type={LabelType.Outlined} size={LabelSize.Regular}>
           C
-        </Label>
-      </LabelContainer>
+        </Label> */}
+      {/* </LabelContainer> */}
       {/* TODO: Insert Audio Wave */}
       <Background
         testID="audio-player-background"

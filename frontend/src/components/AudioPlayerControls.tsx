@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import {
   StyledSlider,
   Container,
@@ -21,6 +22,25 @@ import { PlaybackStatus } from "../contexts/PlaybackContext";
  */
 const AudioPlayerControls = () => {
   const { playAudio, pauseAudio, rewindAudio, forwardAudio, playbackStatus, audioLength, currentPosition, skipTo } = usePlayback();
+  const [sliderPosition, setSliderPosition] = useState(currentPosition);
+
+  useEffect(() => {
+    setSliderPosition(currentPosition);
+  }, [currentPosition]);
+
+  const handleSliderChange = (value: number) => {
+    setSliderPosition(value);
+  };
+
+  const handleSliderChangeStart = () => {
+    if (playbackStatus === PlaybackStatus.Playing) {
+      pauseAudio();
+    }
+  };
+
+  const handleSliderChangeComplete = async () => {
+    await skipTo(sliderPosition);
+  };
 
   const togglePlayPause = () => {
     if (playbackStatus === PlaybackStatus.Playing) {
@@ -30,12 +50,26 @@ const AudioPlayerControls = () => {
     }
   };
 
+  const formatTime = (totalSeconds: number) => {
+    const roundedSeconds = Math.round(totalSeconds);
+    const date = new Date(0);
+    date.setSeconds(roundedSeconds);
+    return date.toISOString().substring(14, 19);
+  };
+
   return (
     <Container>
-      <StyledSlider onValueChange={(value) => skipTo(value)} maximumValue={audioLength} />
+      <StyledSlider
+        value={0 || currentPosition}
+        onValueChange={handleSliderChange}
+        onSeekStart={handleSliderChangeStart}
+        onSeekEnd={handleSliderChangeComplete}
+        maximumValue={audioLength || 1}
+        minimumValue={0}
+      />
       <Time>
-        <TimeText>{currentPosition}</TimeText>
-        <TimeText>{audioLength}</TimeText>
+        <TimeText>{formatTime(sliderPosition)}</TimeText>
+        <TimeText>{formatTime(audioLength)}</TimeText>
       </Time>
       <Controls>
         <TouchableOpacity onPress={rewindAudio}>

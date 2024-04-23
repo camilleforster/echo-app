@@ -6,6 +6,8 @@ import {
   Title,
 } from "./styles/PageHeader.styled";
 import { BackIcon, UploadIcon } from "../assets/icons/icons";
+import { TouchableOpacity } from "react-native-ui-lib/src/incubator";
+import { useNavigation } from "@react-navigation/native";
 
 export interface PageHeaderProps {
   headerTitle: string;
@@ -17,17 +19,21 @@ export interface PageHeaderProps {
  * @param headerTitle the title of the page
  */
 const PageHeader: React.FC<PageHeaderProps> = ({ headerTitle }) => {
+  const navigation = useNavigation();
+  
+  const goBack = () => navigation.goBack();
+
   return (
     <Container>
-      <LeftIcon>
-        {/* TODO: Make button functional */}
-        <BackIcon />
-      </LeftIcon>
+      <TouchableOpacity onPress={goBack}>
+        <LeftIcon>
+          <BackIcon />
+        </LeftIcon>
+      </TouchableOpacity>
       <Title numberOfLines={1}>{headerTitle}</Title>
-      <RightIcon>
-        {/* TODO: Make button functional */}
-        <UploadIcon />
-      </RightIcon>
+        <RightIcon>
+          <UploadIcon />
+        </RightIcon>
     </Container>
   );
 };
