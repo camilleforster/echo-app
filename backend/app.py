@@ -47,13 +47,14 @@ def get_user_data(email):
     JSON response
         A JSON response containing the user's data, including display name, sequences, and folders.
     """
+
     cursor = db.connection.cursor()
     query = "SELECT * FROM Users WHERE email = %s"
     cursor.execute(query, (email,))
     user = cursor.fetchone()
 
     if user is None:
-        response = jsonify({"error": "User does not exist"}), 400  # TODO look into right error codes for each context
+        response = jsonify({"error": "User does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -139,6 +140,7 @@ def get_recording_file(sequence_id):
     MP3 response
         The recorded sequence as an MP3 file
     """
+
     cursor = db.connection.cursor()
     query = "SELECT filename FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
@@ -146,7 +148,7 @@ def get_recording_file(sequence_id):
     cursor.close()
 
     if sequence is None:
-        response = jsonify({"error": "Sequence does not exist"}), 400
+        response = jsonify({"error": "Sequence does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -184,7 +186,7 @@ def process_recording():
     recording = request.files['file']
 
     if not recording or not recording.filename.endswith('.mp3'):
-        response = jsonify({"error": "Invalid recording format"}), 400
+        response = jsonify({"error": "Invalid recording format"}), 415
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
     
@@ -240,11 +242,21 @@ def process_recording():
 @app.route('/rename-sequence/<int:sequence_id>/<display_name>', methods=['PUT'])
 def rename_sequence(sequence_id, display_name):
     """
-    TODO complete docstring
+    Renames a sequence.
+
+    Parameters
+    ----------
+    sequence_id : int
+        The unique identifier for the sequence.
+    display_name : str
+        The new name of the sequence.
+
+    Returns
     -------
     JSON response
-        A JSON response containing ...
+        A JSON confirmation of the sequence rename.
     """
+
     cursor = db.connection.cursor()
     query = "SELECT * FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
@@ -252,7 +264,7 @@ def rename_sequence(sequence_id, display_name):
 
     if sequence is None:
         cursor.close()
-        response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
+        response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -268,11 +280,21 @@ def rename_sequence(sequence_id, display_name):
 @app.route('/update-sequence-data/<int:sequence_id>/<updated_sequence>', methods=['PUT'])
 def update_sequence_data(sequence_id, updated_sequence):
     """
-    TODO complete docstring
+    Updates the note data associated with an audio sequence.
+
+    Parameters
+    ----------
+    sequence_id : int
+        The unique identifier for the sequence.
+    updated_sequence : str
+        The new note data of the sequence, formatted sequentially as a string.
+
+    Returns
     -------
     JSON response
-        A JSON response containing ...
+        A JSON confirmation of the note data update.
     """
+
     cursor = db.connection.cursor()
     query = "SELECT filename FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
@@ -280,7 +302,7 @@ def update_sequence_data(sequence_id, updated_sequence):
     cursor.close()
 
     if sequence is None:
-        response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
+        response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
     
@@ -309,11 +331,21 @@ def update_sequence_data(sequence_id, updated_sequence):
 @app.route('/create-folder/<display_name>/<owner>', methods=['POST'])
 def create_folder(display_name, owner):
     """
-    TODO complete docstring
+    Creates a new folder.
+
+    Parameters
+    ----------
+    display_name : str
+        The display name for the folder.
+    owner : str
+        The email of the user who owns the folder.
+
+    Returns
     -------
     JSON response
-        A JSON response containing ...
+        A JSON response containing the new folder ID.
     """
+
     cursor = db.connection.cursor()
     query = "INSERT INTO Folders (display_name, owner) VALUES (%s, %s)"
     cursor.execute(query, (display_name, owner))
@@ -331,11 +363,21 @@ def create_folder(display_name, owner):
 @app.route('/rename-folder/<int:folder_id>/<display_name>', methods=['PUT'])
 def rename_folder(folder_id, display_name):
     """
-    TODO complete docstring
+    Renames a folder.
+
+    Parameters
+    ----------
+    folder_id : int
+        The unique identifier for the folder.
+    display_name : str
+        The new name of the folder.
+
+    Returns
     -------
     JSON response
-        A JSON response containing ...
+        A JSON confirmation of the folder rename.
     """
+
     cursor = db.connection.cursor()
     query = "SELECT display_name FROM Folders WHERE folder_id = %s"
     cursor.execute(query, (folder_id,))
@@ -343,7 +385,7 @@ def rename_folder(folder_id, display_name):
 
     if folder is None:
         cursor.close()
-        response = jsonify({"error": "Folder does not exist in database"}), 400
+        response = jsonify({"error": "Folder does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -360,15 +402,24 @@ def rename_folder(folder_id, display_name):
 @app.route('/update-folder-contents', methods=['PUT'])
 def update_folder_contents():
     """
-    TODO complete docstring
+    Update the contents of a folder, including adding or removing sequences.
     TODO replace with add and delete routes
+    
+    Parameters
+    ----------
+    folder_id : int
+        The unique identifier for the folder.
+    sequences : list of int
+        An array of the sequences now contained in the folder.
+
+    Returns
     -------
     JSON response
-        A JSON response containing ...
+        A JSON confirmation of the folder contents update.
     """
 
     if not request.is_json:
-        response = jsonify({"error": "Invalid request format"}), 400  # TODO make more descriptive
+        response = jsonify({"error": "Invalid request format"}), 400
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -397,7 +448,7 @@ def update_folder_contents():
 
     if folder is None:
         cursor.close()
-        response = jsonify({"error": f"Folder does not exist"}), 400
+        response = jsonify({"error": f"Folder does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
 
@@ -410,7 +461,7 @@ def update_folder_contents():
 
         if sequence is None:
             cursor.close()
-            response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
+            response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 404
             response[0].headers.add('Access-Control-Allow-Origin', '*')
             return response
 
@@ -418,7 +469,7 @@ def update_folder_contents():
 
         if sequence_owner != folder_owner:
             cursor.close()
-            response = jsonify({"error": f"Sequence {sequence_id} is not owned by {folder_owner}"}), 400
+            response = jsonify({"error": f"Sequence {sequence_id} is not owned by {folder_owner}"}), 403
             response[0].headers.add('Access-Control-Allow-Origin', '*')
             return response
         
@@ -446,6 +497,20 @@ def update_folder_contents():
 
 @app.route('/delete-folder/<int:folder_id>', methods=['DELETE'])
 def delete_folder(folder_id):
+    """
+    Deletes a folder.
+
+    Parameters
+    ----------
+    folder_id : int
+        The unique identifier for the folder to be deleted.
+
+    Returns
+    -------
+    JSON response
+        A JSON confirmation of the folder deletion.
+    """
+
     cursor = db.connection.cursor()
     query = "DELETE FROM Folders WHERE folder_id = %s"
     cursor.execute(query, (folder_id,))
@@ -460,6 +525,20 @@ def delete_folder(folder_id):
 
 @app.route('/delete-sequence/<int:sequence_id>', methods=['DELETE'])
 def delete_sequence(sequence_id):
+    """
+    Deletes a sequence.
+
+    Parameters
+    ----------
+    sequence_id : int
+        The unique identifier for the sequence to be deleted.
+
+    Returns
+    -------
+    JSON response
+        A JSON confirmation of the sequence deletion.
+    """
+
     cursor = db.connection.cursor()
     query = "DELETE FROM Sequences WHERE sequence_id = %s"
     cursor.execute(query, (sequence_id,))
@@ -474,6 +553,22 @@ def delete_sequence(sequence_id):
 
 @app.route('/create-user/<email>/<username>', methods=['POST'])
 def create_user(email, username):
+    """
+    Creates a user.
+
+    Parameters
+    ----------
+    email : str
+        The user's email, which will serve as the user's unique DB identifier.
+    username : str
+        The user's display name.
+
+    Returns
+    -------
+    JSON response
+        A JSON confirmation of user creation.
+    """
+
     cursor = db.connection.cursor()
     query = "INSERT INTO Users (email, display_name) VALUES (%s, %s)"
     cursor.execute(query, (email, username))
