@@ -43,7 +43,7 @@ npm run test
 
 #### Setup
 
-Make sure you have a virtual environment in place. You will also need `portaudio` installed to install the package `pyaudio`. You will need a mysql client installed on ypur computer and the following vars defined in your env: MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS. 
+Make sure you have a virtual environment in place. You will also need `portaudio` installed to install the package `pyaudio`, and `ffmpeg` to run the package `pydub`. You will need a mysql client installed on ypur computer and the following vars defined in your env: MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS. 
 
 ##### Windows
 

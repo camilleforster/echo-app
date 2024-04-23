@@ -63,6 +63,7 @@ Currently under construction.
 * **REST Method**: `POST`
 * **Parameters** (web form-based)
     * **file** (.mp3 file) - an MP3 file of the vocal recording of the audio sequence 
+    * **user** (string) - the email of the user who recorded the audio
     * **display_name** (string) - the sequence's display name indicated by the user
     * **instrument** (int) - the ID of the instrument associated with default playback (this can just be set to 0 if we do not plan on implementing this functionality)
 * **Returns**: a JSON response containing the processed sequence data

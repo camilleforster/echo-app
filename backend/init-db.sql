@@ -1,5 +1,7 @@
 CREATE DATABASE echo_db;
 
+use echo_db;
+
 -- TODO see if we can use variables for string lengths
 
 CREATE TABLE IF NOT EXISTS Users (
@@ -41,3 +43,5 @@ CREATE TABLE IF NOT EXISTS Contains (
     FOREIGN KEY (folder) REFERENCES Folders(folder_id),
     FOREIGN KEY (sequence) REFERENCES Sequences(sequence_id)
 );
+
+INSERT INTO Instruments (display_name) VALUES ('dummy');  --instruments are unused

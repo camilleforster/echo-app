@@ -1,6 +1,5 @@
 from typing import Iterator, List
 from midiutil.MidiFile import MIDIFile
-import lilypond
 import librosa
 import subprocess
 import os
@@ -90,9 +89,9 @@ class AnalysisPoint:
 
     def __repr__(self):
         """
-        Outputs time stamp and corresponding frequencies.
+        Represents the point as a string containing the note data and duration.
         """
-        return f"Time: {self.time_stamp}s, Frequency: {self.frequency}Hz, Note: {self.note_name}, Duration: {self.duration}sec"
+        return f"{self.note_name}{self.duration}"
 
 
 class AnalyzedSong:
@@ -198,8 +197,22 @@ class AnalyzedSong:
             name of the file to save the analysis to.
         """
         with open(filename, 'w') as file:
-            for point in self.data:
-                file.write(f"{point}\n")
+            file.write(str(self))
+
+    def __repr__(self):
+        """
+        Represents the song as a comma-delineated sequence of notes and their durations.
+        """
+        string = ''
+
+        for i, point in enumerate(self.data):
+            string += str(point)
+
+            if i + 1 < len(self.data):
+                string += ','
+
+        return string
+
 
     def notes_to_lilypond(self, chunk_duration):
         """Returns a represtnation of the song notes in lilypond format
@@ -249,40 +262,4 @@ class AnalyzedSong:
 
         with open(filename+".mid", 'wb') as outf:
             mf.writeFile(outf)
-
-    def generate_sheet_music(self, image_name, chunk_duration=0.25):
-        """Generates a represtnation of the song notes in lilypond format
-        and saves it to a PDF file. 
-        
-        Parameters
-        -------
-        image_name : str
-            name of the pdf file to save the notes representation to.
-        chunk_duration: float
-            duration of one beat in secs
-        """
-        # LilyPond code as a Python string
-        lilypond_code = """
-        \\version "2.20.0"
-
-        \\header {
-          title = "A Simple Melody"
-          composer = "Composer Name"
-        }
-
-        \\score {
-          {""" + self.notes_to_lilypond(chunk_duration) + """
-          }
-          \\layout { }
-          \\midi { }
-        }
-        """
-        file_path = os.path.join("output", image_name+".ly")
-        os.makedirs("output", exist_ok=True)
-
-        # Writing the LilyPond code to a file in the output directory
-        with open(file_path, "w") as file:
-            file.write(lilypond_code)
-
-        subprocess.run([str(lilypond.executable()), file_path])
 
