@@ -189,7 +189,7 @@ def process_recording():
         response = jsonify({"error": "Invalid recording format"}), 415
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
-    
+
     display_name = request.form.get('display_name')
 
     if '/' in display_name or '\\' in display_name or '.' in display_name:
@@ -305,7 +305,7 @@ def update_sequence_data(sequence_id, updated_sequence):
         response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 404
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
-    
+
     # validate sequence format
     notes = updated_sequence.split(',')
     analyzer = AudioAnalyzer()
@@ -404,7 +404,7 @@ def update_folder_contents():
     """
     Update the contents of a folder, including adding or removing sequences.
     TODO replace with add and delete routes
-    
+
     Parameters
     ----------
     folder_id : int
@@ -473,7 +473,7 @@ def update_folder_contents():
             response = jsonify({"error": f"Sequence {sequence_id} is not owned by {folder_owner}"}), 403
             response[0].headers.add('Access-Control-Allow-Origin', '*')
             return response
-        
+
     query = "SELECT sequence FROM Contains WHERE folder = %s"
     cursor.execute(query, (folder_id,))
     current_sequences = cursor.fetchall()
@@ -488,7 +488,7 @@ def update_folder_contents():
         if sequence_id not in sequences:
             query = "DELETE FROM Contains WHERE sequence = %s"
             cursor.execute(query, (sequence_id,))
- 
+
     db.connection.commit()
     cursor.close()
     display_name = folder[1]
@@ -582,5 +582,5 @@ def create_user(email, username):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port=8080)
 
