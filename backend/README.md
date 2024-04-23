@@ -8,7 +8,7 @@ This document outlines the parameters, outputs, effects, and intended usage of a
 
 Sequences notes are strings of notes and their respective durations, delimited by commas.
 
-Example: `"C#20.25,B10.25,C20.25,C40.25,C40.25,C30.25`
+Example: `C#20.25,B10.25,C20.25,C40.25,C40.25,C30.25`
 
 ## User data
 
