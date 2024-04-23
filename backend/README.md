@@ -2,6 +2,14 @@
 
 This document outlines the parameters, outputs, effects, and intended usage of all routes made available by the Echo backend (Flask API).
 
+## Data formats
+
+### Sequence notes
+
+Sequences notes are strings of notes and their respective durations, delimited by commas.
+
+Example: `"C#20.25,B10.25,C20.25,C40.25,C40.25,C30.25`
+
 ## User data
 
 ### /create-user/\<email>/\<username>
