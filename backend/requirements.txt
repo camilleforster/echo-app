@@ -13,9 +13,9 @@ zipp==3.17.0
 numpy
 midiutil
 librosa
-lilypond
 pandas
 scipy
 flask-mysqldb
 flask_cors
 pyaudio
+pydub

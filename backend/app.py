@@ -21,48 +21,27 @@ functions:
 """
 
 import os
+import re
 from flask import Flask, request, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 
-from db_client import Client
+from audio_processing import Song, convert_mp3_to_wav, AudioAnalyzer
 
-NOTE_DATA_PATH = './note-data'
-AUDIO_DATA_PATH = './audio-data'
+NOTE_DATA_PATH = './note_data'
+AUDIO_DATA_PATH = './audio_data'
 
 app = Flask(__name__)
 db = MySQL()
 
-# client = Client()
-
-# app.config['MYSQL_HOST'] = client.db_host
-# app.config['MYSQL_DB'] = client.db_name
-# app.config['MYSQL_PORT'] = client.db_port
-# app.config['MYSQL_USER'] = client.user  # TODO create new user
-# app.config['MYSQL_ROOT_PASSWORD'] = client.password
-
 app.config['MYSQL_HOST'] = '127.0.0.1'
-app.config['MYSQL_USER'] = 'root'  # TODO create new user
+app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
 app.config['MYSQL_DB'] = 'echo_db'
 app.config['MYSQL_PORT'] = 53346
 
 db.init_app(app)
 CORS(app)
-
-
-def execute_query(query): # TODO update routes to leverage DB client
-    #     try:
-    #         cursor = db.connection.cursor()
-    #         query = client.create_user(email, username)
-    #         cursor.execute(query)
-    #         rows = cursor.fetchall()
-    #         db.connection.commit() # save changes to the database
-    #     except Exception as e:
-    #         return 'Failure'
-    #     finally:
-    #         cursor.close()
-    pass
 
 
 @app.route('/get-user-data/<email>', methods=['GET'])
@@ -190,7 +169,7 @@ def get_recording_file(sequence_id):
     return response
 
 
-@app.route('/process-recording', methods=['POST'])  # TODO
+@app.route('/process-recording', methods=['POST'])
 def process_recording():
     """
     Processes an uploaded vocal recording by converting it into
@@ -199,6 +178,7 @@ def process_recording():
     Parameters
     ----------
     File file: An MP3 file of the vocal recording of the audio sequence.
+    str user: The email of the creator of the song.
     str display_name: The display name associated with the recording.
     int instrument: The ID of the default playback instrument.
 
@@ -209,26 +189,64 @@ def process_recording():
     """
 
     if 'file' not in request.files:
-        return jsonify({"error": "No recording provided"}), 400
+        response = jsonify({"error": "No recording provided"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     recording = request.files['file']
 
     if not recording or not recording.filename.endswith('.mp3'):
-        return jsonify({"error": "Invalid recording format"}), 400
-
+        response = jsonify({"error": "Invalid recording format"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    
     display_name = request.form.get('display_name')
-    instrument = request.form.get('instrument', type=int)  # default playback instrument
 
-    # TODO ensure all parameters are here
-    email = ""
-    instrument_id = -1
-    bpm = -1
-    filename = ""
-    datetime = ""
-    query = client.create_sequence(email, instrument_id, bpm, display_name, filename, datetime)
-    sequence = {}  # TODO process sequence, save to database, and return sequence data for frontend
+    if '/' in display_name or '\\' in display_name or '.' in display_name:
+        response = jsonify({"error": "Display name cannot include slashes or periods"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
-    return jsonify(sequence)
+    user = request.form.get('user')
+    cursor = db.connection.cursor()
+    query = "SELECT * FROM Sequences WHERE creator = %s AND display_name = %s"
+    cursor.execute(query, (user, display_name))
+    num_sequences_with_same_name = len(cursor.fetchall())
+    filename = f'{user}-{display_name}{num_sequences_with_same_name}'
+    recording_path = f'{AUDIO_DATA_PATH}/{filename}'
+    recording_mp3_path = f'{recording_path}.mp3'
+    recording_wav_path = f'{recording_path}.wav'
+    recording.save(recording_mp3_path)
+    convert_mp3_to_wav(recording_path)
+    instrument = 1  # default playback instrument is unused, so default to 1 instead of `request.form.get('instrument', type=int)`
+    sequence = Song(recording_wav_path, 0.25)
+    processed_sequence = sequence.audio_to_notes()
+    note_path = f'{NOTE_DATA_PATH}/{filename}.txt'
+    processed_sequence.save_to_file(note_path)
+    query = "INSERT INTO Sequences (instrument, bpm, creator, display_name, filename) VALUES (%s, %s, %s, %s, %s)"
+    cursor.execute(query, (instrument, 0, user, display_name, filename))  # use default value of 0 for BPM (currently uncalculated)
+    query = "SELECT LAST_INSERT_ID()"
+    cursor.execute(query)
+    record = cursor.fetchone()
+    record_id = record[0]
+    query = "SELECT * FROM Sequences WHERE sequence_id = %s"
+    cursor.execute(query, (record_id,))
+    raw_sequence_data = cursor.fetchone()
+    db.connection.commit()
+    cursor.close()
+    sequence_id = raw_sequence_data[0]
+    created = raw_sequence_data[6]
+
+    sequence_data = {
+        "id": sequence_id,
+        "display_name": display_name,
+        "created": created,
+        "notes": str(processed_sequence),
+    }
+
+    response = jsonify(sequence_data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/rename-sequence/<int:sequence_id>/<display_name>', methods=['PUT'])
@@ -259,7 +277,7 @@ def rename_sequence(sequence_id, display_name):
     return response
 
 
-@app.route('/update-sequence-data/<int:sequence_id>/<updated_sequence>', methods=['PUT'])  # TODO
+@app.route('/update-sequence-data/<int:sequence_id>/<updated_sequence>', methods=['PUT'])
 def update_sequence_data(sequence_id, updated_sequence):
     """
     TODO complete docstring
@@ -267,18 +285,37 @@ def update_sequence_data(sequence_id, updated_sequence):
     JSON response
         A JSON response containing ...
     """
-    if True:
-        # TODO validate that sequence ID exists as a record in database
-        return jsonify({"error": "Invalid sequence ID"}), 400
+    cursor = db.connection.cursor()
+    query = "SELECT filename FROM Sequences WHERE sequence_id = %s"
+    cursor.execute(query, (sequence_id,))
+    sequence = cursor.fetchone()
+    cursor.close()
 
-    if True:
-        # TODO validate format of new sequence data
-        return jsonify({"error": "Invalid new sequence data"}), 400
+    if sequence is None:
+        response = jsonify({"error": f"Sequence {sequence_id} does not exist"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    
+    # validate sequence format
+    notes = updated_sequence.split(',')
+    analyzer = AudioAnalyzer()
+    pattern = r"^(" + "|".join(analyzer.Note_Names) + r")(\d+(\.\d+)?)$"
 
-    # TODO process edit to sequence, save to database
-    query = client.update_sequence_data(sequence_id, {}) # TODO: fill the dict with new values
+    for note in notes:
+        if not re.match(pattern, note):
+            response = jsonify({"error": "Invalid new sequence data"}), 400
+            response[0].headers.add('Access-Control-Allow-Origin', '*')
+            return response
 
-    return jsonify({"message": f"Sequence {sequence_id} updated successfully"})
+    filename = sequence[0]
+    path = f'{NOTE_DATA_PATH}/{filename}.txt'
+
+    with open(path, 'w') as f:
+        f.write(updated_sequence)
+
+    response = jsonify({"message": f"Sequence {sequence_id} updated successfully"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/create-folder/<display_name>/<owner>', methods=['POST'])
