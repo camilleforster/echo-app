@@ -41,6 +41,7 @@ const App: React.FC = () => {
       <RecordingProvider>
         <TranscriptionControlsProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
+            <PlaybackProvider>
               <NavigationContainer>
                 <Stack.Navigator
                   initialRouteName="LibraryPage"
@@ -53,6 +54,7 @@ const App: React.FC = () => {
                   <Stack.Screen name="AudioTranscriptionPage" component={AudioTranscriptionPage} />
                 </Stack.Navigator>
               </NavigationContainer>
+            </PlaybackProvider>
           </GestureHandlerRootView>
         </TranscriptionControlsProvider>
       </RecordingProvider>

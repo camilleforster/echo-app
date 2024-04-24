@@ -5,9 +5,11 @@ import { Container, Bottom } from "./styles/AudioTranscriptionPage.styled";
 import AudioPlaybackControls from "../components/AudioPlayerControls";
 import AudioTranscriptionControls from "../components/AudioTranscriptionControls";
 import ChordCarousel from "../components/ChordCarousel";
-import PlaybackProvider from "../contexts/PlaybackContext";
 import { useRoute } from "@react-navigation/native";
 import { AudioTranscriptionPageProps } from "../types/NavigationStackTypes";
+import { useEffect } from "react";
+import { usePlayback } from "../contexts/PlaybackContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 /**
  * The page that contains audio transcription data and controls for the chosen audio
@@ -15,20 +17,33 @@ import { AudioTranscriptionPageProps } from "../types/NavigationStackTypes";
 const AudioTranscriptionPage: React.FC<AudioTranscriptionPageProps> = () => {
   const route = useRoute<AudioTranscriptionPageProps['route']>();
   const { uri } = route.params;
+  const { loadAudio, unloadAudio } = usePlayback();
+
+  useEffect(() => {
+    if (uri) {
+      loadAudio(uri);
+    }
+  }, [uri]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        unloadAudio();
+      };
+    }, [unloadAudio])
+  );
 
   return (
-    <PlaybackProvider uri={uri}>
-      <Container>
-        <PageHeader headerTitle={"alternative bass line for Kanye"} />
-        <AudioPlaybackWave />
-        <Bottom>
-          <AudioPlaybackControls />
-          <AudioTranscriptionControls />
-          {/* TODO: Supply actual Chord Diagram data */}
-          <ChordCarousel chordDiagrams={[0, 1, 2]} />
-        </Bottom>
-      </Container>
-    </PlaybackProvider>
+    <Container>
+      <PageHeader headerTitle={"alternative bass line for Kanye"} />
+      <AudioPlaybackWave />
+      <Bottom>
+        <AudioPlaybackControls />
+        <AudioTranscriptionControls />
+        {/* TODO: Supply actual Chord Diagram data */}
+        <ChordCarousel chordDiagrams={[0, 1, 2]} />
+      </Bottom>
+    </Container>
   );
 };
 export default AudioTranscriptionPage;
