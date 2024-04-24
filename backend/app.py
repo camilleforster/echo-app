@@ -582,6 +582,6 @@ def create_user(email, username):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 
