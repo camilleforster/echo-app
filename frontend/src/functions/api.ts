@@ -1,3 +1,8 @@
+import { ConfirmationType } from "../types/ConfirmationType";
+import { CreateFolderResponseType } from "../types/CreateFolderResponseType";
+import { SequenceDataType } from "../types/SequenceDataType";
+import { UserDataType } from "../types/UserDataType";
+
 const API_URL = 'http://127.0.0.1:5000'; // 'http://cs506-team-23.cs.wisc.edu:5000';
 
 /**
@@ -6,7 +11,7 @@ const API_URL = 'http://127.0.0.1:5000'; // 'http://cs506-team-23.cs.wisc.edu:50
  * @param username The user's display name.
  * @returns A JSON confirmation of user creation.
  */
-const createUser = async (email: string, username: string) => {
+const createUser = async (email: string, username: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/create-user/${email}/${username}`, { method: 'POST' });
   return response.json();
 };
@@ -16,7 +21,7 @@ const createUser = async (email: string, username: string) => {
  * @param email The email address of the user to fetch data for.
  * @returns A JSON response containing the user's data, including display name, sequences, and folders.
  */
-const getUserData = async (email: string) => {
+const getUserData = async (email: string): Promise<UserDataType> => {
   const response = await fetch(`${API_URL}/get-user-data/${email}`);
   return response.json();
 };
@@ -39,7 +44,7 @@ const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
  * @param instrumentId The ID of the default playback instrument.
  * @returns A JSON response containing the processed sequence data for the frontend.
  */
-const processRecording = async (file: Blob, user: string, displayName: string, instrumentId: number = 0) => {
+const processRecording = async (file: Blob, user: string, displayName: string, instrumentId: number = 0): Promise<SequenceDataType> => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('user', user);
@@ -56,7 +61,7 @@ const processRecording = async (file: Blob, user: string, displayName: string, i
  * @param updatedSequence The new note data of the sequence, formatted sequentially as a string.
  * @returns A JSON confirmation of the note data update.
  */
-const updateSequenceData = async (sequenceId: number, updatedSequence: string) => {
+const updateSequenceData = async (sequenceId: number, updatedSequence: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/update-sequence-data/${sequenceId}/${updatedSequence}`, { method: 'PUT' });
   return response.json();
 };
@@ -67,7 +72,7 @@ const updateSequenceData = async (sequenceId: number, updatedSequence: string) =
  * @param displayName The new name of the sequence.
  * @returns A JSON confirmation of the sequence rename.
  */
-const renameSequence = async (sequenceId: number, displayName: string) => {
+const renameSequence = async (sequenceId: number, displayName: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/rename-sequence/${sequenceId}/${displayName}`, { method: 'PUT' });
   return response.json();
 };
@@ -77,7 +82,7 @@ const renameSequence = async (sequenceId: number, displayName: string) => {
  * @param sequenceId The unique identifier for the sequence to be deleted.
  * @returns A JSON confirmation of the sequence deletion.
  */
-const deleteSequence = async (sequenceId: number) => {
+const deleteSequence = async (sequenceId: number): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/delete-sequence/${sequenceId}`, { method: 'DELETE' });
   return response.json();
 };
@@ -88,7 +93,7 @@ const deleteSequence = async (sequenceId: number) => {
  * @param owner The email of the user who owns the folder.
  * @returns A JSON response containing the new folder ID.
  */
-const createFolder = async (displayName: string, owner: string) => {
+const createFolder = async (displayName: string, owner: string): Promise<CreateFolderResponseType> => {
   const response = await fetch(`${API_URL}/create-folder/${displayName}/${owner}`, { method: 'POST' });
   return response.json();
 };
@@ -99,7 +104,7 @@ const createFolder = async (displayName: string, owner: string) => {
  * @param displayName The new name of the folder.
  * @returns A JSON confirmation of the folder rename.
  */
-const renameFolder = async (folderId: number, displayName: string) => {
+const renameFolder = async (folderId: number, displayName: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/rename-folder/${folderId}/${displayName}`, { method: 'PUT' });
   return response.json();
 };
@@ -110,7 +115,7 @@ const renameFolder = async (folderId: number, displayName: string) => {
  * @param sequences An array of the sequences now contained in the folder.
  * @returns A JSON confirmation of the folder contents update.
  */
-const updateFolderContents = async (folderId: number, sequences: number[]) => {
+const updateFolderContents = async (folderId: number, sequences: number[]): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/update-folder-contents`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -124,7 +129,7 @@ const updateFolderContents = async (folderId: number, sequences: number[]) => {
  * @param folderId The unique identifier for the folder to be deleted.
  * @returns A JSON confirmation of the folder deletion.
  */
-const deleteFolder = async (folderId: number) => {
+const deleteFolder = async (folderId: number): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/delete-folder/${folderId}`, { method: 'DELETE' });
   return response.json();
 };
