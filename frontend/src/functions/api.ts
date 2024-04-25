@@ -41,10 +41,10 @@ const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
  * @param file An MP3 file of the vocal recording of the audio sequence.
  * @param user The email of the creator of the song.
  * @param displayName The display name associated with the recording.
- * @param instrumentId The ID of the default playback instrument.
+ * @param instrument The ID of the default playback instrument.
  * @returns A JSON response containing the processed sequence data for the frontend.
  */
-const processRecording = async (file: Blob, user: string, displayName: string, instrumentId: number = 0): Promise<SequenceDataType> => {
+const processRecording = async (file: Blob, user: string, displayName: string, instrument: number = 1): Promise<SequenceDataType> => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('user', user);
