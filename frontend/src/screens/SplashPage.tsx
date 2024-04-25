@@ -4,7 +4,7 @@ import { SplashBackground, Echo } from "./styles/Splash.styled";
 
 /**
  * Splash page that is shown to users while they load the app
-*/
+ */
 const Splash = () => {
   return (
     <SplashBackground
