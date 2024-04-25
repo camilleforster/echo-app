@@ -49,7 +49,7 @@ const processRecording = async (file: Blob, user: string, displayName: string, i
   formData.append('file', file);
   formData.append('user', user);
   formData.append('display_name', displayName);
-  formData.append('instrument', instrumentId.toString());
+  formData.append('instrument', instrument.toString());
 
   const response = await fetch(`${API_URL}/process-recording`, { method: 'POST', body: formData });
   return response.json();
