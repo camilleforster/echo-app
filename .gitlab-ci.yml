@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - check
+  - deploy
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -82,5 +83,22 @@ check-frontend:
     - npm install
     - npm run start --port=${PORT} &
     - npx wait-on http://localhost:${PORT} -t 30000
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+
+deploy-backend:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - cd backend
+    - echo "MYSQL_ROOT_PASSWORD=dummyp@ss123" >> .env  # not our real password!
+    - docker build -f Dockerfile-api -t api_image .
+    - docker build -f Dockerfile-db -t db_image .
+    - docker compose -f splunge.yml --env-file .env -p t23project up -d
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
