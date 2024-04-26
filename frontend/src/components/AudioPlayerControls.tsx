@@ -1,7 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 import {
-  StyledSlider,
   Container,
   Time,
   TimeText,
@@ -21,34 +19,15 @@ import { PlaybackStatus } from "../contexts/PlaybackContext";
   Contains controls for playing the audio including play, pause, rewind, and forward
  */
 const AudioPlayerControls = () => {
-  const { playAudio, pauseAudio, rewindAudio, forwardAudio, playbackStatus, audioLength, currentPosition, skipTo } = usePlayback();
-  const [sliderPosition, setSliderPosition] = useState(currentPosition);
-
-  useEffect(() => {
-    setSliderPosition(currentPosition);
-  }, [currentPosition]);
-
-  const handleSliderChange = (value: number) => {
-    setSliderPosition(value);
-  };
-
-  const handleSliderChangeStart = () => {
-    if (playbackStatus === PlaybackStatus.Playing) {
-      pauseAudio();
-    }
-  };
-
-  const handleSliderChangeComplete = async () => {
-    await skipTo(sliderPosition);
-  };
+  const { playAudio, pauseAudio, rewindAudio, forwardAudio, playbackStatus, audioLength, currentPosition, scrollingPosition, isAutoScrolling } = usePlayback();
 
   const togglePlayPause = () => {
     if (playbackStatus === PlaybackStatus.Playing) {
-      pauseAudio();
+        pauseAudio();
     } else {
-      playAudio();
+        playAudio();
     }
-  };
+};
 
   const formatTime = (totalSeconds: number) => {
     const roundedSeconds = Math.round(totalSeconds);
@@ -57,18 +36,13 @@ const AudioPlayerControls = () => {
     return date.toISOString().substring(14, 19);
   };
 
+  const displayPosition = playbackStatus === PlaybackStatus.Playing ? currentPosition :
+                        (isAutoScrolling ? currentPosition : scrollingPosition);
+
   return (
     <Container>
-      <StyledSlider
-        value={0 || currentPosition}
-        onValueChange={handleSliderChange}
-        onSeekStart={handleSliderChangeStart}
-        onSeekEnd={handleSliderChangeComplete}
-        maximumValue={audioLength || 1}
-        minimumValue={0}
-      />
       <Time>
-        <TimeText>{formatTime(sliderPosition)}</TimeText>
+        <TimeText>{formatTime(displayPosition)}</TimeText>
         <TimeText>{formatTime(audioLength)}</TimeText>
       </Time>
       <Controls>

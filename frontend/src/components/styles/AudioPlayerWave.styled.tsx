@@ -38,7 +38,8 @@ export const ScrollContainer = styled(ScrollView).attrs({
 
 export const WaveformContainer = styled(View)`
   display: flex;
-  margin-left: 205px;
+  margin-left: 208px;
+  margin-right: 208px;
 `;
 
 export const CenterLine = styled(Image)`

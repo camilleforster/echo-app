@@ -11,7 +11,7 @@ type AudioWaveFormProps = {
  *
  * @param meteringArray - An array of metering data points, with each point representing the audio intensity (in dB) at a given moment
  */
-const AudioWaveForm: React.FC<AudioWaveFormProps> = ({ meteringArray }) => {
+const AudioWaveForm: React.FC<AudioWaveFormProps> = ({ meteringArray }) => {  
   return (
     <WaveformContainer testID="waveform-container">
       {meteringArray.map((metering, index) => {

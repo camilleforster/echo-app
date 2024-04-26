@@ -18,7 +18,10 @@ interface PlaybackContextType {
     playbackStatus: PlaybackStatus;
     audioLength: number;
     currentPosition: number;
-    isLoading: boolean;
+    scrollingPosition: number;
+    setScrollingPosition: (seconds: number) => void;
+    isAutoScrolling: boolean;
+    setIsAutoScrolling: (flag : boolean) => void;
 }
 
 export const PlaybackContext = createContext<PlaybackContextType | undefined>(
@@ -42,60 +45,70 @@ const PlaybackProvider: React.FC<PlaybackProviderProps> = ({ children }) => {
     const [playbackStatus, setPlaybackStatus] = useState<PlaybackStatus>(PlaybackStatus.Stopped);
     const [audioLength, setAudioLength] = useState<number>(0);
     const [currentPosition, setCurrentPosition] = useState<number>(0);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [uri, setUri] = useState<string>('');
+    const [scrollingPosition, setScrollingPosition] = useState<number>(0);
+    const [isAutoScrolling, setIsAutoScrolling] = useState<boolean>(false);
 
     const loadAudio = async (newUri: string) => {
-        setIsLoading(true);
         try {
-            const { sound: newSound } = await Audio.Sound.createAsync({ uri: newUri });
-            newSound.setOnPlaybackStatusUpdate(updatePlaybackStatus);
+            const { sound: newSound } = await Audio.Sound.createAsync(
+                { uri: newUri },
+                { progressUpdateIntervalMillis: 1000 },
+                updatePlaybackStatus
+            );
             setSound(newSound);
-            setUri(newUri);  // Update the URI state
             const status = await newSound.getStatusAsync();
             if (status.isLoaded) {
                 setAudioLength((status.durationMillis || 0) / 1000);
             }
-            setIsLoading(false);
         } catch (error) {
             console.error("Error loading audio:", error);
-            setIsLoading(false);
         }
     }
 
     const updatePlaybackStatus = async (status: AVPlaybackStatus) => {
-        if (!status.isLoaded) {
-            return;
-        }
-
-        const loadedStatus = status as AVPlaybackStatusSuccess;
-
-        if (loadedStatus.isPlaying) {
-            setPlaybackStatus(PlaybackStatus.Playing);
-            setCurrentPosition(loadedStatus.positionMillis / 1000);
-        } else if (loadedStatus.didJustFinish && sound) {
-            await sound.setPositionAsync(0);
-            setPlaybackStatus(PlaybackStatus.Stopped);
-            setCurrentPosition(0);
-        } else {
-            setPlaybackStatus(PlaybackStatus.Paused);
+        if (status.isLoaded) {
+            const loadedStatus = status;
+            if (loadedStatus.isPlaying) {
+                setPlaybackStatus(PlaybackStatus.Playing);
+                setCurrentPosition(loadedStatus.positionMillis / 1000);
+            } else if (loadedStatus.didJustFinish) {
+                if (sound) {
+                    sound.setPositionAsync(0);
+                    setPlaybackStatus(PlaybackStatus.Stopped);
+                    setCurrentPosition(0);
+                    setScrollingPosition(0);
+                }
+            } else {
+                setPlaybackStatus(PlaybackStatus.Paused);
+            }
         }
     };
 
     const playAudio = useCallback(async () => {
         if (sound) {
             const status = await sound.getStatusAsync();
-            if (status.isLoaded && status.positionMillis >= (status.durationMillis || 0)) {
-                await sound.setPositionAsync(0);
+            if (status.isLoaded) {
+                if (status.positionMillis >= (status.durationMillis || 0)) {
+                    await sound.setPositionAsync(0);
+                    setCurrentPosition(0);
+                    setScrollingPosition(0);
+                }
+                if (playbackStatus === PlaybackStatus.Paused && !isAutoScrolling) {
+                    await sound.setPositionAsync(scrollingPosition * 1000);
+                }
+
+                await sound.playAsync();
             }
-            await sound.playAsync();
         }
-    }, [sound]);
+    }, [sound, playbackStatus, currentPosition, scrollingPosition]);
 
 
     const pauseAudio = useCallback(async () => {
         if (sound) {
-            await sound.pauseAsync();
+            const status = await sound.getStatusAsync();
+            if (status.isLoaded) {
+                await sound.pauseAsync();
+            }
         }
     }, [sound]);
 
@@ -106,6 +119,7 @@ const PlaybackProvider: React.FC<PlaybackProviderProps> = ({ children }) => {
                 sound.stopAsync().then(() => {
                     sound.unloadAsync().then(() => {
                         setCurrentPosition(0);
+                        setScrollingPosition(0);
                     }).catch(error => console.error('Failed to unload audio:', error));
                 }).catch(error => console.error('Failed to stop audio:', error));
             }
@@ -113,32 +127,23 @@ const PlaybackProvider: React.FC<PlaybackProviderProps> = ({ children }) => {
     }, [sound]);
 
     const forwardAudio = useCallback(async () => {
-        if (sound) {
-            const status = await sound.getStatusAsync();
-            if (status.isLoaded) {
-                const newPosition = Math.min(status.durationMillis || 0, status.positionMillis + 15000);
-                await sound.setPositionAsync(newPosition);
-                setCurrentPosition(newPosition);
-            }
-        }
-    }, [sound]);
+        skipTo(Math.min(currentPosition + 15, audioLength));
+    }, [currentPosition]);
 
     const rewindAudio = useCallback(async () => {
-        if (sound) {
-            const status = await sound.getStatusAsync();
-            if (status.isLoaded) {
-                const newPosition = Math.max(0, status.positionMillis - 15000);
-                await sound.setPositionAsync(newPosition);
-                setCurrentPosition(newPosition);
-            }
-        }
-    }, [sound]);
+        skipTo(Math.max(currentPosition - 15, 0));
+    }, [currentPosition]);
 
 
     const skipTo = useCallback(async (seconds: number) => {
         if (sound) {
-            await sound.setPositionAsync(seconds * 1000);
-            setCurrentPosition(seconds);
+            const status = await sound.getStatusAsync();
+            if (status.isLoaded) {
+                await sound.setPositionAsync(seconds * 1000);
+                console.log("setting scrolling position", seconds)
+                setCurrentPosition(seconds);
+                setScrollingPosition(seconds);
+            }
         }
     }, [sound]);
 
@@ -153,8 +158,11 @@ const PlaybackProvider: React.FC<PlaybackProviderProps> = ({ children }) => {
             playbackStatus,
             audioLength,
             currentPosition,
-            isLoading,
-            unloadAudio
+            scrollingPosition,
+            setScrollingPosition,
+            unloadAudio,
+            isAutoScrolling,
+            setIsAutoScrolling
         }}>
             {children}
         </PlaybackContext.Provider>

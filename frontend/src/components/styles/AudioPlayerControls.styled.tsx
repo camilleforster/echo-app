@@ -7,29 +7,6 @@ export const Container = styled(View)`
   flex-direction: column;
 `;
 
-export const StyledSlider = styled(Slider).attrs((props) => ({
-  minimumTrackTintColor: `${props.theme.textDarkBlue}`,
-  maximumTrackTintColor: `${props.theme.backgroundLightBlue}`,
-  thumbTintColor: `${props.theme.textDarkBlue}`,
-  thumbStyle: {
-    height: 15,
-    width: 15,
-    borderRadius: 10,
-    backgroundColor: `${props.theme.textDarkBlue}`,
-    borderWidth: 0,
-  },
-  activeThumbStyle: {
-    height: 15,
-    width: 15,
-    borderRadius: 10,
-    backgroundColor: `${props.theme.textDarkBlue}`,
-    borderWidth: 0,
-  },
-  trackStyle: {
-    height: 4,
-  },
-}))``;
-
 export const Time = styled(View)`
   width: 100%;
   flex-direction: row;

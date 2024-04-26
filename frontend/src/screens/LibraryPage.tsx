@@ -10,7 +10,7 @@ import { LibraryPageProps } from "../types/NavigationStackTypes";
 const LibraryPage: React.FC<LibraryPageProps> = ({ navigation }) => {
   return (
     <Container>
-      <TouchableOpacity onPress={() => navigation.navigate('AudioTranscriptionPage', { uri: 'file:///var/mobile/Containers/Data/Application/B398B30D-D853-4217-81AB-589D469E12DF/Library/Caches/ExponentExperienceData/@anonymous/echo-dfb1fca1-63f7-4b28-b5d6-9360ca5fccdc/AV/recording-0A5756B5-AB77-45E4-AB31-467227599731.m4a' })}>
+      <TouchableOpacity onPress={() => navigation.navigate('AudioTranscriptionPage', { uri: 'file:///var/mobile/Containers/Data/Application/D43D48C6-E218-40AD-A4AE-122A1ECD3E42/Library/Caches/ExponentExperienceData/@anonymous/echo-dfb1fca1-63f7-4b28-b5d6-9360ca5fccdc/AV/recording-7175D525-15B2-420A-9FE4-8D2E58B994C2.m4a' })}>
         <Text style={{ padding: 50 }}>Item Test</Text>
       </TouchableOpacity>
       <RecordingFooter />
