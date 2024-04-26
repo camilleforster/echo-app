@@ -42,6 +42,7 @@ const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
  * @param user The email of the creator of the song.
  * @param displayName The display name associated with the recording.
  * @param instrument The ID of the default playback instrument.
+ * @param metering_data The metering data associated with the sequence (formatted as a string that represents the array, ex. `["5.55", "9.23"]'`
  * @returns A JSON response containing the processed sequence data for the frontend.
  */
 const processRecording = async (file: Blob, user: string, displayName: string, instrument: number = 1): Promise<SequenceDataType> => {
