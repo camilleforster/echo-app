@@ -8,6 +8,7 @@ for creating, updating, and retrieving user data, as well as processing audio re
 to generate note sequences viewable on the frontend.
 """
 
+import ast
 import os
 import re
 from flask import Flask, request, jsonify, send_file
@@ -18,6 +19,7 @@ from audio_processing import Song, convert_mp3_to_wav, AudioAnalyzer
 
 NOTE_DATA_PATH = './note_data'
 AUDIO_DATA_PATH = './audio_data'
+METERING_DATA_PATH = './metering_data'
 
 app = Flask(__name__)
 db = MySQL()
@@ -99,17 +101,26 @@ def get_user_data(email):
         filename = raw_sequence[3]
         created = raw_sequence[4]
         notes = ''
-        path = f'{NOTE_DATA_PATH}/{filename}.txt'
+        metering_data = []
+        notes_path = f'{NOTE_DATA_PATH}/{filename}.txt'
+        metering_data_path = f'{METERING_DATA_PATH}/{filename}.txt'
 
-        if os.path.exists(path):
-            with open(path, 'r') as f:
+        if os.path.exists(notes_path):
+            with open(notes_path, 'r') as f:
                 notes = f.read()
+
+        if os.path.exists(metering_data_path):
+            with open(metering_data_path, 'r') as f:
+                metering_data_raw = f.read()
+
+            metering_data = ast.literal_eval(metering_data_raw)  # formatted as a string
 
         sequence = {
             "id": sequence_id,
             "display_name": display_name,
             "created": created,
             "notes": notes,
+            "metering_data": metering_data,
         }
 
         sequences.append(sequence)
@@ -171,6 +182,7 @@ def process_recording():
     str user: The email of the creator of the song.
     str display_name: The display name associated with the recording.
     int instrument: The ID of the default playback instrument.
+    str metering_data: The metering data associated with the recording, formatted as a string.
 
     Returns
     -------
@@ -189,8 +201,37 @@ def process_recording():
         response = jsonify({"error": "Invalid recording format"}), 415
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
+    
+    metering_data = request.form.get('metering_data')
+    
+    # validate that metering data represents a list
+    if not (metering_data.startswith('[') and metering_data.endswith(']')):
+        response = jsonify({"error": "Metering data not formatted correctly"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    
+    try:
+        format_test = ast.literal_eval(metering_data)
+
+        if not isinstance(format_test, list):
+            raise ValueError
+        
+        for item in format_test:
+            float(item)  # verify each item is a number
+
+            if not type(item) == str:
+                raise ValueError
+    except (SyntaxError, ValueError):
+        response = jsonify({"error": "Metering data not formatted correctly"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     display_name = request.form.get('display_name')
+
+    if display_name is None:
+        response = jsonify({"error": "Display name does not exist"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
     if '/' in display_name or '\\' in display_name or '.' in display_name:
         response = jsonify({"error": "Display name cannot include slashes or periods"}), 400
@@ -198,11 +239,22 @@ def process_recording():
         return response
 
     user = request.form.get('user')
+
+    if user is None:
+        response = jsonify({"error": "User does not exist"}), 400
+        response[0].headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
     cursor = db.connection.cursor()
     query = "SELECT * FROM Sequences WHERE creator = %s AND display_name = %s"
     cursor.execute(query, (user, display_name))
     num_sequences_with_same_name = len(cursor.fetchall())
     filename = f'{user}-{display_name}{num_sequences_with_same_name}'
+    metering_path = f'{METERING_DATA_PATH}/{filename}.txt'
+
+    with open(metering_path, 'w') as f:
+        f.write(metering_data)
+
     recording_path = f'{AUDIO_DATA_PATH}/{filename}'
     recording_mp3_path = f'{recording_path}.mp3'
     recording_wav_path = f'{recording_path}.wav'
@@ -232,6 +284,7 @@ def process_recording():
         "display_name": display_name,
         "created": created,
         "notes": str(processed_sequence),
+        "metering_data": ast.literal_eval(metering_data)
     }
 
     response = jsonify(sequence_data)

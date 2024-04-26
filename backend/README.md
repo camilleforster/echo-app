@@ -46,7 +46,8 @@ Example: `C#20.25,B10.25,C20.25,C40.25,C40.25,C30.25`
             "id" (int): # sequence ID,
             "display_name" (string): # sequence display name,
             "created" (string): # created timestamp,
-            "notes" (string): # the notes of the sequence, formatted sequentially as a string
+            "notes" (string): # the notes of the sequence, formatted sequentially as a string,
+            "metering_data" (string[]): # the metering data associated with the sequence
         },
         ...
     ]
@@ -74,6 +75,7 @@ Currently under construction.
     * **user** (string) - the email of the user who recorded the audio
     * **display_name** (string) - the sequence's display name indicated by the user
     * **instrument** (int) - the ID of the instrument associated with default playback (this can just be set to 0 if we do not plan on implementing this functionality)
+    * **metering_data** (str) - the metering data associated with the sequence (formatted as a string that represents the array, ex. `["5.55", "9.23"]'`
 * **Returns**: a JSON response containing the processed sequence data
 
 ```
@@ -81,7 +83,8 @@ Currently under construction.
     "id" (int): # sequence ID,
     "display_name" (string): # sequence display name,
     "created" (string): # created timestamp,
-    "notes" (string): # the notes of the sequence, formatted sequentially as a string
+    "notes" (string): # the notes of the sequence, formatted sequentially as a string,
+    "metering_data" (string[]): # the metering data associated with the sequence
 }
 ```
 
