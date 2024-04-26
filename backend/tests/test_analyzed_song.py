@@ -44,7 +44,7 @@ def test_notes_to_lilypond(sample_analyzed_song):
     lilypond_notation = sample_analyzed_song.notes_to_lilypond(chunk_duration=0.5)
     assert lilypond_notation == "\\relative c' {\n    \\key c \\major\n    \\time 4/4\na'2 g'2 \n}"
 
-def test_save_to_file(tmp_path):
+def test_save_to_file():
     # Test saving analysis results to a file
     file_path = "tests/test_data/"
     filename =  file_path + "test_song.txt"
@@ -53,7 +53,7 @@ def test_save_to_file(tmp_path):
     song.save_to_file(filename)
     assert Path(filename).is_file()
 
-def test_save_to_MIDI(tmp_path):
+def test_save_to_MIDI():
     # Test saving audio analysis results to a MIDI file
     file_path = "tests/test_data/"
     filename =  file_path + "test_song"

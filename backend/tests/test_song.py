@@ -1,39 +1,34 @@
 import os
 import pytest
+from pathlib import Path
 
 
 from audio_processing import Song
 
 
-"""
-fixture for the path of the audio file. 
-currently returns the first file in the test_data directory
-can be changed to return other test audio files
-"""
 @pytest.fixture
-def file_path():
+def sample_song_path():
+    # Create a sample audio file for testing
+    sample_data = bytearray([0] * 44100 * 2)  # 1 second of silence at 44100 Hz, 16-bit
     file_path = "tests/test_data/"
-    file = file_path + os.listdir(file_path)[0]
-    return file
+    sample_path = Path(file_path + "sample.wav")
+    with open(sample_path, "wb") as f:
+        f.write(b'RIFF' + (len(sample_data) + 36).to_bytes(4, 'little') + b'WAVE' + b'fmt ' + (16).to_bytes(4, 'little') + (1).to_bytes(2, 'little') + (1).to_bytes(2, 'little') + (44100).to_bytes(4, 'little') + (44100 * 2).to_bytes(4, 'little') + (2).to_bytes(2, 'little') + (16).to_bytes(2, 'little') + b'data' + (len(sample_data)).to_bytes(4, 'little') + sample_data)
+    return str(sample_path)
 
-@pytest.fixture
-def duration():
-    return 0.25
+def test_init(sample_song_path):
+    # Test initialization of the Song class
+    song = Song(file_path=sample_song_path)
+    assert song.file_path == sample_song_path
+    assert song.chunk_duration == 0.25
 
-@pytest.fixture
-def song(file_path, duration):
-    return Song(file_path, duration)
+def test_audio_to_notes(sample_song_path):
+    # Test conversion of audio file to AnalyzedSong object
+    song = Song(file_path=sample_song_path)
+    analyzed_song = song.audio_to_notes()
+    assert len(analyzed_song.data) > 0
+    assert analyzed_song.data[0].time_stamp == 0.0
+    assert analyzed_song.data[0].frequency is not None
+    assert analyzed_song.data[0].note_name is not None
+    assert analyzed_song.data[0].duration == 0.25
 
-
-"""
-A test for the Song constructor
-Tkes as input the audio file path and the created song
-"""
-def test_init(song, file_path, duration):
-    assert isinstance(song, Song)
-    assert song.file_path == file_path
-    assert song.chunk_duration == duration
-
-
-def test_audio_to_notes(song):
-    pass
