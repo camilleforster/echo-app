@@ -11,7 +11,7 @@ const API_URL = 'http://127.0.0.1:5000'; // 'http://cs506-team-23.cs.wisc.edu:50
  * @param username The user's display name.
  * @returns A JSON confirmation of user creation.
  */
-const createUser = async (email: string, username: string): Promise<ConfirmationType> => {
+export const createUser = async (email: string, username: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/create-user/${email}/${username}`, { method: 'POST' });
   return response.json();
 };
@@ -21,7 +21,7 @@ const createUser = async (email: string, username: string): Promise<Confirmation
  * @param email The email address of the user to fetch data for.
  * @returns A JSON response containing the user's data, including display name, sequences, and folders.
  */
-const getUserData = async (email: string): Promise<UserDataType> => {
+export const getUserData = async (email: string): Promise<UserDataType> => {
   const response = await fetch(`${API_URL}/get-user-data/${email}`);
   return response.json();
 };
@@ -31,7 +31,7 @@ const getUserData = async (email: string): Promise<UserDataType> => {
  * @param sequenceId The sequence to be retrieved.
  * @returns The recorded sequence as an MP3 file.
  */
-const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
+export const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
   const response = await fetch(`${API_URL}/get-recording-file/${sequenceId}`);
   return response.blob();
 };
@@ -45,7 +45,7 @@ const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
  * @param metering_data The metering data associated with the sequence (formatted as a string that represents the array, ex. `["5.55", "9.23"]'`
  * @returns A JSON response containing the processed sequence data for the frontend.
  */
-const processRecording = async (file: Blob, user: string, displayName: string, instrument: number = 1): Promise<SequenceDataType> => {
+export const processRecording = async (file: Blob, user: string, displayName: string, instrument: number = 1): Promise<SequenceDataType> => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('user', user);
@@ -62,7 +62,7 @@ const processRecording = async (file: Blob, user: string, displayName: string, i
  * @param updatedSequence The new note data of the sequence, formatted sequentially as a string.
  * @returns A JSON confirmation of the note data update.
  */
-const updateSequenceData = async (sequenceId: number, updatedSequence: string): Promise<ConfirmationType> => {
+export const updateSequenceData = async (sequenceId: number, updatedSequence: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/update-sequence-data/${sequenceId}/${updatedSequence}`, { method: 'PUT' });
   return response.json();
 };
@@ -73,7 +73,7 @@ const updateSequenceData = async (sequenceId: number, updatedSequence: string): 
  * @param displayName The new name of the sequence.
  * @returns A JSON confirmation of the sequence rename.
  */
-const renameSequence = async (sequenceId: number, displayName: string): Promise<ConfirmationType> => {
+export const renameSequence = async (sequenceId: number, displayName: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/rename-sequence/${sequenceId}/${displayName}`, { method: 'PUT' });
   return response.json();
 };
@@ -83,7 +83,7 @@ const renameSequence = async (sequenceId: number, displayName: string): Promise<
  * @param sequenceId The unique identifier for the sequence to be deleted.
  * @returns A JSON confirmation of the sequence deletion.
  */
-const deleteSequence = async (sequenceId: number): Promise<ConfirmationType> => {
+export const deleteSequence = async (sequenceId: number): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/delete-sequence/${sequenceId}`, { method: 'DELETE' });
   return response.json();
 };
@@ -94,7 +94,7 @@ const deleteSequence = async (sequenceId: number): Promise<ConfirmationType> => 
  * @param owner The email of the user who owns the folder.
  * @returns A JSON response containing the new folder ID.
  */
-const createFolder = async (displayName: string, owner: string): Promise<CreateFolderResponseType> => {
+export const createFolder = async (displayName: string, owner: string): Promise<CreateFolderResponseType> => {
   const response = await fetch(`${API_URL}/create-folder/${displayName}/${owner}`, { method: 'POST' });
   return response.json();
 };
@@ -105,7 +105,7 @@ const createFolder = async (displayName: string, owner: string): Promise<CreateF
  * @param displayName The new name of the folder.
  * @returns A JSON confirmation of the folder rename.
  */
-const renameFolder = async (folderId: number, displayName: string): Promise<ConfirmationType> => {
+export const renameFolder = async (folderId: number, displayName: string): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/rename-folder/${folderId}/${displayName}`, { method: 'PUT' });
   return response.json();
 };
@@ -116,7 +116,7 @@ const renameFolder = async (folderId: number, displayName: string): Promise<Conf
  * @param sequences An array of the sequences now contained in the folder.
  * @returns A JSON confirmation of the folder contents update.
  */
-const updateFolderContents = async (folderId: number, sequences: number[]): Promise<ConfirmationType> => {
+export const updateFolderContents = async (folderId: number, sequences: number[]): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/update-folder-contents`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -130,7 +130,7 @@ const updateFolderContents = async (folderId: number, sequences: number[]): Prom
  * @param folderId The unique identifier for the folder to be deleted.
  * @returns A JSON confirmation of the folder deletion.
  */
-const deleteFolder = async (folderId: number): Promise<ConfirmationType> => {
+export const deleteFolder = async (folderId: number): Promise<ConfirmationType> => {
   const response = await fetch(`${API_URL}/delete-folder/${folderId}`, { method: 'DELETE' });
   return response.json();
 };
