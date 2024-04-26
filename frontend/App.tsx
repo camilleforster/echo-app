@@ -15,7 +15,7 @@ import { TranscriptionControlsProvider } from "./src/contexts/TranscriptionContr
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { RootStackParamList } from "./src/types/NavigationStackTypes";
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import PlaybackProvider from "./src/contexts/PlaybackContext";
 
 /**
@@ -46,12 +46,15 @@ const App: React.FC = () => {
                 <Stack.Navigator
                   initialRouteName="LibraryPage"
                   screenOptions={{
-                    contentStyle: { backgroundColor: 'white' },
-                    headerShown: false
+                    contentStyle: { backgroundColor: "white" },
+                    headerShown: false,
                   }}
                 >
                   <Stack.Screen name="LibraryPage" component={LibraryPage} />
-                  <Stack.Screen name="AudioTranscriptionPage" component={AudioTranscriptionPage} />
+                  <Stack.Screen
+                    name="AudioTranscriptionPage"
+                    component={AudioTranscriptionPage}
+                  />
                 </Stack.Navigator>
               </NavigationContainer>
             </PlaybackProvider>

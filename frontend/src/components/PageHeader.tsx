@@ -16,11 +16,11 @@ export interface PageHeaderProps {
 /**
  * Header that displays the title of the page and any button the page might contain
  *
- * @param headerTitle the title of the page
+ * @param headerTitle - the title of the page
  */
 const PageHeader: React.FC<PageHeaderProps> = ({ headerTitle }) => {
   const navigation = useNavigation();
-  
+
   const goBack = () => navigation.goBack();
 
   return (
@@ -31,9 +31,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({ headerTitle }) => {
         </LeftIcon>
       </TouchableOpacity>
       <Title numberOfLines={1}>{headerTitle}</Title>
-        <RightIcon>
-          <UploadIcon />
-        </RightIcon>
+      <RightIcon>
+        <UploadIcon />
+      </RightIcon>
     </Container>
   );
 };

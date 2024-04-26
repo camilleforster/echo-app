@@ -26,8 +26,8 @@ export const ScrollContainer = styled(ScrollView).attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
   contentContainerStyle: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 })`
   width: 100%;

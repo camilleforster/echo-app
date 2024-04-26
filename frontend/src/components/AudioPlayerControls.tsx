@@ -19,15 +19,25 @@ import { PlaybackStatus } from "../contexts/PlaybackContext";
   Contains controls for playing the audio including play, pause, rewind, and forward
  */
 const AudioPlayerControls = () => {
-  const { playAudio, pauseAudio, rewindAudio, forwardAudio, playbackStatus, audioLength, currentPosition, scrollingPosition, isAutoScrolling } = usePlayback();
+  const {
+    playAudio,
+    pauseAudio,
+    rewindAudio,
+    forwardAudio,
+    playbackStatus,
+    audioLength,
+    currentPosition,
+    scrollingPosition,
+    isAutoScrolling,
+  } = usePlayback();
 
   const togglePlayPause = () => {
     if (playbackStatus === PlaybackStatus.Playing) {
-        pauseAudio();
+      pauseAudio();
     } else {
-        playAudio();
+      playAudio();
     }
-};
+  };
 
   const formatTime = (totalSeconds: number) => {
     const roundedSeconds = Math.round(totalSeconds);
@@ -36,8 +46,12 @@ const AudioPlayerControls = () => {
     return date.toISOString().substring(14, 19);
   };
 
-  const displayPosition = playbackStatus === PlaybackStatus.Playing ? currentPosition :
-                        (isAutoScrolling ? currentPosition : scrollingPosition);
+  const displayPosition =
+    playbackStatus === PlaybackStatus.Playing
+      ? currentPosition
+      : isAutoScrolling
+        ? currentPosition
+        : scrollingPosition;
 
   return (
     <Container>

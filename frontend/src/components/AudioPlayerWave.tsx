@@ -1,5 +1,9 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
-import { ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import React, { useEffect, useRef, useContext } from "react";
+import {
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
 import {
   Background,
   Container,
@@ -14,8 +18,16 @@ interface AudioPlayerWaveProps {
   meteringArray: number[];
 }
 const AudioPlayerWave: React.FC<AudioPlayerWaveProps> = ({ meteringArray }) => {
-  const { currentPosition, skipTo, audioLength, playbackStatus, scrollingPosition, setScrollingPosition, isAutoScrolling, setIsAutoScrolling } = useContext(PlaybackContext)!;
-  const waveformWidth = (meteringArray.length * 2) + ((meteringArray.length - 1) * 3);
+  const {
+    currentPosition,
+    audioLength,
+    playbackStatus,
+    setScrollingPosition,
+    isAutoScrolling,
+    setIsAutoScrolling,
+  } = useContext(PlaybackContext)!;
+  const waveformWidth =
+    meteringArray.length * 2 + (meteringArray.length - 1) * 3;
   const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -25,7 +37,6 @@ const AudioPlayerWave: React.FC<AudioPlayerWaveProps> = ({ meteringArray }) => {
       scrollViewRef.current.scrollTo({ x: scrollTo, animated: true });
     }
   }, [currentPosition, waveformWidth, audioLength]);
-
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (!isAutoScrolling) {
@@ -39,7 +50,7 @@ const AudioPlayerWave: React.FC<AudioPlayerWaveProps> = ({ meteringArray }) => {
 
   const handleOnScrollEndDrag = () => {
     setIsAutoScrolling(false);
-  }
+  };
 
   return (
     <Container>
