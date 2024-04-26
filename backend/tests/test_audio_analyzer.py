@@ -9,6 +9,7 @@ from audio_processing import AudioAnalyzer
 def sample_audio_analyzer():
     return AudioAnalyzer()
 
+
 def test_audio_chunk_to_frequency(sample_audio_analyzer):
     # Test for detecting the frequency with the highest magnitude in the audio chunk
     chunk_data = np.sin(2 * np.pi * 440 * np.arange(44100) / 44100)  # Generate a sine wave with frequency 440 Hz
