@@ -1,1 +1,1 @@
-from .db_client import Client
+from .db_client import Client, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD

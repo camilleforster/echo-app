@@ -80,8 +80,12 @@ class AnalysisPoint:
         name = self.note_name[:-1].lower()  # Extract the note letter(s) and make them lowercase
         octave = int(self.note_name[-1])  # Extract the octave as an integer
         octave_difference = octave - 4  # Determine octave difference from C4
-        octave_adjustment = "'" * octave_difference if octave_difference > 0 else "," * -octave_difference
-        
+        if octave_difference > 0:
+            octave_adjustment = "'" + str(octave_difference)
+        else:
+            #octave_adjustment = "," + str(-1*octave_difference)
+            octave_adjustment = "'"
+
         lily_duration = self._duration_to_lilypond(chunk_duration)
         lilypond_notation += f"{name}{octave_adjustment}{lily_duration} "
         #lilypond_notation += "\n}"

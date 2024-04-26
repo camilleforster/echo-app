@@ -1,7 +1,7 @@
-# import os
-# import pytest
+import os
+import pytest
 
-# from audio_analyzer_interface import AudioAnalyzer
+from audio_processing import AudioAnalyzer
 
 # @pytest.fixture
 # def analyzer_params():
@@ -11,18 +11,12 @@
 #     return (sampling_rate, chunk_size, channels)
 
 
-# @pytest.fixture
-# def analyzer(analyzer_params):
-#     return AudioAnalyzer(analyzer_params[0], analyzer_params[1], analyzer_params[2])
+@pytest.fixture
+def analyzer():
+    return AudioAnalyzer()
 
 
-# def test_init(analyzer, analyzer_params):
-#     assert isinstance(analyzer, AudioAnalyzer)
-#     assert analyzer.sampling_rate == analyzer_params[0]
-#     assert analyzer.chunk_size == analyzer_params[1]
-#     assert analyzer.channels == analyzer_params[2]
+def test_init(analyzer):
+    assert isinstance(analyzer, AudioAnalyzer)
 
-
-# def test_frequencies_to_note_name(analyzer):
-# 	pass
 
