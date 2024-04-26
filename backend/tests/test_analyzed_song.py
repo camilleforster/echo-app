@@ -11,6 +11,7 @@ def sample_analyzed_song():
     song.add_point(time_stamp=1.0, frequency=392.0, note_name="G4", duration=0.5)
     return song
 
+
 @pytest.fixture
 def sample_analyzed_song2():
     song = AnalyzedSong()
