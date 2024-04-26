@@ -20,13 +20,12 @@ The application is designed for casual users or those new to composition or musi
 
 | ID   | Description                                                                         | Priority | Status |
 | ---- | ----------------------------------------------------------------------------------- | -------- | ------ |
-| 36  | Users should be able to sign in using Duo authentication.                            | Low      | Open   |
 | 41  | Users should be able to view all previous recordings and organize them into folders. | High     | Open   |
 | 45  | Users should be able to create new recordings and save them into folders.            | High     | Open   |
 | 46  | Users should be able to edit previous recordings.                                    | Med      | Open   |
 | 42  | Users should be able to play previous recordings back with a variety of instruments. | Low      | Open   |
 | 47  | Users should be able to export previous recordings in several formats.               | High     | Open   |
-
+<!--| 36  | Users should be able to sign in using Duo authentication.                             | Low      | Open   |-->
 ### Use Cases & User Stories
 
 <!--Use cases and user stories that support the user requirements in the previous section. The use cases should be based off user stories. Every major scenario should be represented by a use case, and every use case should say something not already illustrated by the other use cases. Diagrams (such as sequence charts) are encouraged. Ask the customer what are the most important use cases to implement by the deadline. You can have a total ordering, or mark use cases with “must have,” “useful,” or “optional.” For each use case you may list one or more concrete acceptance tests (concrete scenarios that the customer will try to see if the use case is implemented).-->
@@ -45,11 +44,13 @@ During our next meeting with our customer (Daniel), we will ask for an ordering 
 
 > As a guitar/bass player, I would like to store multiple samples so that I can quickly go over in recording session.
 
+<!--
 #### Piano Player
 
 > As a piano player, in order to make a song, I want to be able to hum a melody and play that on my piano.
 
 > As a piano player, to collaborate on songs, I want to be able to share my recordings as sheet music to my bandmates or friends.
+-->
 
 #### All Musicians
 
@@ -57,11 +58,13 @@ During our next meeting with our customer (Daniel), we will ask for an ordering 
 
 > As a musician, I want to be able to make sub folders for my recordings in order to keep my library organized.
 
-> As a musician, to collaborate on songs, I want to be able to share my recordings as an mp3 to my bandmates or friends.
+<!-- > As a musician, to collaborate on songs, I want to be able to share my recordings as an mp3 to my bandmates or friends. 
+-->
 
 > As a musician, I would like to see a midi display for my recording samples.
 
-> As a musician, to add my own renditions and fixes, I would like to edit the notes displayed on the transcribed echo app.
+<!-- As a musician, to add my own renditions and fixes, I would like to edit the notes displayed on the transcribed echo app.
+-->
 
 > As a musician, I would like to be able to play my melodies with different instruments.
 

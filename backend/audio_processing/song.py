@@ -1,7 +1,7 @@
 from scipy.io import wavfile
 
-from backend.audio_processing.analyzed_song import AnalyzedSong
-from backend.audio_processing.audio_analyzer import AudioAnalyzer
+from audio_processing.analyzed_song import AnalyzedSong
+from audio_processing.audio_analyzer import AudioAnalyzer
 
 class Song:
     """A class representing the audio file before analysis.
@@ -52,7 +52,7 @@ class Song:
         if data.ndim > 1:
             data = data[:, 0]
 
-        analyzer = AudioAnalyzer(sampling_rate)
+        analyzer = AudioAnalyzer()
         analyzed_song = AnalyzedSong()
 
         chunk_n_samples = int(self.chunk_duration* sampling_rate)  # #samples in each 0.25s chunk
@@ -67,30 +67,30 @@ class Song:
 
             # Convert frequency to note name
             note_name = analyzer.frequency_to_note_name(max_freq)
-            time_stamp = chunk_idx * chunk_duration  # Time stamp for the current chunk
+            time_stamp = chunk_idx * self.chunk_duration  # Time stamp for the current chunk
 
             # Add point to analyzed song
-            analyzed_song.add_point(time_stamp, max_freq, note_name, chunk_duration)
+            analyzed_song.add_point(time_stamp, max_freq, note_name, self.chunk_duration)
 
         return analyzed_song
 
 
 # Example usage
-file_path = 'sample1.wav'  # Update this path to your audio file
-chunk_duration = 0.25
-song = Song(file_path, chunk_duration)
-analyzed_song = song.audio_to_notes()
+# file_path = 'sample1.wav'  # Update this path to your audio file
+# chunk_duration = 0.25
+# song = Song(file_path, chunk_duration)
+# analyzed_song = song.audio_to_notes()
 
-for analysis_point in analyzed_song.get_analysis():
-    print(analysis_point)
+# for analysis_point in analyzed_song.get_analysis():
+#     print(analysis_point)
 
-# Optionally save the analysis to a file
-analyzed_song.save_to_file("analysis_result.txt")
-analyzed_song.save_to_MIDI('midi1')
-print("*************************")
+# # Optionally save the analysis to a file
+# analyzed_song.save_to_file("analysis_result.txt")
+# analyzed_song.save_to_MIDI('midi1')
+# print("*************************")
 
-print(analyzed_song.notes_to_lilypond(chunk_duration))
-for analysis_point in analyzed_song.get_analysis():
-    print(analysis_point)
+# print(analyzed_song.notes_to_lilypond(chunk_duration))
+# for analysis_point in analyzed_song.get_analysis():
+#     print(analysis_point)
 
-analyzed_song.generate_sheet_music('sheet1')
+# analyzed_song.generate_sheet_music('sheet1')
