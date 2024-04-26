@@ -9,7 +9,7 @@ import AudioPlayerWave from "../../components/AudioPlayerWave";
 const renderComponent = () =>
   render(
     <Theme>
-      <AudioPlayerWave />
+      <AudioPlayerWave meteringArray={[-18, -20]} />
     </Theme>,
   );
 
