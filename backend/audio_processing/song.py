@@ -1,7 +1,8 @@
 from scipy.io import wavfile
 
-from audio_processing.analyzed_song import AnalyzedSong
-from audio_processing.audio_analyzer import AudioAnalyzer
+from .analyzed_song import AnalyzedSong
+from .audio_analyzer import AudioAnalyzer
+from .convert import convert_mp3_to_wav
 
 class Song:
     """A class representing the audio file before analysis.
@@ -45,7 +46,8 @@ class Song:
         AnalyzedSong
             an AnalyzedSong object which contains the processed notes of the audio
         """
-
+        if self.file_path.endswith(".mp3"):
+            self.file_path = convert_mp3_to_wav(self.file_path)
         # returns sampling_rate (in samples/sec) and array of audio amplitudes
         sampling_rate, data = wavfile.read(self.file_path) # 
         # only keep the left channel. we assume audio is mono for simplicity
@@ -76,13 +78,13 @@ class Song:
 
 
 # Example usage
-# file_path = 'sample1.wav'  # Update this path to your audio file
-# chunk_duration = 0.25
-# song = Song(file_path, chunk_duration)
-# analyzed_song = song.audio_to_notes()
+#file_path = '../tests/test_data/a_small_miracle.mp3'  # Update this path to your audio file
+#chunk_duration = 0.25
+#song = Song(file_path, chunk_duration)
+#analyzed_song = song.audio_to_notes()
 
-# for analysis_point in analyzed_song.get_analysis():
-#     print(analysis_point)
+#for analysis_point in analyzed_song.get_analysis():
+#    print(analysis_point)
 
 # # Optionally save the analysis to a file
 # analyzed_song.save_to_file("analysis_result.txt")
