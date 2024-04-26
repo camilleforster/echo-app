@@ -35,7 +35,7 @@ test-backend:
     - cd backend
     - source .venv/bin/activate
     - pip install -r requirements.txt
-    - pytest tests --junitxml=result.xml
+    - python -m pytest --junitxml="test_result.xml"
   artifacts:
     when: always
     reports:
