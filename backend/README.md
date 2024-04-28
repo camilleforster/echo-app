@@ -60,18 +60,16 @@ Example: `C#20.25,B10.25,C20.25,C40.25,C40.25,C30.25`
 * **REST Method**: `GET`
 * **Parameters** (URI-based)
     * **sequence_id** (int) - the unique identifier for a particular audio sequence
-* **Returns**: the sequence's original recording as an MP3, for playback purposes
+* **Returns**: the sequence's original recording as a M4A, for playback purposes
 
 ## Audio processing and sequences
 
 ### /process-recording
 
-Currently under construction.
-
 * **Function**: identify a recording's associated note sequence and add it to the database
 * **REST Method**: `POST`
 * **Parameters** (web form-based)
-    * **file** (.mp3 file) - an MP3 file of the vocal recording of the audio sequence 
+    * **file** (.m4a file) - an M4A file of the vocal recording of the audio sequence 
     * **user** (string) - the email of the user who recorded the audio
     * **display_name** (string) - the sequence's display name indicated by the user
     * **instrument** (int) - the ID of the instrument associated with default playback (this can just be set to 0 if we do not plan on implementing this functionality)
@@ -89,8 +87,6 @@ Currently under construction.
 ```
 
 ### /update-sequence-data/\<int:sequence_id>/\<updated_sequence>
-
-Currently under construction.
 
 * **Function**: update the note data associated with an audio sequence, as indicated by the user
 * **REST Method**: `PUT`

@@ -1,16 +1,14 @@
 from pydub import AudioSegment
 
-def convert_mp3_to_wav(path):
+def convert_m4a_to_wav(path):
     """
-    Converts a MP3 file to a WAV file.
+    Converts a M4A file to a WAV file.
     
     Parameters
     ----------
     path: str
-        The path to the file, WITHOUT a .mp3 extension
+        The path to the file, WITHOUT a .m4a extension
     """
-    path = path[:len(path)-4]
-    print(path)
-    audio = AudioSegment.from_mp3(f'{path}.mp3')
+    audio = AudioSegment.from_file(f'{path}.m4a', format='m4a')
     audio.export(f'{path}.wav', format='wav')
     return f'{path}.wav'

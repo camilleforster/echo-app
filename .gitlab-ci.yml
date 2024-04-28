@@ -31,8 +31,9 @@ test-backend:
   stage: test
   image: python:3.11
   script:
-    - apt-get update && apt-get install -y portaudio19-dev
+    - apt-get update && apt-get install -y portaudio19-dev && apt-get install -y ffmpeg
     - cd backend
+    - echo "MYSQL_ROOT_PASSWORD=dummyp@ss123" >> .env  # not our real password!
     - source .venv/bin/activate
     - pip install -r requirements.txt
     - python -m pytest --junitxml="test_result.xml"
