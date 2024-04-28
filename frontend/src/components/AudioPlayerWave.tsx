@@ -1,25 +1,71 @@
-import * as React from "react";
+import React, { useEffect, useRef, useContext } from "react";
+import {
+  ScrollView,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
 import {
   Background,
   Container,
-  LabelContainer,
+  WaveformContainer,
+  CenterLine,
+  ScrollContainer,
 } from "./styles/AudioPlayerWave.styled";
-import { LabelType, LabelSize } from "../types/LabelType";
-import Label from "./Label";
+import AudioWaveForm from "./AudioWaveForm";
+import { PlaybackContext, PlaybackStatus } from "../contexts/PlaybackContext";
 
-/**
-  Contains the audio playback waveform and note descriptions of the selected audio
- */
-const AudioPlayerWave = () => {
+interface AudioPlayerWaveProps {
+  meteringArray: number[];
+}
+const AudioPlayerWave: React.FC<AudioPlayerWaveProps> = ({ meteringArray }) => {
+  const {
+    currentPosition,
+    audioLength,
+    playbackStatus,
+    setScrollingPosition,
+    isAutoScrolling,
+    setIsAutoScrolling,
+  } = useContext(PlaybackContext)!;
+  const waveformWidth =
+    meteringArray.length * 2 + (meteringArray.length - 1) * 3;
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      const scrollTo = (currentPosition / audioLength) * waveformWidth;
+      setIsAutoScrolling(true);
+      scrollViewRef.current.scrollTo({ x: scrollTo, animated: true });
+    }
+  }, [currentPosition, waveformWidth, audioLength]);
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (!isAutoScrolling) {
+      const scrollOffset = event.nativeEvent.contentOffset.x;
+      let newAudioPosition = (scrollOffset / waveformWidth) * audioLength;
+      newAudioPosition = Math.max(0, Math.min(newAudioPosition, audioLength));
+
+      setScrollingPosition(newAudioPosition);
+    }
+  };
+
+  const handleOnScrollEndDrag = () => {
+    setIsAutoScrolling(false);
+  };
+
   return (
     <Container>
-      <LabelContainer>
-        {/* TODO: Connect with time */}
-        <Label type={LabelType.Outlined} size={LabelSize.Regular}>
-          C
-        </Label>
-      </LabelContainer>
-      {/* TODO: Insert Audio Wave */}
+      <CenterLine source={require("../assets/gradient.png")} />
+      <ScrollContainer
+        scrollEnabled={playbackStatus !== PlaybackStatus.Playing}
+        ref={scrollViewRef}
+        onScroll={handleScroll}
+        onScrollEndDrag={handleOnScrollEndDrag}
+        scrollEventThrottle={100}
+      >
+        <WaveformContainer>
+          <AudioWaveForm meteringArray={meteringArray} />
+        </WaveformContainer>
+      </ScrollContainer>
       <Background
         testID="audio-player-background"
         source={require("../assets/player-background.png")}

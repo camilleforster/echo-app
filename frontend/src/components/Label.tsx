@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyledText, StyledLabel } from "./styles/Label.styled";
-import { LabelType, LabelSize } from "../types/LabelType";
+import { LabelType, LabelSize } from "../types/LabelTypes";
 
 export interface LabelProps {
   type: LabelType;

@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react-native";
 import Theme from "../../../Theme";
 import Label, { LabelProps } from "../../components/Label";
-import { LabelType, LabelSize } from "../../types/LabelType";
+import { LabelType, LabelSize } from "../../types/LabelTypes";
 
 /**
  * Renders the Label component wrapped in a ThemeProvider with the default theme.

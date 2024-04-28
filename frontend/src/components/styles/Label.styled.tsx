@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { Text, View } from "react-native";
-import { LabelType, LabelSize } from "../../types/LabelType";
+import { LabelType, LabelSize } from "../../types/LabelTypes";
 
 interface LabelStyleProps {
   type: LabelType;

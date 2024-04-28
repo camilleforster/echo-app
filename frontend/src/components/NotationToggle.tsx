@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LabelType, LabelSize } from "../types/LabelType";
+import { LabelType, LabelSize } from "../types/LabelTypes";
 import Label from "./Label";
 import { TouchableOpacity } from "react-native";
 import { LabelContainer } from "./styles/NotationToggle.styled";

@@ -12,7 +12,11 @@ import {
 } from "@expo-google-fonts/work-sans";
 import AudioTranscriptionPage from "./src/screens/AudioTranscriptionPage";
 import { TranscriptionControlsProvider } from "./src/contexts/TranscriptionControlsContext";
-import SignUp from "./src/screens/SignInPage";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { RootStackParamList } from "./src/types/NavigationStackTypes";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import PlaybackProvider from "./src/contexts/PlaybackContext";
 
 /**
  * An app that converts a user's voice to notes.
@@ -30,16 +34,34 @@ const App: React.FC = () => {
     return <Text>Loading...</Text>;
   }
 
+  const Stack = createNativeStackNavigator<RootStackParamList>();
+
   return (
-    <SignUp></SignUp>
-    // <Theme>
-    //   <RecordingProvider>
-    //     <TranscriptionControlsProvider>
-    //       {/* <LibraryPage /> */}
-    //       <AudioTranscriptionPage />
-    //     </TranscriptionControlsProvider>
-    //   </RecordingProvider>
-    // </Theme>
+    <Theme>
+      <RecordingProvider>
+        <TranscriptionControlsProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <PlaybackProvider>
+              <NavigationContainer>
+                <Stack.Navigator
+                  initialRouteName="LibraryPage"
+                  screenOptions={{
+                    contentStyle: { backgroundColor: "white" },
+                    headerShown: false,
+                  }}
+                >
+                  <Stack.Screen name="LibraryPage" component={LibraryPage} />
+                  <Stack.Screen
+                    name="AudioTranscriptionPage"
+                    component={AudioTranscriptionPage}
+                  />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </PlaybackProvider>
+          </GestureHandlerRootView>
+        </TranscriptionControlsProvider>
+      </RecordingProvider>
+    </Theme>
   );
 };
 
