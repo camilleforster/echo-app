@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { AddFolderButton, AddFolderBanner, TextContent, ContentContainer, FolderBanner, AudioCount } from "./styles/Folders.styled";
+import { ContentContainer, FolderBanner} from "./styles/Folders.styled";
 import FolderItem from "./FolderItem";
-import { FlatList, Text, TouchableOpacity, View, StyleSheet, Image } from "react-native";
-import { RadioGroup } from 'react-native-ui-lib';
-import { AddFolderIcon } from "../assets/icons";
-
+import { FlatList, Text, View, } from "react-native";
 
 interface FolderProps {
-    isEditMode: boolean; // This prop is passed from the parent component
+    isEditMode: boolean; 
     recordings: Array<{ title: string; item_number: string; key: string; }>,
     deleteItems: Array<{}>,
     setDeleteItems: React.Dispatch<React.SetStateAction<any[]>>;
@@ -19,8 +16,6 @@ const Folders: React.FC<FolderProps> = ({ isEditMode, recordings,  deleteItems, 
     const handleSelectFolder = (key: string) => {
         setSelectedKey(key);
     };
-
-
 
     const defaultItem = { title: "My Library", item_number: '0', key: '0' };
 
@@ -68,7 +63,5 @@ const Folders: React.FC<FolderProps> = ({ isEditMode, recordings,  deleteItems, 
         </ContentContainer>
     );
 };
-
-
 
 export default Folders;

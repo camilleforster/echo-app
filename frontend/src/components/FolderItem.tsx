@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles/FolderItem.styled";
-// import { RadioButton, RadioGroup } from "react-native-ui-lib";
-import { RadioButton, Checkbox } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 
 interface FolderItemProps {
     item: {
@@ -33,9 +32,6 @@ const FolderItem: React.FC<FolderItemProps> = ({ item, isEditMode, isSelected, d
                                         setDeleteItems([...deleteItems, item.key])
                                       }}
                                 />
-                                {/* <RadioButton
-                                    value={false}
-                                /> */}
                             </View>
                         ) : (
                         <Image style={styles.icon} resizeMode="cover" source={require('../assets/folderIcon.png')} />

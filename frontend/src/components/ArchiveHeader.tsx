@@ -1,6 +1,5 @@
 import React from "react";
-import { Icons, Edit, EditButton, Top1, Title, Icons1, Search, Content, SearchBar, Content1, ArchiveHeadingRoot, Top } from "./styles/ArchiveHeader.styled" 
-import { Text, View } from "react-native-ui-lib";
+import { Edit, EditButton, Top1, Title, Content1, ArchiveHeadingRoot, Top } from "./styles/ArchiveHeader.styled" 
 
 interface ArchiveHeadingProps {
   isEditMode: boolean;
