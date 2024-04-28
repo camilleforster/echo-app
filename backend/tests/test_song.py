@@ -21,7 +21,7 @@ def sample_song_path():
 def better_day():
     # Create a sample audio file for testing
     file_path = "tests/test_data/"
-    sample_path = file_path + "better_day.m4a"
+    sample_path = file_path + "better_day"
     sample_path = convert_m4a_to_wav(sample_path)
     return sample_path
 
