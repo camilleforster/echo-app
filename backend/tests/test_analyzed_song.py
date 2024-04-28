@@ -75,13 +75,3 @@ def test_save_to_file():
     song.add_point(time_stamp=0.0, frequency=440.0, note_name="A4", duration=1.0)
     song.save_to_file(filename)
     assert Path(filename).is_file()
-
-
-def test_save_to_MIDI():
-    # Test saving audio analysis results to a MIDI file
-    file_path = "tests/test_data/"
-    filename =  file_path + "test_song"
-    song = AnalyzedSong()
-    song.add_point(time_stamp=0.0, frequency=440.0, note_name="A4", duration=1.0)
-    song.save_to_MIDI(filename)
-    assert Path(filename+ ".mid").is_file()

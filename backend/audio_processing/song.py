@@ -2,7 +2,7 @@ from scipy.io import wavfile
 
 from .analyzed_song import AnalyzedSong
 from .audio_analyzer import AudioAnalyzer
-from .convert import convert_mp3_to_wav
+from .convert import convert_m4a_to_wav
 
 class Song:
     """A class representing the audio file before analysis.
@@ -46,8 +46,8 @@ class Song:
         AnalyzedSong
             an AnalyzedSong object which contains the processed notes of the audio
         """
-        if self.file_path.endswith(".mp3"):
-            self.file_path = convert_mp3_to_wav(self.file_path)
+        if self.file_path.endswith(".m4a"):
+            self.file_path = convert_m4a_to_wav(self.file_path)
         # returns sampling_rate (in samples/sec) and array of audio amplitudes
         sampling_rate, data = wavfile.read(self.file_path) # 
         # only keep the left channel. we assume audio is mono for simplicity

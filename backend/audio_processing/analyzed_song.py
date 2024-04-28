@@ -114,8 +114,6 @@ class AnalyzedSong:
         Returns the list of analyzed data points.
     save_to_file(filename)
         Saves the analysis results to a file.
-    save_to_MIDI(self, filename: str)
-        Saves the audio analysis results to an MIDI file.
     notes_to_lilypond(self, chunk_duration)
         Returns a represtnation of the song notes in lilypond format.
     generate_sheet_music(self, image_name, chunk_duration=0.25)
@@ -239,31 +237,4 @@ class AnalyzedSong:
             lilypond_notation += point.note_to_lilypond(chunk_duration)
         lilypond_notation += "\n}"
         return lilypond_notation
-
-    def save_to_MIDI(self, filename: str):
-        """ Saves the audio analysis results to an MIDI file.
-
-        Parameters
-        -------
-        filename : str
-            name of the file to save the notes sequence to.
-        """
-        # create an MIDI object
-        mf = MIDIFile(1)     # only 1 track
-        track = 0   # the first and only track
-
-        time = 0    # start at the beginning
-        mf.addTrackName(track, time, "Track")
-        mf.addTempo(track, time, 120) # 120 BPM assuming 0.25 sec per note
-
-        # add the notes
-        channel = 0
-        volume = 100
-
-        for point in self.data:
-            mf.addNote(track, channel, librosa.note_to_midi(point.note_name),
-                point.time_stamp//0.25, point.duration//0.25, volume)
-
-        with open(filename+".mid", 'wb') as outf:
-            mf.writeFile(outf)
 

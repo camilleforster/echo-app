@@ -15,7 +15,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 
-from audio_processing import Song, convert_mp3_to_wav, AudioAnalyzer
+from audio_processing import Song, convert_m4a_to_wav, AudioAnalyzer
 
 NOTE_DATA_PATH = './note_data'
 AUDIO_DATA_PATH = './audio_data'
@@ -139,7 +139,7 @@ def get_user_data(email):
 @app.route('/get-recording-file/<int:sequence_id>', methods=['GET'])
 def get_recording_file(sequence_id):
     """
-    Fetches the MP3 file corresponding to a recorded sequence.
+    Fetches the M4A file corresponding to a recorded sequence.
 
     Parameters
     ----------
@@ -149,7 +149,7 @@ def get_recording_file(sequence_id):
     Returns
     -------
     MP3 response
-        The recorded sequence as an MP3 file
+        The recorded sequence as a M4A file
     """
 
     cursor = db.connection.cursor()
@@ -178,7 +178,7 @@ def process_recording():
 
     Parameters
     ----------
-    File file: An MP3 file of the vocal recording of the audio sequence.
+    File file: An M4A file of the vocal recording of the audio sequence.
     str user: The email of the creator of the song.
     str display_name: The display name associated with the recording.
     int instrument: The ID of the default playback instrument.
@@ -197,7 +197,7 @@ def process_recording():
 
     recording = request.files['file']
 
-    if not recording or not recording.filename.endswith('.mp3'):
+    if not recording or not recording.filename.endswith('.m4a'):
         response = jsonify({"error": "Invalid recording format"}), 415
         response[0].headers.add('Access-Control-Allow-Origin', '*')
         return response
@@ -256,10 +256,10 @@ def process_recording():
         f.write(metering_data)
 
     recording_path = f'{AUDIO_DATA_PATH}/{filename}'
-    recording_mp3_path = f'{recording_path}.mp3'
+    recording_m4a_path = f'{recording_path}.m4a'
     recording_wav_path = f'{recording_path}.wav'
-    recording.save(recording_mp3_path)
-    convert_mp3_to_wav(recording_path)
+    recording.save(recording_m4a_path)
+    convert_m4a_to_wav(recording_path)
     instrument = 1  # default playback instrument is unused, so default to 1 instead of `request.form.get('instrument', type=int)`
     sequence = Song(recording_wav_path, 0.25)
     processed_sequence = sequence.audio_to_notes()

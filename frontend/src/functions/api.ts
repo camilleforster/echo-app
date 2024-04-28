@@ -27,9 +27,9 @@ export const getUserData = async (email: string): Promise<UserDataType> => {
 };
 
 /**
- * Fetches the MP3 file corresponding to a recorded sequence.
+ * Fetches the M4A file corresponding to a recorded sequence.
  * @param sequenceId The sequence to be retrieved.
- * @returns The recorded sequence as an MP3 file.
+ * @returns The recorded sequence as an M4A file.
  */
 export const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
   const response = await fetch(`${API_URL}/get-recording-file/${sequenceId}`);
@@ -38,7 +38,7 @@ export const getRecordingFile = async (sequenceId: number): Promise<Blob> => {
 
 /**
  * Processes an uploaded vocal recording by converting it into a note sequence, saving it, and returning it to the frontend.
- * @param file An MP3 file of the vocal recording of the audio sequence.
+ * @param file An M4A file of the vocal recording of the audio sequence.
  * @param user The email of the creator of the song.
  * @param displayName The display name associated with the recording.
  * @param instrument The ID of the default playback instrument.
