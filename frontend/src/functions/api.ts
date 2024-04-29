@@ -3,7 +3,7 @@ import { CreateFolderResponseType } from "../types/CreateFolderResponseType";
 import { SequenceDataType } from "../types/SequenceDataType";
 import { UserDataType } from "../types/UserDataType";
 
-const API_URL = 'http://127.0.0.1:5000'; // 'http://cs506-team-23.cs.wisc.edu:5000';
+const API_URL = 'http://34.121.166.252:5000'; // 'http://cs506-team-23.cs.wisc.edu:5000';
 
 /**
  * Creates a user.
