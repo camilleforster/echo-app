@@ -2,7 +2,12 @@ stages:
   - build
   - test
   - check
-  - deploy
+  # - deploy # stage removed as Docker pull rate limit has been reached
+    # ERROR: failed to solve: mysql/mysql-server:latest: failed to resolve source metadata for 
+    # docker.io/mysql/mysql-server:latest: failed to copy: httpReadSeeker: failed open: unexpected 
+    # status code https://registry-1.docker.io/v2/mysql/mysql-server/manifests/sha256:d6c8301b7834c5b9c2b733b10b7e630f441af7bc917c74dba379f24eeeb6a313:
+    # 429 Too Many Requests - Server message: toomanyrequests: You have reached your pull rate 
+    # limit. You may increase the limit by authenticating and upgrading: https://www.docker.com/increase-rate-limit
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -87,19 +92,19 @@ check-frontend:
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
 
-deploy-backend:
-  stage: deploy
-  image: docker:latest
-  services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - cd backend
-    - echo "MYSQL_ROOT_PASSWORD=dummyp@ss123" >> .env  # not our real password!
-    - docker build -f Dockerfile-api -t api_image .
-    - docker build -f Dockerfile-db -t db_image .
-    - docker compose -f splunge.yml --env-file .env -p t23project up -d
-  rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+# deploy-backend:
+#   stage: deploy
+#   image: docker:latest
+#   services:
+#     - docker:dind
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375/
+#     DOCKER_TLS_CERTDIR: ""
+#   script:
+#     - cd backend
+#     - echo "MYSQL_ROOT_PASSWORD=dummyp@ss123" >> .env  # not our real password!
+#     - docker build -f Dockerfile-api -t api_image .
+#     - docker build -f Dockerfile-db -t db_image .
+#     - docker compose -f splunge.yml --env-file .env -p t23project up -d
+#   rules:
+#     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"

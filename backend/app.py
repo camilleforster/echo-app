@@ -14,6 +14,7 @@ import re
 from flask import Flask, request, jsonify, send_file
 from flask_mysqldb import MySQL
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
 
 from audio_processing import Song, convert_m4a_to_wav, AudioAnalyzer
 
@@ -630,6 +631,25 @@ def create_user(email, username):
     db.connection.commit()
     cursor.close()
     response = jsonify({"message": f"{username}'s account created"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    """
+    A global exception handler that more eloquently addresses non-defined exceptions.
+
+    Returns
+    -------
+    JSON response
+        An error with code 500 and a message regarding what went wrong during the execution of the route's code.
+    """
+    if isinstance(e, HTTPException):
+        response = jsonify({"error": e.description}), e.code
+    else:
+        response = jsonify({"error": e}), 500
+
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
