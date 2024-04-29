@@ -1,11 +1,12 @@
 # Echo - Voice to Tabs: Coding Sandards Document
 
-Backend Coding Style
-
 [Jump to Frontend Coding Style](#coding-guidelines---reactjs)
 
-# PEP8-Style_Guide_for_Python_Code
-PEP8–Style_Guide_for_Python_Code
+## Backend Coding Style
+We use PEP8–Style_Guide_for_Python_Code for our python code and [Numpy Scipy documentation style guide](https://numpydoc.readthedocs.io/en/latest/format.html) for comments and documentation. 
+
+## PEP8-Style_Guide_for_Python_Code
+
 
 https://peps.python.org/pep-0008/
 
