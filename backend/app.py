@@ -148,7 +148,7 @@ def get_recording_file(sequence_id):
 
     Returns
     -------
-    MP3 response
+    M4A response
         The recorded sequence as a M4A file
     """
 
@@ -164,7 +164,7 @@ def get_recording_file(sequence_id):
         return response
 
     filename = sequence[0]
-    path = f'{AUDIO_DATA_PATH}/{filename}.mp3'
+    path = f'{AUDIO_DATA_PATH}/{filename}.m4a'
     response = send_file(path, as_attachment=True)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
