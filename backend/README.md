@@ -27,7 +27,7 @@ Example: `C#20.25,B10.25,C20.25,C40.25,C40.25,C30.25`
 * **REST method**: `GET`
 * **Parameters** (URI-based)
     * **email** (string) - the email of the user corresponding to their DB entry's primary key
-* **Returns**: a JSON object containing the user's display name, folder data, and sequence data. Note that to retrieve the actual audio recording affiliated with each sequence, the `get-recording-file` route must be called for an individual sequence (using the sequence ID) as a single route cannot include several MP3 files.
+* **Returns**: a JSON object containing the user's display name, folder data, and sequence data. Note that to retrieve the actual audio recording affiliated with each sequence, the `get-recording-file` route must be called for an individual sequence (using the sequence ID) as a single route cannot include several M4A files.
 
 ```
 {
