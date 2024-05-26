@@ -35,7 +35,7 @@ const AudioTranscriptionPage: React.FC<AudioTranscriptionPageProps> = () => {
 
   // THIS WILL BE CHANGED GIVEN BACKEND METERING ARRAY
   const meteringArray = [
-    -28, -21
+    -28, -21, -20
   ];
 
   return (
